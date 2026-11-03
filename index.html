@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O-Skeuos Digital Studio | Scaffold Generator & Live Quoting</title>
+  <title>O-Skeuos Digital Studio | Visual Website Builder</title>
   <style>
     :root {
       --bg: #0d0f12;
@@ -19,7 +19,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; line-height: 1.5; }
 
-    /* Header & Navigation */
     header {
       background: rgba(13, 15, 18, 0.95); backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border); padding: 16px; text-align: center;
@@ -29,7 +28,6 @@
 
     .container { max-width: 600px; margin: 0 auto; padding: 16px; }
 
-    /* Wizard Sections */
     .section-card {
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 16px; padding: 20px; margin-bottom: 16px;
@@ -40,24 +38,39 @@
       padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;
     }
 
-    /* Form Controls */
     .form-group { margin-bottom: 14px; text-align: left; }
-    label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+    label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .hint { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; display: block; }
     select, input {
       width: 100%; background: #000; border: 1px solid var(--border);
-      color: var(--text); padding: 10px; border-radius: 8px; font-size: 0.9rem;
+      color: var(--text); padding: 12px; border-radius: 8px; font-size: 0.9rem;
     }
 
-    /* Checkbox Grid for Add-ons */
     .addon-grid { display: grid; gap: 8px; }
     .addon-item {
-      background: #000; border: 1px solid var(--border); padding: 10px 14px;
+      background: #000; border: 1px solid var(--border); padding: 12px 14px;
       border-radius: 8px; display: flex; justify-content: space-between; align-items: center;
       cursor: pointer; font-size: 0.85rem;
     }
     .addon-item input { width: auto; cursor: pointer; }
 
-    /* Pricing Display Banner */
+    /* Visual Evidence Card Preview */
+    .preview-box {
+      background: #000; border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden; margin-top: 16px; text-align: left;
+    }
+    .preview-header {
+      background: #1e2330; padding: 8px 12px; font-size: 0.75rem; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between;
+    }
+    .preview-body { padding: 16px; }
+    .preview-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .preview-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; }
+    .preview-mockup-badge {
+      display: inline-block; background: rgba(16, 185, 129, 0.15); color: var(--success);
+      padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+    }
+
     .pricing-banner {
       background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success);
       border-radius: 12px; padding: 16px; text-align: center; margin-top: 16px;
@@ -71,14 +84,6 @@
       margin-top: 16px; cursor: pointer; transition: background 0.2s;
     }
     .cta-btn:hover { background: var(--accent-hover); }
-
-    /* Live Preview Box */
-    .preview-box {
-      background: #000; border: 1px dashed var(--border); border-radius: 12px;
-      padding: 16px; margin-top: 16px; text-align: center;
-    }
-    .preview-title { font-size: 0.9rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
-    .preview-sub { font-size: 0.8rem; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -89,48 +94,48 @@
 
   <div class="container">
 
-    <!-- WIZARD STEP 1: FOUNDATION TEMPLATE -->
+    <!-- STEP 1: PLAIN ENGLISH TEMPLATE SELECTOR -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 1</span> Select Foundation Scaffold</h2>
+      <h2><span class="step-badge">Step 1</span> What type of business do you run?</h2>
+      <span class="hint">Choose the style that matches your booth or local shop.</span>
       <div class="form-group">
-        <label>Primary Business Template</label>
         <select id="template-select" onchange="updateCalculator()">
-          <option value="landing">Simple Lead Capture Landing Page ($350)</option>
-          <option value="food_express" selected>Festival Express: Food & Artisan Catalog ($500)</option>
-          <option value="service_engine">Service Quote Engine & Trades ($1,200)</option>
-          <option value="custom_portal">Full Custom Portal ($2,000)</option>
+          <option value="landing">Simple Lead Page (Great for quick contact & info)</option>
+          <option value="food_express" selected>Festival Express: Online Shop & Menu (Food & Goods)</option>
+          <option value="service_engine">Service Quote Engine (For contractors, cleaning, trades)</option>
+          <option value="custom_portal">Full Custom Portal (Advanced multi-page setup)</option>
         </select>
       </div>
     </div>
 
-    <!-- WIZARD STEP 2: MODULAR ADD-ONS -->
+    <!-- STEP 2: PLAIN ENGLISH FEATURES -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 2</span> Modular Components</h2>
+      <h2><span class="step-badge">Step 2</span> Choose Your Add-on Features</h2>
+      <span class="hint>Select what you want your customers to be able to do on your site.</span>
       <div class="addon-grid">
         <label class="addon-item">
-          <span>Interactive Pricing Calculator / Estimate Engine</span>
+          <span>🧮 Instant Price Estimator (Customers calculate costs online)</span>
           <input type="checkbox" class="addon-checkbox" value="150" checked onchange="updateCalculator()">
         </label>
         <label class="addon-item">
-          <span>Stripe / Square Deposit & Checkout Routing</span>
+          <span>💳 Secure Checkout & Deposit Button (Accept Apple Pay / Cards)</span>
           <input type="checkbox" class="addon-checkbox" value="200" checked onchange="updateCalculator()">
         </label>
         <label class="addon-item">
-          <span>Dynamic Customer Review / Testimonials Carousel</span>
+          <span>⭐ Customer Reviews & Testimonials Section</span>
           <input type="checkbox" class="addon-checkbox" value="75" onchange="updateCalculator()">
         </label>
         <label class="addon-item">
-          <span>Split Image / Video Hero Background Styling</span>
+          <span>🎨 Premium Photo & Video Banner Header</span>
           <input type="checkbox" class="addon-checkbox" value="100" onchange="updateCalculator()">
         </label>
       </div>
     </div>
 
-    <!-- WIZARD STEP 3: TIMELINE SPEED -->
+    <!-- STEP 3: SPEED -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 3</span> Build Speed & Turnaround</h2>
+      <h2><span class="step-badge">Step 3</span> When do you need it live?</h2>
       <div class="form-group">
-        <label>Turnaround Preference</label>
         <select id="speed-select" onchange="updateCalculator()">
           <option value="0">Standard Queue (5–7 Business Days)</option>
           <option value="150" selected>3-Day Expedited Rush (Pecan Fest Special)</option>
@@ -138,13 +143,20 @@
       </div>
     </div>
 
-    <!-- WIZARD STEP 4: LIVE CALCULATION & DEPOSIT READOUT -->
+    <!-- STEP 4: VISUAL PREVIEW & LIVE PRICING -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 4</span> Live Blueprint Estimate</h2>
+      <h2><span class="step-badge">Step 4</span> Your Live Website Preview</h2>
       
       <div class="preview-box">
-        <div class="preview-title" id="preview-title-text">Festival Express: Food & Artisan Catalog</div>
-        <div class="preview-sub" id="preview-sub-text">Includes mobile ordering grid, product catalog, and instant SMS confirmation.</div>
+        <div class="preview-header">
+          <span>Live Layout Preview</span>
+          <span style="color:var(--success);">● Active</span>
+        </div>
+        <div class="preview-body">
+          <div class="preview-title" id="preview-title-text">Festival Express: Online Shop & Menu</div>
+          <div class="preview-desc" id="preview-sub-text">Mobile-friendly product grid where festival goers can browse goods and place re-orders instantly.</div>
+          <div class="preview-mockup-badge" id="preview-badge">✓ Mobile Optimized</div>
+        </div>
       </div>
 
       <div class="pricing-banner">
@@ -153,7 +165,7 @@
         <div class="deposit-sub" id="live-deposit-text">Required Upfront Deposit (50%): <strong>$462.50</strong></div>
       </div>
 
-      <button class="cta-btn" onclick="lockInBlueprint()">Lock In Blueprint & Claim Build Slot</button>
+      <button class="cta-btn" onclick="lockInBlueprint()">Lock In My Build & Pay 50% Deposit</button>
     </div>
 
   </div>
@@ -167,21 +179,22 @@
     };
 
     const templateMeta = {
-      landing: { title: "Simple Lead Capture Landing Page", desc: "Direct single-offer focus, high-impact hero, and instant contact capture." },
-      food_express: { title: "Festival Express: Food & Artisan Catalog", desc: "Includes mobile ordering grid, product catalog, and instant SMS confirmation." },
-      service_engine: { title: "Service Quote Engine & Trades", desc: "Custom calculator logic, property size multipliers, and instant estimate lead lock." },
-      custom_portal: { title: "Full Custom Portal", desc: "Advanced database wiring, multi-step user workflows, and customized business logic." }
+      landing: { title: "Simple Lead Capture Page", desc: "Clean mobile layout with direct phone tap and contact form for local clients.", badge: "✓ Fast 1-Page Setup" },
+      food_express: { title: "Festival Express: Online Shop & Menu", desc: "Mobile-friendly product grid where festival goers can browse goods and place re-orders instantly.", badge: "✓ Mobile Ordering Ready" },
+      service_engine: { title: "Service Quote Engine", desc: "Interactive estimator where customers select project size and get instant price quotes.", badge: "✓ Automated Lead Capture" },
+      custom_portal: { title: "Full Custom Portal", desc: "Comprehensive web presence with custom databases and tailored booking workflows.", badge: "✓ Enterprise Grade" }
     };
 
     function updateCalculator() {
       let templateKey = document.getElementById('template-select').value;
       let total = basePrices[templateKey] || 500;
 
-      // Update preview text
+      // Update visual preview card
       document.getElementById('preview-title-text').innerText = templateMeta[templateKey].title;
       document.getElementById('preview-sub-text').innerText = templateMeta[templateKey].desc;
+      document.getElementById('preview-badge').innerText = templateMeta[templateKey].badge;
 
-      // Sum checked add-ons
+      // Sum add-ons
       const addOns = document.querySelectorAll('.addon-checkbox:checked');
       addOns.forEach(addon => {
         total += parseFloat(addon.value);
@@ -191,10 +204,9 @@
       let rushFee = parseFloat(document.getElementById('speed-select').value) || 0;
       total += rushFee;
 
-      // Calculate 50% deposit
+      // 50% deposit
       let deposit = total / 2;
 
-      // Update DOM
       document.getElementById('live-total-price').innerText = `$${total.toFixed(2)}`;
       document.getElementById('live-deposit-text').innerHTML = `Required Upfront Deposit (50%): <strong>$${deposit.toFixed(2)}</strong>`;
     }
@@ -202,10 +214,9 @@
     function lockInBlueprint() {
       let total = document.getElementById('live-total-price').innerText;
       let deposit = document.getElementById('live-deposit-text').innerText;
-      alert(`O-Skeuos Blueprint Locked!\n\nTotal: ${total}\n${deposit}\n\nRedirecting to secure deposit checkout & opening client intake checklist...`);
+      alert(`O-Skeuos Blueprint Locked!\n\nTotal: ${total}\n${deposit}\n\nOpening client intake checklist & secure deposit link...`);
     }
 
-    // Run initial calc on load
     updateCalculator();
   </script>
 </body>
