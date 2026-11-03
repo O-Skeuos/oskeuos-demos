@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O-Skeuos Digital Studio | Visual Website Builder</title>
+  <title>O-Skeuos Digital Studio | Local Florence Website Builder</title>
   <style>
     :root {
       --bg: #0d0f12;
@@ -17,14 +17,15 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; line-height: 1.5; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; line-height: 1.5; }
 
     header {
       background: rgba(13, 15, 18, 0.95); backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border); padding: 16px; text-align: center;
+      border-bottom: 1px solid var(--border); padding: 14px; text-align: center;
       position: sticky; top: 0; z-index: 100;
     }
     .brand { font-size: 1.2rem; font-weight: 800; color: var(--accent); letter-spacing: 0.5px; }
+    .local-badge { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; display: block; margin-top: 2px; }
 
     .container { max-width: 600px; margin: 0 auto; padding: 16px; }
 
@@ -54,7 +55,7 @@
     }
     .addon-item input { width: auto; cursor: pointer; }
 
-    /* Visual Evidence Card Preview */
+    /* Visual Preview Box */
     .preview-box {
       background: #000; border: 1px solid var(--border); border-radius: 12px;
       overflow: hidden; margin-top: 16px; text-align: left;
@@ -84,23 +85,44 @@
       margin-top: 16px; cursor: pointer; transition: background 0.2s;
     }
     .cta-btn:hover { background: var(--accent-hover); }
+
+    .direct-contact {
+      text-align: center; margin-top: 12px; font-size: 0.8rem; color: var(--text-muted);
+    }
+    .direct-contact a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+    /* High-Trust Success Modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(10px); z-index: 1000; justify-content: center; align-items: center; padding: 16px;
+    }
+    .modal-card {
+      background: var(--card-bg); border: 1px solid var(--accent);
+      border-radius: 16px; padding: 24px; max-width: 450px; width: 100%; text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    }
+    .modal-card h3 { color: var(--accent); font-size: 1.2rem; margin-bottom: 8px; }
+    .modal-summary { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin: 16px 0; text-align: left; font-size: 0.85rem; }
+    .modal-summary div { margin-bottom: 4px; display: flex; justify-content: space-between; }
+    .close-modal { background: var(--border); color: var(--text); border: none; padding: 8px 16px; border-radius: 6px; margin-top: 12px; cursor: pointer; }
   </style>
 </head>
 <body>
 
   <header>
     <div class="brand">O-SKEUOS DIGITAL STUDIO</div>
+    <span class="local-badge">📍 Florence, SC • Independent Web & Digital Infrastructure Studio</span>
   </header>
 
   <div class="container">
 
-    <!-- STEP 1: PLAIN ENGLISH TEMPLATE SELECTOR -->
+    <!-- STEP 1: FOUNDATION -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 1</span> What type of business do you run?</h2>
-      <span class="hint">Choose the style that matches your booth or local shop.</span>
+      <h2><span class="step-badge">Step 1</span> Business Type</h2>
+      <span class="hint">Select the style that matches your festival booth or local shop.</span>
       <div class="form-group">
         <select id="template-select" onchange="updateCalculator()">
-          <option value="landing">Simple Lead Page (Great for quick contact & info)</option>
+          <option value="landing">Simple Lead Page (Quick contact & info page)</option>
           <option value="food_express" selected>Festival Express: Online Shop & Menu (Food & Goods)</option>
           <option value="service_engine">Service Quote Engine (For contractors, cleaning, trades)</option>
           <option value="custom_portal">Full Custom Portal (Advanced multi-page setup)</option>
@@ -108,25 +130,25 @@
       </div>
     </div>
 
-    <!-- STEP 2: PLAIN ENGLISH FEATURES -->
+    <!-- STEP 2: ADD-ONS -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 2</span> Choose Your Add-on Features</h2>
-      <span class="hint>Select what you want your customers to be able to do on your site.</span>
+      <h2><span class="step-badge">Step 2</span> Choose Features</h2>
+      <span class="hint">Select what you want your site to do.</span>
       <div class="addon-grid">
         <label class="addon-item">
-          <span>🧮 Instant Price Estimator (Customers calculate costs online)</span>
+          <span>🧮 Instant Price Estimator Engine</span>
           <input type="checkbox" class="addon-checkbox" value="150" checked onchange="updateCalculator()">
         </label>
         <label class="addon-item">
-          <span>💳 Secure Checkout & Deposit Button (Accept Apple Pay / Cards)</span>
+          <span>💳 Secure Checkout & Deposit Button</span>
           <input type="checkbox" class="addon-checkbox" value="200" checked onchange="updateCalculator()">
         </label>
         <label class="addon-item">
-          <span>⭐ Customer Reviews & Testimonials Section</span>
+          <span>⭐ Customer Reviews & Testimonials</span>
           <input type="checkbox" class="addon-checkbox" value="75" onchange="updateCalculator()">
         </label>
         <label class="addon-item">
-          <span>🎨 Premium Photo & Video Banner Header</span>
+          <span>🎨 Premium Photo & Video Header</span>
           <input type="checkbox" class="addon-checkbox" value="100" onchange="updateCalculator()">
         </label>
       </div>
@@ -134,7 +156,7 @@
 
     <!-- STEP 3: SPEED -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 3</span> When do you need it live?</h2>
+      <h2><span class="step-badge">Step 3</span> Turnaround Window</h2>
       <div class="form-group">
         <select id="speed-select" onchange="updateCalculator()">
           <option value="0">Standard Queue (5–7 Business Days)</option>
@@ -143,9 +165,9 @@
       </div>
     </div>
 
-    <!-- STEP 4: VISUAL PREVIEW & LIVE PRICING -->
+    <!-- STEP 4: PREVIEW & PRICING -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 4</span> Your Live Website Preview</h2>
+      <h2><span class="step-badge">Step 4</span> Live Blueprint Estimate</h2>
       
       <div class="preview-box">
         <div class="preview-header">
@@ -155,7 +177,7 @@
         <div class="preview-body">
           <div class="preview-title" id="preview-title-text">Festival Express: Online Shop & Menu</div>
           <div class="preview-desc" id="preview-sub-text">Mobile-friendly product grid where festival goers can browse goods and place re-orders instantly.</div>
-          <div class="preview-mockup-badge" id="preview-badge">✓ Mobile Optimized</div>
+          <div class="preview-mockup-badge" id="preview-badge">✓ Mobile Ordering Ready</div>
         </div>
       </div>
 
@@ -165,9 +187,35 @@
         <div class="deposit-sub" id="live-deposit-text">Required Upfront Deposit (50%): <strong>$462.50</strong></div>
       </div>
 
-      <button class="cta-btn" onclick="lockInBlueprint()">Lock In My Build & Pay 50% Deposit</button>
+      <button class="cta-btn" onclick="openModal()">Lock In My Build & Reserve Slot</button>
+
+      <div class="direct-contact">
+        Prefer to talk first? <a href="sms:18430000000">Text Designer Direct</a>
+      </div>
     </div>
 
+  </div>
+
+  <!-- SUCCESS / LOCK-IN MODAL OVERLAY -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal-card">
+      <h3>🎉 Blueprint Reserved!</h3>
+      <p style="font-size:0.85rem; color:var(--text-muted);">Your custom O-Skeuos build slot is reserved for 24 hours.</p>
+
+      <div class="modal-summary">
+        <div><span>Selected Package:</span> <strong id="modal-pkg">Festival Express</strong></div>
+        <div><span>Total Investment:</span> <strong id="modal-total">$925.00</strong></div>
+        <div><span>50% Deposit Due:</span> <strong id="modal-deposit" style="color:var(--success);">$462.50</strong></div>
+      </div>
+
+      <div class="form-group">
+        <label style="text-align:left;">Enter your mobile phone number for instant SMS receipt & onboarding link:</label>
+        <input type="tel" id="vendor-phone" placeholder="(843) 555-0199">
+      </div>
+
+      <button class="cta-btn" onclick="confirmDeposit()">Send Me Deposit Invoice & Setup Doc</button>
+      <button class="close-modal" onclick="closeModal()">Back to Builder</button>
+    </div>
   </div>
 
   <script>
@@ -189,32 +237,42 @@
       let templateKey = document.getElementById('template-select').value;
       let total = basePrices[templateKey] || 500;
 
-      // Update visual preview card
       document.getElementById('preview-title-text').innerText = templateMeta[templateKey].title;
       document.getElementById('preview-sub-text').innerText = templateMeta[templateKey].desc;
       document.getElementById('preview-badge').innerText = templateMeta[templateKey].badge;
 
-      // Sum add-ons
       const addOns = document.querySelectorAll('.addon-checkbox:checked');
-      addOns.forEach(addon => {
-        total += parseFloat(addon.value);
-      });
+      addOns.forEach(addon => { total += parseFloat(addon.value); });
 
-      // Add speed fee
       let rushFee = parseFloat(document.getElementById('speed-select').value) || 0;
       total += rushFee;
 
-      // 50% deposit
       let deposit = total / 2;
 
       document.getElementById('live-total-price').innerText = `$${total.toFixed(2)}`;
       document.getElementById('live-deposit-text').innerHTML = `Required Upfront Deposit (50%): <strong>$${deposit.toFixed(2)}</strong>`;
     }
 
-    function lockInBlueprint() {
-      let total = document.getElementById('live-total-price').innerText;
-      let deposit = document.getElementById('live-deposit-text').innerText;
-      alert(`O-Skeuos Blueprint Locked!\n\nTotal: ${total}\n${deposit}\n\nOpening client intake checklist & secure deposit link...`);
+    function openModal() {
+      let templateKey = document.getElementById('template-select').value;
+      document.getElementById('modal-pkg').innerText = templateMeta[templateKey].title;
+      document.getElementById('modal-total').innerText = document.getElementById('live-total-price').innerText;
+      document.getElementById('modal-deposit').innerText = document.getElementById('live-deposit-text').querySelector('strong').innerText;
+      document.getElementById('success-modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('success-modal').style.display = 'none';
+    }
+
+    function confirmDeposit() {
+      let phone = document.getElementById('vendor-phone').value;
+      if (!phone) {
+        alert("Please enter your phone number so we can text your invoice!");
+        return;
+      }
+      alert(`Receipt sent to ${phone}!\n\nYour 3-day build slot is officially reserved. Check your text messages for the deposit invoice link.`);
+      closeModal();
     }
 
     updateCalculator();
