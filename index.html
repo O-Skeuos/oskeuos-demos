@@ -6,27 +6,28 @@
   <title>O-Skeuos Digital Studio | Florence, SC</title>
   <style>
     :root {
-      --bg: #07080b;
-      --card-bg: #11131a;
-      --card-border: #1e2330;
+      --bg: #000000;
+      --card-bg: #0a0b0e;
+      --border: #222630;
+      --border-hover: #f59e0b;
       --accent: #f59e0b;
       --accent-hover: #d97706;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
+      --text: #ffffff;
+      --text-muted: #8892b0;
       --success: #10b981;
-      --success-bg: rgba(16, 185, 129, 0.06);
+      --success-bg: rgba(16, 185, 129, 0.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; line-height: 1.6; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 100px; line-height: 1.5; }
 
-    /* Clean Agency Navigation */
+    /* Editorial Header */
     header {
-      background: rgba(7, 8, 11, 0.9);
+      background: rgba(0, 0, 0, 0.9);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--card-border);
-      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -34,134 +35,173 @@
       justify-content: space-between;
       align-items: center;
     }
-    .brand-area { display: flex; flex-direction: column; }
-    .brand { font-size: 1.1rem; font-weight: 800; color: #fff; letter-spacing: 0.5px; text-transform: uppercase; }
-    .brand span { color: var(--accent); }
-    .local-tag { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
-    .header-badge {
-      background: rgba(245, 158, 11, 0.1); color: var(--accent);
-      border: 1px solid rgba(245, 158, 11, 0.25); padding: 6px 12px;
-      border-radius: 20px; font-size: 0.75rem; font-weight: 700;
-    }
+    .brand { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-transform: uppercase; }
+    .nav-link { font-size: 0.8rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 1px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; }
 
-    .container { max-width: 640px; margin: 0 auto; padding: 24px 16px; }
+    .container { max-width: 600px; margin: 0 auto; padding: 24px 20px; }
 
-    /* Hero Section */
+    /* Hero Section with Glass Emblem Concept */
     .hero {
-      text-align: center;
-      padding: 30px 10px 20px 10px;
+      padding: 30px 0 20px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 30px;
     }
-    .hero h1 { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.5px; }
-    .hero p { font-size: 0.95rem; color: var(--text-muted); max-width: 480px; margin: 0 auto; line-height: 1.6; }
+    .hero-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
 
-    /* Portfolio Cards Grid (Visual Proof) */
-    .portfolio-grid {
-      display: grid;
-      gap: 16px;
-      margin: 24px 0;
+    /* 3D Glass Emblem Mockup Container */
+    .glass-emblem-box {
+      width: 100%;
+      height: 220px;
+      background: radial-gradient(circle at center, #1a1d26 0%, #000000 80%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
     }
+    .glass-logo {
+      font-size: 4rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffffff 0%, #64748b 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -2px;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));
+    }
+    .local-indicator {
+      position: absolute;
+      bottom: 12px;
+      left: 16px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Section Typography */
+    .section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    /* Editorial Portfolio Cards */
+    .portfolio-grid { display: grid; gap: 14px; margin-bottom: 30px; }
     .portfolio-card {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      border: 1px solid var(--border);
       border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.2s ease;
+      padding: 20px;
       cursor: pointer;
+      transition: all 0.2s ease;
     }
-    .portfolio-card:hover { border-color: rgba(245, 158, 11, 0.4); transform: translateY(-2px); }
-    .portfolio-card.selected { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2); }
+    .portfolio-card:hover { border-color: rgba(245, 158, 11, 0.5); }
+    .portfolio-card.selected { border-color: var(--accent); background: #12151c; box-shadow: 0 0 0 1px var(--accent); }
     
-    .portfolio-header {
-      padding: 18px 20px 10px 20px;
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .card-title { font-size: 1.05rem; font-weight: 700; color: #fff; }
+    .card-price { font-size: 1.1rem; font-weight: 800; color: var(--accent); }
+    .card-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; }
+    
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { background: #151821; border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
+
+    /* Expandable Accordions (Inspired by Reference Video) */
+    .accordion {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .accordion-header {
+      padding: 18px 20px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
     }
-    .portfolio-title { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .portfolio-subtitle { font-size: 0.82rem; color: var(--text-muted); }
-    .portfolio-price { font-size: 1.1rem; font-weight: 800; color: var(--accent); }
+    .accordion-content {
+      padding: 0 20px 20px 20px;
+      display: none;
+      border-top: 1px solid var(--border);
+      background: #050608;
+    }
+    .accordion.open .accordion-content { display: block; padding-top: 16px; }
+    .accordion-icon { font-size: 1.2rem; color: var(--accent); font-weight: 800; }
 
-    .portfolio-body {
-      padding: 0 20px 18px 20px;
-    }
-    .feature-chips {
-      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;
-    }
-    .chip {
-      background: #171a23; border: 1px solid var(--card-border);
-      padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; color: var(--text-muted); font-weight: 600;
-    }
-
-    /* Section Cards for Customization */
-    .section-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 18px;
-    }
-    .section-card h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-
-    .addon-grid { display: grid; gap: 10px; }
+    /* Form Elements */
     .addon-item {
-      background: #0c0e13; border: 1px solid var(--card-border);
-      padding: 14px 16px; border-radius: 10px; display: flex;
-      justify-content: space-between; align-items: center; cursor: pointer;
-      font-size: 0.85rem; font-weight: 500; transition: all 0.2s;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem;
     }
-    .addon-item:hover { border-color: var(--accent); }
+    .addon-item:last-child { border-bottom: none; }
     .addon-item input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
 
-    .form-group { margin-top: 12px; }
-    label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
     select {
-      width: 100%; background: #0c0e13; border: 1px solid var(--card-border);
+      width: 100%; background: #000; border: 1px solid var(--border);
       color: #fff; padding: 14px; border-radius: 10px; font-size: 0.95rem; outline: none;
+      margin-top: 8px;
     }
     select:focus { border-color: var(--accent); }
 
-    /* Pricing & Summary Box */
+    /* Summary Banner */
     .summary-box {
       background: var(--success-bg);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      border-radius: 16px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 18px;
       padding: 24px;
       text-align: center;
-      margin-top: 20px;
+      margin-top: 30px;
     }
     .summary-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-    .total-price { font-size: 2.3rem; font-weight: 800; color: var(--success); margin: 6px 0; }
-    .terms-breakdown { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
-    .terms-breakdown strong { color: #fff; }
+    .total-price { font-size: 2.4rem; font-weight: 900; color: var(--success); margin: 6px 0; letter-spacing: -1px; }
+    .terms { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
+    .terms strong { color: #fff; }
 
     .cta-btn {
       width: 100%; background: var(--accent); color: #000; border: none;
       padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem;
-      margin-top: 16px; cursor: pointer; transition: all 0.2s;
-      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25);
+      cursor: pointer; transition: background 0.2s;
     }
-    .cta-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .cta-btn:hover { background: var(--accent-hover); }
 
-    .direct-contact {
-      text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);
-    }
-    .direct-contact a { color: var(--accent); text-decoration: none; font-weight: 700; }
+    .direct-link { text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--text-muted); }
+    .direct-link a { color: var(--accent); text-decoration: none; font-weight: 700; }
 
     /* Modal Overlay */
     .modal-overlay {
-      display: none; position: fixed; inset: 0; background: rgba(7, 8, 11, 0.9);
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
       backdrop-filter: blur(16px); z-index: 1000; justify-content: center; align-items: center; padding: 16px;
     }
     .modal-card {
-      background: var(--card-bg); border: 1px solid rgba(245, 158, 11, 0.3);
+      background: var(--card-bg); border: 1px solid var(--accent);
       border-radius: 20px; padding: 28px; max-width: 440px; width: 100%; text-align: center;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.8);
     }
     .modal-card h3 { color: #fff; font-size: 1.3rem; margin-bottom: 6px; font-weight: 800; }
-    .modal-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
-    
     .modal-receipt {
-      background: #0c0e13; border: 1px solid var(--card-border);
+      background: #000; border: 1px solid var(--border);
       border-radius: 12px; padding: 16px; margin: 16px 0; text-align: left; font-size: 0.88rem;
     }
     .modal-receipt div { margin-bottom: 8px; display: flex; justify-content: space-between; }
@@ -169,116 +209,102 @@
     .modal-receipt strong { color: #fff; }
 
     input[type="tel"] {
-      width: 100%; background: #0c0e13; border: 1px solid var(--card-border);
-      color: #fff; padding: 14px; border-radius: 10px; font-size: 0.95rem; outline: none; margin-top: 6px;
+      width: 100%; background: #000; border: 1px solid var(--border);
+      color: #fff; padding: 14px; border-radius: 10px; font-size: 0.95rem; outline: none; margin-top: 8px;
     }
     input[type="tel"]:focus { border-color: var(--accent); }
 
-    .close-modal {
-      background: transparent; color: var(--text-muted); border: none;
-      padding: 8px 16px; border-radius: 6px; margin-top: 10px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
-    }
-    .close-modal:hover { color: #fff; }
+    .close-modal { background: transparent; color: var(--text-muted); border: none; padding: 8px; margin-top: 10px; cursor: pointer; font-weight: 600; }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="brand-area">
-      <div class="brand">O-Skeuos <span>Digital</span></div>
-      <span class="local-tag">Florence, SC Studio</span>
-    </div>
-    <div class="header-badge">⚡ 3-Day Turnaround</div>
+    <div class="brand">O-Skeuos Studio</div>
+    <a href="sms:18430000000" class="nav-link">(CONTACT)</a>
   </header>
 
   <div class="container">
 
+    <!-- HERO SECTION -->
     <div class="hero">
-      <h1>High-Performance Mobile Infrastructure for Local Business</h1>
-      <p>Select your business blueprint below to lock in your custom mobile ordering or quote portal delivered in 3 days.</p>
+      <h1 class="hero-title">High-performance digital infrastructure for local business.</h1>
+      <p class="hero-subtitle">We remove friction, limitation, and rigidity from local commerce. Built right here in Florence, SC.</p>
     </div>
 
-    <!-- STEP 1: VISUAL PORTFOLIO SELECTOR -->
+    <!-- 3D GLASS LOGO EMBLEM HERO -->
+    <div class="glass-emblem-box">
+      <div class="glass-logo">OS</div>
+      <div class="local-indicator">Florence, SC • Est. Studio</div>
+    </div>
+
+    <!-- PORTFOLIO / BLUEPRINTS -->
+    <div class="section-title">Select Blueprint</div>
     <div class="portfolio-grid">
       
-      <!-- Option 1: Food & Festival Express -->
       <div class="portfolio-card selected" id="card-food_express" onclick="selectTemplate('food_express', 500)">
-        <div class="portfolio-header">
-          <div>
-            <div class="portfolio-title">Festival Express: Food & Retail Catalog</div>
-            <div class="portfolio-subtitle">Instant mobile ordering grid to eliminate booth lines</div>
-          </div>
-          <div class="portfolio-price">$500</div>
+        <div class="card-top">
+          <div class="card-title">Festival Express: Food & Retail Catalog</div>
+          <div class="card-price">$500</div>
         </div>
-        <div class="portfolio-body">
-          <div class="feature-chips">
-            <span class="chip">Mobile Menu Grid</span>
-            <span class="chip">Instant Cart</span>
-            <span class="chip">Apple Pay Ready</span>
-          </div>
+        <div class="card-desc">Mobile ordering grid to eliminate booth lines and take instant payments.</div>
+        <div class="tags">
+          <span class="tag">Mobile Menu</span>
+          <span class="tag">Instant Cart</span>
+          <span class="tag">Apple Pay</span>
         </div>
       </div>
 
-      <!-- Option 2: Bakery / Artisan -->
       <div class="portfolio-card" id="card-bakery_demo" onclick="selectTemplate('bakery_demo', 500)">
-        <div class="portfolio-header">
-          <div>
-            <div class="portfolio-title">Artisan & Bakery Pre-Order Portal</div>
-            <div class="portfolio-subtitle">Showcase handmade goods and secure advance boxes</div>
-          </div>
-          <div class="portfolio-price">$500</div>
+        <div class="card-top">
+          <div class="card-title">Artisan & Bakery Pre-Order Portal</div>
+          <div class="card-price">$500</div>
         </div>
-        <div class="portfolio-body">
-          <div class="feature-chips">
-            <span class="chip">Product Showcases</span>
-            <span class="chip">Pre-Order Deposits</span>
-            <span class="chip">Pickup Scheduler</span>
-          </div>
+        <div class="card-desc">Showcase handmade goods and secure advance pickup box orders.</div>
+        <div class="tags">
+          <span class="tag">Pre-Orders</span>
+          <span class="tag">Catalog Grid</span>
+          <span class="tag">Pickup Scheduler</span>
         </div>
       </div>
 
-      <!-- Option 3: Service Trade -->
       <div class="portfolio-card" id="card-service_engine" onclick="selectTemplate('service_engine', 1200)">
-        <div class="portfolio-header">
-          <div>
-            <div class="portfolio-title">Interactive Service Quote Engine</div>
-            <div class="portfolio-subtitle">Calculates instant project estimates & captures leads</div>
-          </div>
-          <div class="portfolio-price">$1,200</div>
+        <div class="card-top">
+          <div class="card-title">Interactive Service Quote Engine</div>
+          <div class="card-price">$1,200</div>
         </div>
-        <div class="portfolio-body">
-          <div class="feature-chips">
-            <span class="chip">Dynamic Estimator</span>
-            <span class="chip">Instant Lead Routing</span>
-            <span class="chip">Client Booking</span>
-          </div>
+        <div class="card-desc">Calculates instant project estimates and captures high-intent customer leads.</div>
+        <div class="tags">
+          <span class="tag">Dynamic Math</span>
+          <span class="tag">Lead Capture</span>
+          <span class="tag">Booking Flow</span>
         </div>
       </div>
 
-      <!-- Option 4: Lead Capture -->
       <div class="portfolio-card" id="card-landing" onclick="selectTemplate('landing', 350)">
-        <div class="portfolio-header">
-          <div>
-            <div class="portfolio-title">High-Impact Mobile Lead Page</div>
-            <div class="portfolio-subtitle">Clean 1-page presence with direct call & directions</div>
-          </div>
-          <div class="portfolio-price">$350</div>
+        <div class="card-top">
+          <div class="card-title">High-Impact Mobile Lead Page</div>
+          <div class="card-price">$350</div>
         </div>
-        <div class="portfolio-body">
-          <div class="feature-chips">
-            <span class="chip">Tap-to-Call</span>
-            <span class="chip">Map Integration</span>
-            <span class="chip">Lightning Fast</span>
-          </div>
+        <div class="card-desc">Clean 1-page presence with direct phone dial and map integration.</div>
+        <div class="tags">
+          <span class="tag">Tap-to-Call</span>
+          <span class="tag">Map Link</span>
+          <span class="tag">Fast Setup</span>
         </div>
       </div>
 
     </div>
 
-    <!-- STEP 2: OPTIONAL ADD-ONS -->
-    <div class="section-card">
-      <h3>🧩 Customize Core Modules</h3>
-      <div class="addon-grid">
+    <!-- EXPANDABLE ACCORDIONS (REFERENCE STYLE) -->
+    <div class="section-title">Studio Specifications</div>
+    
+    <div class="accordion" id="acc-addons">
+      <div class="accordion-header" onclick="toggleAccordion('acc-addons')">
+        <span>+ Customize Core Modules & Add-Ons</span>
+        <span class="accordion-icon">▾</span>
+      </div>
+      <div class="accordion-content">
         <label class="addon-item">
           <span>🧮 Instant Price Estimator Engine</span>
           <input type="checkbox" class="addon-checkbox" value="150" checked onchange="updateCalculator()">
@@ -298,35 +324,39 @@
       </div>
     </div>
 
-    <!-- STEP 3: SPEED & PAYMENT TERMS -->
-    <div class="section-card">
-      <h3>⚡ Turnaround & Payment Structure</h3>
-      <div class="form-group">
-        <label>Build Timeline:</label>
-        <select id="speed-select" onchange="updateCalculator()">
-          <option value="0">Standard Queue (5–7 Business Days)</option>
-          <option value="150" selected>3-Day Expedited Rush (Pecan Fest Special)</option>
-        </select>
+    <div class="accordion" id="acc-terms">
+      <div class="accordion-header" onclick="toggleAccordion('acc-terms')">
+        <span>+ Turnaround & Payment Structure</span>
+        <span class="accordion-icon">▾</span>
       </div>
-      <div class="form-group" style="margin-top:14px;">
-        <label>Payment Plan Option:</label>
-        <select id="plan-select" onchange="updateCalculator()">
-          <option value="split" selected>Standard 50% Deposit / 50% on Launch</option>
-          <option value="installments">3-Part Micro-Installments</option>
-        </select>
+      <div class="accordion-content">
+        <div style="margin-bottom: 14px;">
+          <label>Build Timeline:</label>
+          <select id="speed-select" onchange="updateCalculator()">
+            <option value="0">Standard Queue (5–7 Business Days)</option>
+            <option value="150" selected>3-Day Expedited Rush (Pecan Fest Special)</option>
+          </select>
+        </div>
+        <div>
+          <label>Payment Plan Option:</label>
+          <select id="plan-select" onchange="updateCalculator()">
+            <option value="split" selected>Standard 50% Deposit / 50% on Launch</option>
+            <option value="installments">3-Part Micro-Installments</option>
+          </select>
+        </div>
       </div>
     </div>
 
     <!-- SUMMARY & ACTION -->
     <div class="summary-box">
-      <div class="summary-label">Total Investment</div>
+      <div class="summary-label">Total Project Investment</div>
       <div class="total-price" id="live-total">$925.00</div>
-      <div class="terms-breakdown" id="live-terms">Due Today (50% Deposit): <strong>$462.50</strong></div>
+      <div class="terms" id="live-terms">Due Today (50% Deposit): <strong>$462.50</strong></div>
       
       <button class="cta-btn" onclick="openModal()">Lock In My 3-Day Build Slot</button>
 
-      <div class="direct-contact">
-        Have questions? <a href="sms:18430000000">Text Designer Direct</a>
+      <div class="direct-link">
+        Questions? <a href="sms:18430000000">Text Designer Direct</a>
       </div>
     </div>
 
@@ -336,20 +366,20 @@
   <div class="modal-overlay" id="success-modal">
     <div class="modal-card">
       <h3>🎉 Build Slot Reserved</h3>
-      <div class="modal-sub">Your project is locked into the O-Skeuos local queue.</div>
+      <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">Your project is locked into the O-Skeuos local queue.</div>
 
       <div class="modal-receipt">
-        <div><span>Package:</span> <strong id="rec-pkg">Festival Express</strong></div>
+        <div><span>Blueprint:</span> <strong id="rec-pkg">Festival Express</strong></div>
         <div><span>Total Cost:</span> <strong id="rec-total">$925.00</strong></div>
         <div><span>Due Today:</span> <strong id="rec-due" style="color:var(--success);">$462.50</strong></div>
       </div>
 
-      <div class="form-group" style="text-align:left;">
+      <div style="text-align:left; margin-bottom:14px;">
         <label>Enter Cell Phone for Instant SMS Receipt & Onboarding Link:</label>
         <input type="tel" id="vendor-phone" placeholder="(843) 555-0199">
       </div>
 
-      <button class="cta-btn" style="margin-top:14px;" onclick="confirmOrder()">Send Invoice & Intake Link</button>
+      <button class="cta-btn" onclick="confirmOrder()">Send Secure Checkout Link</button>
       <button class="close-modal" onclick="closeModal()">Back to Studio</button>
     </div>
   </div>
@@ -369,22 +399,24 @@
       selectedKey = key;
       basePrice = price;
 
-      // Update card visual selection state
       document.querySelectorAll('.portfolio-card').forEach(card => card.classList.remove('selected'));
       document.getElementById('card-' + key).classList.add('selected');
 
       updateCalculator();
     }
 
+    function toggleAccordion(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('open');
+    }
+
     function updateCalculator() {
       let total = basePrice;
 
-      // Add checked add-ons
       document.querySelectorAll('.addon-checkbox:checked').forEach(cb => {
         total += parseFloat(cb.value);
       });
 
-      // Add rush fee
       let rush = parseFloat(document.getElementById('speed-select').value) || 0;
       total += rush;
 
@@ -404,7 +436,6 @@
     function openModal() {
       document.getElementById('rec-pkg').innerText = packageNames[selectedKey];
       document.getElementById('rec-total').innerText = document.getElementById('live-total').innerText;
-      document.getElementById('rec-terms').innerText // placeholder
       
       let plan = document.getElementById('plan-select').value;
       let totalNum = parseFloat(document.getElementById('live-total').innerText.replace('$', ''));
@@ -421,10 +452,10 @@
     function confirmOrder() {
       let phone = document.getElementById('vendor-phone').value;
       if (!phone) {
-        alert("Please enter your cell phone number so we can text your invoice!");
+        alert("Please enter your cell phone number so we can text your checkout link!");
         return;
       }
-      alert(`Invoice & Onboarding link sent to ${phone}!\n\nYour 3-day build slot is officially locked.`);
+      alert(`Secure checkout & onboarding link sent to ${phone}!\n\nYour 3-day build slot is officially locked.`);
       closeModal();
     }
 
