@@ -40,7 +40,7 @@
 
     .container { max-width: 600px; margin: 0 auto; padding: 24px 20px; }
 
-    /* Hero Section with Glass Emblem Concept */
+    /* Hero Section */
     .hero {
       padding: 30px 0 20px 0;
       border-bottom: 1px solid var(--border);
@@ -125,7 +125,7 @@
     .tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .tag { background: #151821; border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
 
-    /* Expandable Accordions (Inspired by Reference Video) */
+    /* Expandable Accordions */
     .accordion {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -190,6 +190,19 @@
     .direct-link { text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--text-muted); }
     .direct-link a { color: var(--accent); text-decoration: none; font-weight: 700; }
 
+    /* Headquarters / Contact Section */
+    .hq-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 40px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .hq-card div { margin-bottom: 8px; }
+    .hq-card strong { color: #fff; }
+
     /* Modal Overlay */
     .modal-overlay {
       display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
@@ -221,7 +234,7 @@
 
   <header>
     <div class="brand">O-Skeuos Studio</div>
-    <a href="sms:18430000000" class="nav-link">(CONTACT)</a>
+    <a href="sms:8034633531" class="nav-link">(CONTACT)</a>
   </header>
 
   <div class="container">
@@ -296,7 +309,7 @@
 
     </div>
 
-    <!-- EXPANDABLE ACCORDIONS (REFERENCE STYLE) -->
+    <!-- EXPANDABLE ACCORDIONS -->
     <div class="section-title">Studio Specifications</div>
     
     <div class="accordion" id="acc-addons">
@@ -356,13 +369,24 @@
       <button class="cta-btn" onclick="openModal()">Lock In My 3-Day Build Slot</button>
 
       <div class="direct-link">
-        Questions? <a href="sms:18430000000">Text Designer Direct</a>
+        Questions? <a href="sms:8034633531">Text Designer Direct</a>
+      </div>
+    </div>
+
+    <!-- STUDIO HEADQUARTERS & MAP SECTION -->
+    <div class="section-title" style="margin-top: 40px;">Studio Headquarters</div>
+    <div class="hq-card">
+      <div style="margin-bottom: 6px;"><strong style="color:#fff;">Location:</strong> Florence, SC (Serving local vendors on-site)</div>
+      <div style="margin-bottom: 6px;"><strong style="color:#fff;">Direct Phone:</strong> <a href="tel:8034633531" style="color:var(--accent); text-decoration:none;">(803) 463-3531</a></div>
+      <div style="margin-bottom: 12px;"><strong style="color:#fff;">Email:</strong> <a href="mailto:oskeuos@gmail.com" style="color:var(--accent); text-decoration:none;">oskeuos@gmail.com</a></div>
+      <div style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 10px;">
+        📍 <strong>Florence Pecan Festival Zone:</strong> Active on-site deployment & support.
       </div>
     </div>
 
   </div>
 
-  <!-- SUCCESS MODAL -->
+  <!-- SUCCESS MODAL & AUTOMATED SMS REDIRECT -->
   <div class="modal-overlay" id="success-modal">
     <div class="modal-card">
       <h3>🎉 Build Slot Reserved</h3>
@@ -376,10 +400,10 @@
 
       <div style="text-align:left; margin-bottom:14px;">
         <label>Enter Cell Phone for Instant SMS Receipt & Onboarding Link:</label>
-        <input type="tel" id="vendor-phone" placeholder="(843) 555-0199">
+        <input type="tel" id="vendor-phone" placeholder="(803) 463-3531">
       </div>
 
-      <button class="cta-btn" onclick="confirmOrder()">Send Secure Checkout Link</button>
+      <button class="cta-btn" onclick="confirmOrder()">Send Automated SMS & Secure Link</button>
       <button class="close-modal" onclick="closeModal()">Back to Studio</button>
     </div>
   </div>
@@ -452,11 +476,15 @@
     function confirmOrder() {
       let phone = document.getElementById('vendor-phone').value;
       if (!phone) {
-        alert("Please enter your cell phone number so we can text your checkout link!");
+        alert("Please enter your cell phone number!");
         return;
       }
-      alert(`Secure checkout & onboarding link sent to ${phone}!\n\nYour 3-day build slot is officially locked.`);
-      closeModal();
+      
+      // Automated SMS trigger payload pre-populating message to designer/client
+      let msg = encodeURIComponent(`Hey! I just locked in my O-Skeuos build slot for the ${packageNames[selectedKey]} package. Total: ${document.getElementById('live-total').innerText}. Let's get started!`);
+      
+      // Trigger automated SMS handler to phone 8034633531
+      window.location.href = `sms:8034633531?body=${msg}`;
     }
 
     updateCalculator();
