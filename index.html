@@ -3,137 +3,277 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O-Skeuos Digital Studio | Local Florence Website Builder</title>
+  <title>O-Skeuos Digital Studio | Florence, SC</title>
   <style>
     :root {
-      --bg: #0d0f12;
-      --card-bg: #161920;
-      --border: #262b36;
+      --bg: #090a0f;
+      --card-bg: #12151c;
+      --card-hover: #181d26;
+      --border: #212631;
+      --border-focus: #ffb703;
       --accent: #ffb703;
       --accent-hover: #e0a100;
-      --text: #f1f5f9;
+      --text: #f8fafc;
       --text-muted: #94a3b8;
       --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.08);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; line-height: 1.5; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; line-height: 1.6; }
 
     header {
-      background: rgba(13, 15, 18, 0.95); backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border); padding: 14px; text-align: center;
-      position: sticky; top: 0; z-index: 100;
+      background: rgba(9, 10, 15, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .brand { font-size: 1.2rem; font-weight: 800; color: var(--accent); letter-spacing: 0.5px; }
-    .local-badge { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; display: block; margin-top: 2px; }
+    .brand { font-size: 1.15rem; font-weight: 800; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+    .local-badge { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; display: block; margin-top: 4px; }
 
-    .container { max-width: 600px; margin: 0 auto; padding: 16px; }
+    /* Personal Vendor Welcome Banner */
+    .welcome-banner {
+      background: rgba(255, 183, 3, 0.1);
+      border: 1px solid rgba(255, 183, 3, 0.3);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .container { max-width: 540px; margin: 0 auto; padding: 20px 16px; }
 
     .section-card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 16px; padding: 20px; margin-bottom: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      transition: border-color 0.2s ease;
     }
-    h2 { font-size: 1.1rem; margin-bottom: 12px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+    .section-card:hover { border-color: rgba(255, 183, 3, 0.2); }
+
+    h2 { font-size: 1.05rem; margin-bottom: 10px; color: var(--text); display: flex; align-items: center; gap: 10px; font-weight: 700; }
     .step-badge {
-      background: rgba(255, 183, 3, 0.15); color: var(--accent);
-      padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700;
+      background: rgba(255, 183, 3, 0.12); color: var(--accent);
+      padding: 3px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.5px;
     }
+    .hint { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; display: block; }
 
-    .form-group { margin-bottom: 14px; text-align: left; }
+    .form-group { margin-bottom: 12px; text-align: left; }
     label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
-    .hint { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; display: block; }
-    select, input {
-      width: 100%; background: #000; border: 1px solid var(--border);
-      color: var(--text); padding: 12px; border-radius: 8px; font-size: 0.9rem;
+    
+    select, input[type="tel"] {
+      width: 100%;
+      background: #050608;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+    select:focus, input[type="tel"]:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px rgba(255, 183, 3, 0.15);
     }
 
-    .addon-grid { display: grid; gap: 8px; }
+    .addon-grid { display: grid; gap: 10px; }
     .addon-item {
-      background: #000; border: 1px solid var(--border); padding: 12px 14px;
-      border-radius: 8px; display: flex; justify-content: space-between; align-items: center;
-      cursor: pointer; font-size: 0.85rem;
+      background: #050608;
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.2s;
     }
-    .addon-item input { width: auto; cursor: pointer; }
+    .addon-item:hover { background: var(--card-hover); border-color: var(--border-focus); }
+    .addon-item input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
 
-    /* Visual Preview Box */
+    /* Interactive Live Demo Preview Box */
     .preview-box {
-      background: #000; border: 1px solid var(--border); border-radius: 12px;
-      overflow: hidden; margin-top: 16px; text-align: left;
+      background: #050608;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 14px;
+      text-align: left;
     }
     .preview-header {
-      background: #1e2330; padding: 8px 12px; font-size: 0.75rem; font-weight: 700; color: var(--accent);
-      text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between;
+      background: #151922;
+      padding: 10px 14px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .preview-body { padding: 16px; }
-    .preview-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-    .preview-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; }
+    .preview-body { padding: 18px; }
+    .preview-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; color: #fff; }
+    .preview-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
+    
+    .demo-items-list {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 0.82rem;
+    }
+    .demo-item-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .demo-item-row:last-child { margin-bottom: 0; }
+    .demo-item-name { color: var(--text); font-weight: 600; }
+    .demo-item-price { color: var(--accent); font-weight: 700; }
+
     .preview-mockup-badge {
-      display: inline-block; background: rgba(16, 185, 129, 0.15); color: var(--success);
-      padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+      display: inline-block;
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
     }
 
     .pricing-banner {
-      background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success);
-      border-radius: 12px; padding: 16px; text-align: center; margin-top: 16px;
+      background: var(--success-bg);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      margin-top: 16px;
     }
-    .total-price { font-size: 1.8rem; font-weight: 800; color: var(--success); margin: 4px 0; }
-    .deposit-sub { font-size: 0.85rem; color: var(--text-muted); }
+    .pricing-label { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+    .total-price { font-size: 2.1rem; font-weight: 800; color: var(--success); margin: 6px 0; letter-spacing: -0.5px; }
+    .deposit-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; }
+    .deposit-sub strong { color: var(--text); font-weight: 700; }
+    .installment-sub { font-size: 0.78rem; color: var(--accent); font-weight: 600; }
 
     .cta-btn {
-      width: 100%; background: var(--accent); color: #000; border: none;
-      padding: 14px; border-radius: 8px; font-weight: 700; font-size: 1rem;
-      margin-top: 16px; cursor: pointer; transition: background 0.2s;
+      width: 100%;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 16px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 1rem;
+      margin-top: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(255, 183, 3, 0.25);
     }
-    .cta-btn:hover { background: var(--accent-hover); }
+    .cta-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
     .direct-contact {
-      text-align: center; margin-top: 12px; font-size: 0.8rem; color: var(--text-muted);
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
     }
-    .direct-contact a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .direct-contact a { color: var(--accent); text-decoration: none; font-weight: 700; }
 
-    /* High-Trust Success Modal */
     .modal-overlay {
-      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(10px); z-index: 1000; justify-content: center; align-items: center; padding: 16px;
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 6, 8, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
     }
     .modal-card {
-      background: var(--card-bg); border: 1px solid var(--accent);
-      border-radius: 16px; padding: 24px; max-width: 450px; width: 100%; text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 183, 3, 0.3);
+      border-radius: 20px;
+      padding: 26px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.8);
     }
-    .modal-card h3 { color: var(--accent); font-size: 1.2rem; margin-bottom: 8px; }
-    .modal-summary { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin: 16px 0; text-align: left; font-size: 0.85rem; }
-    .modal-summary div { margin-bottom: 4px; display: flex; justify-content: space-between; }
-    .close-modal { background: var(--border); color: var(--text); border: none; padding: 8px 16px; border-radius: 6px; margin-top: 12px; cursor: pointer; }
+    .modal-card h3 { color: var(--accent); font-size: 1.3rem; margin-bottom: 6px; font-weight: 800; }
+    .modal-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
+    
+    .modal-summary {
+      background: #050608;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin: 16px 0;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    .modal-summary div { margin-bottom: 6px; display: flex; justify-content: space-between; }
+    .modal-summary span { color: var(--text-muted); }
+    .modal-summary strong { color: var(--text); }
+
+    .close-modal {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="brand">O-SKEUOS DIGITAL STUDIO</div>
-    <span class="local-badge">📍 Florence, SC • Independent Web & Digital Infrastructure Studio</span>
+    <div class="brand">O-Skeuos Digital Studio</div>
+    <span class="local-badge">📍 Florence, SC • Custom Web & Digital Infrastructure</span>
   </header>
 
   <div class="container">
 
-    <!-- STEP 1: FOUNDATION -->
+    <div class="welcome-banner">
+      👋 Florence Pecan Fest Vendor? Test your live ordering blueprint below!
+    </div>
+
+    <!-- STEP 1: BUSINESS TYPE DEMO SELECTOR -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 1</span> Business Type</h2>
-      <span class="hint">Select the style that matches your festival booth or local shop.</span>
+      <h2><span class="step-badge">STEP 1</span> Select Industry Demo</h2>
+      <span class="hint">Choose your booth category to view pre-loaded sample content:</span>
       <div class="form-group">
         <select id="template-select" onchange="updateCalculator()">
-          <option value="landing">Simple Lead Page (Quick contact & info page)</option>
-          <option value="food_express" selected>Festival Express: Online Shop & Menu (Food & Goods)</option>
-          <option value="service_engine">Service Quote Engine (For contractors, cleaning, trades)</option>
-          <option value="custom_portal">Full Custom Portal (Advanced multi-page setup)</option>
+          <option value="food_express" selected>Taco Truck & Street Food Demo ($500 Base)</option>
+          <option value="bakery_demo">Artisan Pecan & Bakery Demo ($500 Base)</option>
+          <option value="service_engine">Home Service & Trade Quote Demo ($1,200 Base)</option>
+          <option value="landing">Simple Lead Capture Page ($350 Base)</option>
         </select>
       </div>
     </div>
 
-    <!-- STEP 2: ADD-ONS -->
+    <!-- STEP 2: FEATURES -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 2</span> Choose Features</h2>
-      <span class="hint">Select what you want your site to do.</span>
+      <h2><span class="step-badge">STEP 2</span> Choose Features</h2>
+      <span class="hint">Select what you want your customers to do online:</span>
       <div class="addon-grid">
         <label class="addon-item">
           <span>🧮 Instant Price Estimator Engine</span>
@@ -154,40 +294,54 @@
       </div>
     </div>
 
-    <!-- STEP 3: SPEED -->
+    <!-- STEP 3: SPEED & PAYMENT PLAN -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 3</span> Turnaround Window</h2>
+      <h2><span class="step-badge">STEP 3</span> Turnaround & Payment Structure</h2>
       <div class="form-group">
+        <label>Select Build Queue Speed:</label>
         <select id="speed-select" onchange="updateCalculator()">
           <option value="0">Standard Queue (5–7 Business Days)</option>
           <option value="150" selected>3-Day Expedited Rush (Pecan Fest Special)</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-top:12px;">
+        <label>Payment Structure Preference:</label>
+        <select id="payment-plan-select" onchange="updateCalculator()">
+          <option value="split" selected>Standard 50% Upfront / 50% at Launch</option>
+          <option value="installments">3-Part Installments ($285/stage)</option>
         </select>
       </div>
     </div>
 
     <!-- STEP 4: PREVIEW & PRICING -->
     <div class="section-card">
-      <h2><span class="step-badge">Step 4</span> Live Blueprint Estimate</h2>
+      <h2><span class="step-badge">STEP 4</span> Live Blueprint Estimate</h2>
       
       <div class="preview-box">
         <div class="preview-header">
-          <span>Live Layout Preview</span>
+          <span>Live Demo Preview</span>
           <span style="color:var(--success);">● Active</span>
         </div>
         <div class="preview-body">
-          <div class="preview-title" id="preview-title-text">Festival Express: Online Shop & Menu</div>
-          <div class="preview-desc" id="preview-sub-text">Mobile-friendly product grid where festival goers can browse goods and place re-orders instantly.</div>
+          <div class="preview-title" id="preview-title-text">The Rolling Taco - Festival Express</div>
+          <div class="preview-desc" id="preview-sub-text">Skip the line. Order street tacos and horchata right from your phone for instant festival pickup.</div>
+          
+          <div class="demo-items-list" id="demo-items-box">
+            <!-- Dynamic sample items inject here -->
+          </div>
+
           <div class="preview-mockup-badge" id="preview-badge">✓ Mobile Ordering Ready</div>
         </div>
       </div>
 
       <div class="pricing-banner">
-        <label style="color:var(--text); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px;">Total Project Investment</label>
+        <div class="pricing-label">Total Project Investment</div>
         <div class="total-price" id="live-total-price">$925.00</div>
         <div class="deposit-sub" id="live-deposit-text">Required Upfront Deposit (50%): <strong>$462.50</strong></div>
+        <div class="installment-sub" id="live-installment-text">Or 3 installments of $308.33</div>
       </div>
 
-      <button class="cta-btn" onclick="openModal()">Lock In My Build & Reserve Slot</button>
+      <button class="cta-btn" onclick="openModal()">Lock In My Build Slot</button>
 
       <div class="direct-contact">
         Prefer to talk first? <a href="sms:18430000000">Text Designer Direct</a>
@@ -196,24 +350,24 @@
 
   </div>
 
-  <!-- SUCCESS / LOCK-IN MODAL OVERLAY -->
+  <!-- SUCCESS MODAL -->
   <div class="modal-overlay" id="success-modal">
     <div class="modal-card">
       <h3>🎉 Blueprint Reserved!</h3>
-      <p style="font-size:0.85rem; color:var(--text-muted);">Your custom O-Skeuos build slot is reserved for 24 hours.</p>
+      <div class="modal-sub">Your custom O-Skeuos 3-day build slot is reserved.</div>
 
       <div class="modal-summary">
-        <div><span>Selected Package:</span> <strong id="modal-pkg">Festival Express</strong></div>
+        <div><span>Selected Package:</span> <strong id="modal-pkg">Taco Truck Demo</strong></div>
         <div><span>Total Investment:</span> <strong id="modal-total">$925.00</strong></div>
-        <div><span>50% Deposit Due:</span> <strong id="modal-deposit" style="color:var(--success);">$462.50</strong></div>
+        <div><span>Amount Due Today:</span> <strong id="modal-deposit" style="color:var(--success);">$462.50</strong></div>
       </div>
 
       <div class="form-group">
-        <label style="text-align:left;">Enter your mobile phone number for instant SMS receipt & onboarding link:</label>
+        <label style="text-align:left;">Enter your cell phone number for instant SMS receipt & onboarding checklist:</label>
         <input type="tel" id="vendor-phone" placeholder="(843) 555-0199">
       </div>
 
-      <button class="cta-btn" onclick="confirmDeposit()">Send Me Deposit Invoice & Setup Doc</button>
+      <button class="cta-btn" style="margin-top:10px;" onclick="confirmDeposit()">Send Invoice & Setup Doc</button>
       <button class="close-modal" onclick="closeModal()">Back to Builder</button>
     </div>
   </div>
@@ -222,35 +376,89 @@
     const basePrices = {
       landing: 350,
       food_express: 500,
-      service_engine: 1200,
-      custom_portal: 2000
+      bakery_demo: 500,
+      service_engine: 1200
     };
 
     const templateMeta = {
-      landing: { title: "Simple Lead Capture Page", desc: "Clean mobile layout with direct phone tap and contact form for local clients.", badge: "✓ Fast 1-Page Setup" },
-      food_express: { title: "Festival Express: Online Shop & Menu", desc: "Mobile-friendly product grid where festival goers can browse goods and place re-orders instantly.", badge: "✓ Mobile Ordering Ready" },
-      service_engine: { title: "Service Quote Engine", desc: "Interactive estimator where customers select project size and get instant price quotes.", badge: "✓ Automated Lead Capture" },
-      custom_portal: { title: "Full Custom Portal", desc: "Comprehensive web presence with custom databases and tailored booking workflows.", badge: "✓ Enterprise Grade" }
+      food_express: {
+        title: "The Rolling Taco - Mobile Ordering",
+        desc: "Skip the line! Order fresh street tacos and drinks directly from your phone for instant booth pickup.",
+        badge: "✓ Mobile Ordering Ready",
+        items: [
+          { name: "Carne Asada Tacos (3x)", price: "$12.00" },
+          { name: "Al Pastor Torta", price: "$11.50" },
+          { name: "Chips, Guac & Horchata", price: "$7.50" }
+        ]
+      },
+      bakery_demo: {
+        title: "Southern Roots Pecan & Bakery",
+        desc: "Handcrafted cinnamon rolls, spiced pecans, and baked treats made right here in Florence, SC.",
+        badge: "✓ Express Catalog Ready",
+        items: [
+          { name: "Glazed Cinnamon Roll", price: "$5.00" },
+          { name: "Spiced Pecan Bag (8oz)", price: "$12.00" },
+          { name: "Southern Pecan Tart", price: "$6.50" }
+        ]
+      },
+      service_engine: {
+        title: "Elite Florence Property Services",
+        desc: "Instant online quote generator for pressure washing, lawn care, and home cleaning.",
+        badge: "✓ Lead Capture Estimator",
+        items: [
+          { name: "Full Home Pressure Wash", price: "Est. $250" },
+          { name: "Lawn Mowing & Edging", price: "Est. $65" },
+          { name: "Deep Window Cleaning", price: "Est. $110" }
+        ]
+      },
+      landing: {
+        title: "Simple Local Business Lead Page",
+        desc: "Clean 1-page mobile presence with direct phone dial, photo gallery, and Google Map routing.",
+        badge: "✓ Fast 1-Page Setup",
+        items: [
+          { name: "Direct Tap-to-Call Button", price: "Included" },
+          { name: "Photo & Gallery Display", price: "Included" },
+          { name: "Google Maps Location", price: "Included" }
+        ]
+      }
     };
 
     function updateCalculator() {
       let templateKey = document.getElementById('template-select').value;
       let total = basePrices[templateKey] || 500;
 
-      document.getElementById('preview-title-text').innerText = templateMeta[templateKey].title;
-      document.getElementById('preview-sub-text').innerText = templateMeta[templateKey].desc;
-      document.getElementById('preview-badge').innerText = templateMeta[templateKey].badge;
+      const meta = templateMeta[templateKey];
+      document.getElementById('preview-title-text').innerText = meta.title;
+      document.getElementById('preview-sub-text').innerText = meta.desc;
+      document.getElementById('preview-badge').innerText = meta.badge;
 
+      // Populate pre-loaded demo items
+      let itemsHtml = "";
+      meta.items.forEach(item => {
+        itemsHtml += `<div class="demo-item-row"><span class="demo-item-name">${item.name}</span><span class="demo-item-price">${item.price}</span></div>`;
+      });
+      document.getElementById('demo-items-box').innerHTML = itemsHtml;
+
+      // Sum add-ons
       const addOns = document.querySelectorAll('.addon-checkbox:checked');
       addOns.forEach(addon => { total += parseFloat(addon.value); });
 
       let rushFee = parseFloat(document.getElementById('speed-select').value) || 0;
       total += rushFee;
 
+      let planType = document.getElementById('payment-plan-select').value;
       let deposit = total / 2;
+      let installment = total / 3;
 
       document.getElementById('live-total-price').innerText = `$${total.toFixed(2)}`;
-      document.getElementById('live-deposit-text').innerHTML = `Required Upfront Deposit (50%): <strong>$${deposit.toFixed(2)}</strong>`;
+      
+      if (planType === 'installments') {
+        document.getElementById('live-deposit-text').innerHTML = `1st Installment Due Today: <strong>$${installment.toFixed(2)}</strong>`;
+        document.getElementById('live-installment-text').innerText = `Followed by 2 payments of $${installment.toFixed(2)}`;
+      } else {
+        document.getElementById('live-deposit-text').innerHTML = `Required Upfront Deposit (50%): <strong>$${deposit.toFixed(2)}</strong>`;
+        document.getElementById('live-installment-text').innerText = `Or 3 installments of $${installment.toFixed(2)}`;
+      }
     }
 
     function openModal() {
@@ -271,7 +479,7 @@
         alert("Please enter your phone number so we can text your invoice!");
         return;
       }
-      alert(`Receipt sent to ${phone}!\n\nYour 3-day build slot is officially reserved. Check your text messages for the deposit invoice link.`);
+      alert(`Receipt sent to ${phone}!\n\nYour 3-day build slot is officially reserved. Check your text messages for the setup checklist.`);
       closeModal();
     }
 
