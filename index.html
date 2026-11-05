@@ -60,45 +60,6 @@
       line-height: 1.6;
     }
 
-    /* Live Animated Glass Emblem Showcase */
-    .glass-emblem-box {
-      width: 100%;
-      height: 200px;
-      background: radial-gradient(circle at center, #161922 0%, #000000 85%);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 32px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: inset 0 0 40px rgba(255,255,255,0.03);
-    }
-    .glass-logo {
-      font-size: 3.8rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, #ffffff 0%, #475569 50%, #f59e0b 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -2px;
-      animation: pulseGlow 4s ease-in-out infinite alternate;
-    }
-    @keyframes pulseGlow {
-      0% { filter: drop-shadow(0 5px 15px rgba(245, 158, 11, 0.15)); }
-      100% { filter: drop-shadow(0 10px 25px rgba(245, 158, 11, 0.4)); }
-    }
-    .local-indicator {
-      position: absolute;
-      bottom: 12px;
-      left: 16px;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 700;
-    }
-
     /* Architectural Section Headers */
     .section-category {
       font-size: 0.75rem;
@@ -106,6 +67,7 @@
       letter-spacing: 2px;
       color: var(--accent);
       margin-bottom: 12px;
+      margin-top: 24px;
       font-weight: 800;
       display: flex;
       align-items: center;
@@ -132,7 +94,8 @@
     .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
     .card-title { font-size: 1rem; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
     .card-price { font-size: 1.05rem; font-weight: 900; color: var(--accent); }
-    .card-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
+    .card-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5; }
+    .card-clarity { font-size: 0.78rem; color: #cbd5e1; background: rgba(255,255,255,0.03); border-left: 2px solid var(--accent); padding: 8px 10px; border-radius: 0 8px 8px 0; margin-bottom: 12px; }
     
     .tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .tag { background: #151821; border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px; font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
@@ -164,7 +127,13 @@
     .accordion.open .accordion-content { display: block; padding-top: 16px; }
     .accordion-icon { font-size: 1.1rem; color: var(--accent); font-weight: 900; }
 
-    /* Form Elements */
+    /* Form Elements & Specifications Descriptions */
+    .spec-description {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
     .addon-item {
       display: flex; justify-content: space-between; align-items: center;
       padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; font-weight: 600;
@@ -259,13 +228,7 @@
       <p class="hero-subtitle">We remove friction, limitation, and rigidity from local commerce. Built right here in Florence, SC.</p>
     </div>
 
-    <!-- LIVE ANIMATED GLASS EMBLEM HERO -->
-    <div class="glass-emblem-box">
-      <div class="glass-logo">OS</div>
-      <div class="local-indicator">Florence, SC • Studio Edition</div>
-    </div>
-
-    <!-- PORTFOLIO / BLUEPRINTS -->
+    <!-- PORTFOLIO / BLUEPRINTS WITH CLEAR DESCRIPTIONS -->
     <div class="section-category">01 // Select Blueprint</div>
     <div class="portfolio-grid">
       
@@ -275,6 +238,7 @@
           <div class="card-price">$500</div>
         </div>
         <div class="card-desc">Mobile ordering grid to eliminate booth lines and take instant payments.</div>
+        <div class="card-clarity">👉 <strong>What this means:</strong> Customers scan your QR code at your booth, browse your items/menu on their phone, and pay instantly so your physical line keeps moving fast.</div>
         <div class="tags">
           <span class="tag">Mobile Menu</span>
           <span class="tag">Instant Cart</span>
@@ -288,6 +252,7 @@
           <div class="card-price">$500</div>
         </div>
         <div class="card-desc">Showcase handmade goods and secure advance pickup box orders.</div>
+        <div class="card-clarity">👉 <strong>What this means:</strong> Allows customers to reserve boxes of baked goods ahead of time online with a deposit so you sell out before you even arrive.</div>
         <div class="tags">
           <span class="tag">Pre-Orders</span>
           <span class="tag">Catalog Grid</span>
@@ -301,6 +266,7 @@
           <div class="card-price">$1,200</div>
         </div>
         <div class="card-desc">Calculates instant project estimates and captures high-intent customer leads.</div>
+        <div class="card-clarity">👉 <strong>What this means:</strong> For service pros (cleaners, contractors). Customers plug in their project details on your site, and the calculator instantly gives them an estimate and locks in their contact info for you.</div>
         <div class="tags">
           <span class="tag">Dynamic Math</span>
           <span class="tag">Lead Capture</span>
@@ -314,6 +280,7 @@
           <div class="card-price">$350</div>
         </div>
         <div class="card-desc">Clean 1-page presence with direct phone dial and map integration.</div>
+        <div class="card-clarity">👉 <strong>What this means:</strong> A lightning-fast digital business card with a direct "Tap-to-Call" button and Google Map directions to your shop or setup.</div>
         <div class="tags">
           <span class="tag">Tap-to-Call</span>
           <span class="tag">Map Link</span>
@@ -323,7 +290,7 @@
 
     </div>
 
-    <!-- ACCORDIONS -->
+    <!-- ACCORDIONS WITH SPECIFICATION CLARITY -->
     <div class="section-category">02 // Studio Specifications</div>
     
     <div class="accordion" id="acc-addons">
@@ -332,20 +299,37 @@
         <span class="accordion-icon">▾</span>
       </div>
       <div class="accordion-content">
+        <div class="spec-description">Select optional upgrades to tailor your custom digital infrastructure:</div>
+        
         <label class="addon-item">
-          <span>🧮 Instant Price Estimator Engine</span>
+          <div>
+            <span>🧮 Instant Price Estimator Engine</span>
+            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: normal;">Adds interactive math logic for custom quote calculation.</div>
+          </div>
           <input type="checkbox" class="addon-checkbox" value="150" checked onchange="updateCalculator()">
         </label>
+        
         <label class="addon-item">
-          <span>💳 Secure Stripe / Apple Pay Checkout</span>
+          <div>
+            <span>💳 Secure Stripe / Apple Pay Checkout</span>
+            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: normal;">Enables direct credit card & mobile wallet transactions.</div>
+          </div>
           <input type="checkbox" class="addon-checkbox" value="200" checked onchange="updateCalculator()">
         </label>
+        
         <label class="addon-item">
-          <span>⭐ Customer Reviews & Trust Badges</span>
+          <div>
+            <span>⭐ Customer Reviews & Trust Badges</span>
+            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: normal;">Displays social proof and local credibility markers.</div>
+          </div>
           <input type="checkbox" class="addon-checkbox" value="75" onchange="updateCalculator()">
         </label>
+        
         <label class="addon-item">
-          <span>🎨 Premium Media Banner Header</span>
+          <div>
+            <span>🎨 Premium Media Banner Header</span>
+            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: normal;">Adds high-impact imagery and brand visual framing.</div>
+          </div>
           <input type="checkbox" class="addon-checkbox" value="100" onchange="updateCalculator()">
         </label>
       </div>
@@ -357,18 +341,19 @@
         <span class="accordion-icon">▾</span>
       </div>
       <div class="accordion-content">
+        <div class="spec-description">Choose how fast you want your site live and how you prefer to invest:</div>
         <div style="margin-bottom: 14px;">
           <label style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted);">Build Timeline:</label>
           <select id="speed-select" onchange="updateCalculator()">
             <option value="0">Standard Queue (5–7 Business Days)</option>
-            <option value="150" selected>3-Day Expedited Rush (Pecan Fest Special)</option>
+            <option value="150" selected>3-Day Expedited Rush (Festival Special)</option>
           </select>
         </div>
         <div>
           <label style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted);">Payment Plan Option:</label>
           <select id="plan-select" onchange="updateCalculator()">
             <option value="split" selected>Standard 50% Deposit / 50% on Launch</option>
-            <option value="installments">3-Part Micro-Installments</option>
+            <option value="installments">3-Part Micro-Installments (Bite-sized chunks)</option>
           </select>
         </div>
       </div>
@@ -390,12 +375,9 @@
     <!-- STUDIO HEADQUARTERS -->
     <div class="section-category" style="margin-top: 36px;">03 // Studio Headquarters</div>
     <div class="hq-card">
-      <div style="margin-bottom: 6px;"><strong style="color:#fff;">Location:</strong> Florence, SC (Serving local vendors on-site)</div>
+      <div style="margin-bottom: 6px;"><strong style="color:#fff;">Location:</strong> Florence, SC</div>
       <div style="margin-bottom: 6px;"><strong style="color:#fff;">Direct Phone:</strong> <a href="tel:8034633531" style="color:var(--accent); text-decoration:none;">(803) 463-3531</a></div>
-      <div style="margin-bottom: 10px;"><strong style="color:#fff;">Email:</strong> <a href="mailto:oskeuos@gmail.com" style="color:var(--accent); text-decoration:none;">oskeuos@gmail.com</a></div>
-      <div style="font-size: 0.78rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 10px;">
-        📍 <strong>Florence Pecan Festival Zone:</strong> Active on-site deployment & support.
-      </div>
+      <div style="margin-bottom: 6px;"><strong style="color:#fff;">Email:</strong> <a href="mailto:oskeuos@gmail.com" style="color:var(--accent); text-decoration:none;">oskeuos@gmail.com</a></div>
     </div>
 
   </div>
