@@ -7,9 +7,9 @@
   <style>
     :root {
       --bg: #000000;
-      --card-bg: #0a0b0e;
-      --border: #222630;
-      --border-hover: #f59e0b;
+      --card-bg: #0c0d12;
+      --border: #1f2430;
+      --border-active: #f59e0b;
       --accent: #f59e0b;
       --accent-hover: #d97706;
       --text: #ffffff;
@@ -19,15 +19,15 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 100px; line-height: 1.5; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 100px; line-height: 1.6; }
 
     /* Editorial Header */
     header {
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
-      padding: 20px 24px;
+      padding: 18px 24px;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -35,102 +35,114 @@
       justify-content: space-between;
       align-items: center;
     }
-    .brand { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-transform: uppercase; }
-    .nav-link { font-size: 0.8rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 1px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; }
+    .brand { font-size: 1.1rem; font-weight: 900; color: #fff; letter-spacing: -0.5px; text-transform: uppercase; }
+    .nav-link { font-size: 0.75rem; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 1.5px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; }
 
-    .container { max-width: 600px; margin: 0 auto; padding: 24px 20px; }
+    .container { max-width: 580px; margin: 0 auto; padding: 24px 20px; }
 
-    /* Hero Section */
+    /* Editorial Hero */
     .hero {
-      padding: 30px 0 20px 0;
+      padding: 36px 0 24px 0;
       border-bottom: 1px solid var(--border);
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
     .hero-title {
-      font-size: 2.2rem;
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
+      font-size: 2.1rem;
+      font-weight: 900;
+      line-height: 1.12;
+      letter-spacing: -1.2px;
+      margin-bottom: 14px;
       color: #fff;
     }
     .hero-subtitle {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
-      margin-bottom: 24px;
       line-height: 1.6;
     }
 
-    /* 3D Glass Emblem Mockup Container */
+    /* Live Animated Glass Emblem Showcase */
     .glass-emblem-box {
       width: 100%;
-      height: 220px;
-      background: radial-gradient(circle at center, #1a1d26 0%, #000000 80%);
+      height: 200px;
+      background: radial-gradient(circle at center, #161922 0%, #000000 85%);
       border: 1px solid var(--border);
       border-radius: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 32px;
       position: relative;
       overflow: hidden;
+      box-shadow: inset 0 0 40px rgba(255,255,255,0.03);
     }
     .glass-logo {
-      font-size: 4rem;
+      font-size: 3.8rem;
       font-weight: 900;
-      background: linear-gradient(135deg, #ffffff 0%, #64748b 50%, #f59e0b 100%);
+      background: linear-gradient(135deg, #ffffff 0%, #475569 50%, #f59e0b 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -2px;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));
+      animation: pulseGlow 4s ease-in-out infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { filter: drop-shadow(0 5px 15px rgba(245, 158, 11, 0.15)); }
+      100% { filter: drop-shadow(0 10px 25px rgba(245, 158, 11, 0.4)); }
     }
     .local-indicator {
       position: absolute;
       bottom: 12px;
       left: 16px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* Section Typography */
-    .section-title {
-      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: var(--text-muted);
-      margin-bottom: 14px;
       font-weight: 700;
     }
 
-    /* Editorial Portfolio Cards */
-    .portfolio-grid { display: grid; gap: 14px; margin-bottom: 30px; }
+    /* Architectural Section Headers */
+    .section-category {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Portfolio Cards Grid */
+    .portfolio-grid { display: grid; gap: 12px; margin-bottom: 32px; }
     .portfolio-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 20px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .portfolio-card:hover { border-color: rgba(245, 158, 11, 0.5); }
-    .portfolio-card.selected { border-color: var(--accent); background: #12151c; box-shadow: 0 0 0 1px var(--accent); }
+    .portfolio-card:hover { border-color: rgba(245, 158, 11, 0.4); transform: translateY(-1px); }
+    .portfolio-card.selected { 
+      border-color: var(--border-active); 
+      background: #11131c; 
+      box-shadow: 0 0 0 1px var(--border-active), 0 8px 30px rgba(245, 158, 11, 0.1); 
+    }
     
-    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-    .card-title { font-size: 1.05rem; font-weight: 700; color: #fff; }
-    .card-price { font-size: 1.1rem; font-weight: 800; color: var(--accent); }
-    .card-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+    .card-title { font-size: 1rem; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
+    .card-price { font-size: 1.05rem; font-weight: 900; color: var(--accent); }
+    .card-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
     
     .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { background: #151821; border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
+    .tag { background: #151821; border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px; font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
 
     /* Expandable Accordions */
     .accordion {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 16px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       overflow: hidden;
     }
     .accordion-header {
@@ -139,30 +151,31 @@
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
-      font-weight: 700;
-      font-size: 0.95rem;
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: -0.2px;
     }
     .accordion-content {
       padding: 0 20px 20px 20px;
       display: none;
       border-top: 1px solid var(--border);
-      background: #050608;
+      background: #060709;
     }
     .accordion.open .accordion-content { display: block; padding-top: 16px; }
-    .accordion-icon { font-size: 1.2rem; color: var(--accent); font-weight: 800; }
+    .accordion-icon { font-size: 1.1rem; color: var(--accent); font-weight: 900; }
 
     /* Form Elements */
     .addon-item {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem;
+      padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; font-weight: 600;
     }
     .addon-item:last-child { border-bottom: none; }
     .addon-item input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
 
     select {
       width: 100%; background: #000; border: 1px solid var(--border);
-      color: #fff; padding: 14px; border-radius: 10px; font-size: 0.95rem; outline: none;
-      margin-top: 8px;
+      color: #fff; padding: 14px; border-radius: 10px; font-size: 0.9rem; outline: none;
+      margin-top: 6px; font-weight: 600;
     }
     select:focus { border-color: var(--accent); }
 
@@ -170,52 +183,53 @@
     .summary-box {
       background: var(--success-bg);
       border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 18px;
+      border-radius: 20px;
       padding: 24px;
       text-align: center;
-      margin-top: 30px;
+      margin-top: 28px;
     }
-    .summary-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-    .total-price { font-size: 2.4rem; font-weight: 900; color: var(--success); margin: 6px 0; letter-spacing: -1px; }
-    .terms { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; }
-    .terms strong { color: #fff; }
+    .summary-label { font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; }
+    .total-price { font-size: 2.4rem; font-weight: 900; color: var(--success); margin: 6px 0; letter-spacing: -1.5px; }
+    .terms { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px; font-weight: 500; }
+    .terms strong { color: #fff; font-weight: 700; }
 
     .cta-btn {
       width: 100%; background: var(--accent); color: #000; border: none;
-      padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1rem;
-      cursor: pointer; transition: background 0.2s;
+      padding: 16px; border-radius: 12px; font-weight: 900; font-size: 0.95rem;
+      cursor: pointer; transition: background 0.2s, transform 0.1s;
+      text-transform: uppercase; letter-spacing: 0.5px;
     }
-    .cta-btn:hover { background: var(--accent-hover); }
+    .cta-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
-    .direct-link { text-align: center; margin-top: 16px; font-size: 0.85rem; color: var(--text-muted); }
+    .direct-link { text-align: center; margin-top: 16px; font-size: 0.82rem; color: var(--text-muted); }
     .direct-link a { color: var(--accent); text-decoration: none; font-weight: 700; }
 
-    /* Headquarters / Contact Section */
+    /* Headquarters Card */
     .hq-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 20px;
-      margin-top: 40px;
-      font-size: 0.88rem;
+      margin-top: 36px;
+      font-size: 0.85rem;
       color: var(--text-muted);
     }
     .hq-card div { margin-bottom: 8px; }
     .hq-card strong { color: #fff; }
 
-    /* Modal Overlay */
+    /* Modal */
     .modal-overlay {
-      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(16px); z-index: 1000; justify-content: center; align-items: center; padding: 16px;
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(20px); z-index: 1000; justify-content: center; align-items: center; padding: 16px;
     }
     .modal-card {
       background: var(--card-bg); border: 1px solid var(--accent);
       border-radius: 20px; padding: 28px; max-width: 440px; width: 100%; text-align: center;
     }
-    .modal-card h3 { color: #fff; font-size: 1.3rem; margin-bottom: 6px; font-weight: 800; }
+    .modal-card h3 { color: #fff; font-size: 1.25rem; margin-bottom: 6px; font-weight: 900; }
     .modal-receipt {
       background: #000; border: 1px solid var(--border);
-      border-radius: 12px; padding: 16px; margin: 16px 0; text-align: left; font-size: 0.88rem;
+      border-radius: 12px; padding: 16px; margin: 16px 0; text-align: left; font-size: 0.85rem;
     }
     .modal-receipt div { margin-bottom: 8px; display: flex; justify-content: space-between; }
     .modal-receipt span { color: var(--text-muted); }
@@ -223,18 +237,18 @@
 
     input[type="tel"] {
       width: 100%; background: #000; border: 1px solid var(--border);
-      color: #fff; padding: 14px; border-radius: 10px; font-size: 0.95rem; outline: none; margin-top: 8px;
+      color: #fff; padding: 14px; border-radius: 10px; font-size: 0.95rem; outline: none; margin-top: 6px;
     }
     input[type="tel"]:focus { border-color: var(--accent); }
 
-    .close-modal { background: transparent; color: var(--text-muted); border: none; padding: 8px; margin-top: 10px; cursor: pointer; font-weight: 600; }
+    .close-modal { background: transparent; color: var(--text-muted); border: none; padding: 8px; margin-top: 10px; cursor: pointer; font-weight: 700; }
   </style>
 </head>
 <body>
 
   <header>
     <div class="brand">O-Skeuos Studio</div>
-    <a href="sms:8034633531" class="nav-link">(CONTACT)</a>
+    <a href="sms:8034633531" class="nav-link">Contact</a>
   </header>
 
   <div class="container">
@@ -245,19 +259,19 @@
       <p class="hero-subtitle">We remove friction, limitation, and rigidity from local commerce. Built right here in Florence, SC.</p>
     </div>
 
-    <!-- 3D GLASS LOGO EMBLEM HERO -->
+    <!-- LIVE ANIMATED GLASS EMBLEM HERO -->
     <div class="glass-emblem-box">
       <div class="glass-logo">OS</div>
-      <div class="local-indicator">Florence, SC • Est. Studio</div>
+      <div class="local-indicator">Florence, SC • Studio Edition</div>
     </div>
 
     <!-- PORTFOLIO / BLUEPRINTS -->
-    <div class="section-title">Select Blueprint</div>
+    <div class="section-category">01 // Select Blueprint</div>
     <div class="portfolio-grid">
       
       <div class="portfolio-card selected" id="card-food_express" onclick="selectTemplate('food_express', 500)">
         <div class="card-top">
-          <div class="card-title">Festival Express: Food & Retail Catalog</div>
+          <div class="card-title">Festival Express: Food & Retail</div>
           <div class="card-price">$500</div>
         </div>
         <div class="card-desc">Mobile ordering grid to eliminate booth lines and take instant payments.</div>
@@ -270,20 +284,20 @@
 
       <div class="portfolio-card" id="card-bakery_demo" onclick="selectTemplate('bakery_demo', 500)">
         <div class="card-top">
-          <div class="card-title">Artisan & Bakery Pre-Order Portal</div>
+          <div class="card-title">Artisan & Bakery Pre-Order</div>
           <div class="card-price">$500</div>
         </div>
         <div class="card-desc">Showcase handmade goods and secure advance pickup box orders.</div>
         <div class="tags">
           <span class="tag">Pre-Orders</span>
           <span class="tag">Catalog Grid</span>
-          <span class="tag">Pickup Scheduler</span>
+          <span class="tag">Scheduler</span>
         </div>
       </div>
 
       <div class="portfolio-card" id="card-service_engine" onclick="selectTemplate('service_engine', 1200)">
         <div class="card-top">
-          <div class="card-title">Interactive Service Quote Engine</div>
+          <div class="card-title">Interactive Quote Engine</div>
           <div class="card-price">$1,200</div>
         </div>
         <div class="card-desc">Calculates instant project estimates and captures high-intent customer leads.</div>
@@ -309,8 +323,8 @@
 
     </div>
 
-    <!-- EXPANDABLE ACCORDIONS -->
-    <div class="section-title">Studio Specifications</div>
+    <!-- ACCORDIONS -->
+    <div class="section-category">02 // Studio Specifications</div>
     
     <div class="accordion" id="acc-addons">
       <div class="accordion-header" onclick="toggleAccordion('acc-addons')">
@@ -344,14 +358,14 @@
       </div>
       <div class="accordion-content">
         <div style="margin-bottom: 14px;">
-          <label>Build Timeline:</label>
+          <label style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted);">Build Timeline:</label>
           <select id="speed-select" onchange="updateCalculator()">
             <option value="0">Standard Queue (5–7 Business Days)</option>
             <option value="150" selected>3-Day Expedited Rush (Pecan Fest Special)</option>
           </select>
         </div>
         <div>
-          <label>Payment Plan Option:</label>
+          <label style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted);">Payment Plan Option:</label>
           <select id="plan-select" onchange="updateCalculator()">
             <option value="split" selected>Standard 50% Deposit / 50% on Launch</option>
             <option value="installments">3-Part Micro-Installments</option>
@@ -366,31 +380,31 @@
       <div class="total-price" id="live-total">$925.00</div>
       <div class="terms" id="live-terms">Due Today (50% Deposit): <strong>$462.50</strong></div>
       
-      <button class="cta-btn" onclick="openModal()">Lock In My 3-Day Build Slot</button>
+      <button class="cta-btn" onclick="openModal()">Lock In 3-Day Build Slot</button>
 
       <div class="direct-link">
         Questions? <a href="sms:8034633531">Text Designer Direct</a>
       </div>
     </div>
 
-    <!-- STUDIO HEADQUARTERS & MAP SECTION -->
-    <div class="section-title" style="margin-top: 40px;">Studio Headquarters</div>
+    <!-- STUDIO HEADQUARTERS -->
+    <div class="section-category" style="margin-top: 36px;">03 // Studio Headquarters</div>
     <div class="hq-card">
       <div style="margin-bottom: 6px;"><strong style="color:#fff;">Location:</strong> Florence, SC (Serving local vendors on-site)</div>
       <div style="margin-bottom: 6px;"><strong style="color:#fff;">Direct Phone:</strong> <a href="tel:8034633531" style="color:var(--accent); text-decoration:none;">(803) 463-3531</a></div>
-      <div style="margin-bottom: 12px;"><strong style="color:#fff;">Email:</strong> <a href="mailto:oskeuos@gmail.com" style="color:var(--accent); text-decoration:none;">oskeuos@gmail.com</a></div>
-      <div style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 10px;">
+      <div style="margin-bottom: 10px;"><strong style="color:#fff;">Email:</strong> <a href="mailto:oskeuos@gmail.com" style="color:var(--accent); text-decoration:none;">oskeuos@gmail.com</a></div>
+      <div style="font-size: 0.78rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 10px;">
         📍 <strong>Florence Pecan Festival Zone:</strong> Active on-site deployment & support.
       </div>
     </div>
 
   </div>
 
-  <!-- SUCCESS MODAL & AUTOMATED SMS REDIRECT -->
+  <!-- SUCCESS MODAL -->
   <div class="modal-overlay" id="success-modal">
     <div class="modal-card">
       <h3>🎉 Build Slot Reserved</h3>
-      <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">Your project is locked into the O-Skeuos local queue.</div>
+      <div style="font-size:0.82rem; color:var(--text-muted); margin-bottom:14px;">Your project is locked into the O-Skeuos local queue.</div>
 
       <div class="modal-receipt">
         <div><span>Blueprint:</span> <strong id="rec-pkg">Festival Express</strong></div>
@@ -399,7 +413,7 @@
       </div>
 
       <div style="text-align:left; margin-bottom:14px;">
-        <label>Enter Cell Phone for Instant SMS Receipt & Onboarding Link:</label>
+        <label style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted);">Enter Cell Phone for Instant SMS Link:</label>
         <input type="tel" id="vendor-phone" placeholder="(803) 463-3531">
       </div>
 
@@ -415,7 +429,7 @@
     const packageNames = {
       food_express: 'Festival Express: Food & Retail',
       bakery_demo: 'Artisan & Bakery Pre-Order',
-      service_engine: 'Interactive Service Quote Engine',
+      service_engine: 'Interactive Quote Engine',
       landing: 'High-Impact Mobile Lead Page'
     };
 
@@ -480,10 +494,7 @@
         return;
       }
       
-      // Automated SMS trigger payload pre-populating message to designer/client
       let msg = encodeURIComponent(`Hey! I just locked in my O-Skeuos build slot for the ${packageNames[selectedKey]} package. Total: ${document.getElementById('live-total').innerText}. Let's get started!`);
-      
-      // Trigger automated SMS handler to phone 8034633531
       window.location.href = `sms:8034633531?body=${msg}`;
     }
 
