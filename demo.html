@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>O-Skeuos Live Ordering Demo</title>
+    <!-- Canvas Confetti Library for Pitch "Wow" Factor -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --bg-ios: #f2f2f7;
@@ -251,10 +253,30 @@
             font-weight: 700;
             cursor: pointer;
             text-align: center;
+            transition: background 0.2s;
         }
 
         .place-order-main-btn:active {
             transform: scale(0.98);
+        }
+
+        .post-order-actions {
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+
+        .go-to-kds-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
         }
 
         /* KDS VIEW SECTION */
@@ -266,10 +288,21 @@
         .kds-header {
             font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .kds-explainer {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.2rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border-left: 4px solid var(--accent);
+            line-height: 1.5;
         }
 
         .kds-ticket {
@@ -492,7 +525,11 @@
                 <span>Total Amount:</span>
                 <span id="cartViewTotal">$0.00</span>
             </div>
-            <button class="place-order-main-btn" onclick="executeCheckout()">Place Order →</button>
+            <button class="place-order-main-btn" id="placeOrderBtn" onclick="executeCheckout(event)">Place Order →</button>
+            
+            <div class="post-order-actions" id="postOrderActions">
+                <button class="go-to-kds-btn" onclick="switchView('kds')">👀 Open Live KDS Display →</button>
+            </div>
         </div>
     </div>
 
@@ -502,6 +539,11 @@
             <span>Kitchen Display (Live)</span>
             <span style="font-size: 0.85rem; color: var(--success);">● Connected</span>
         </div>
+        
+        <div class="kds-explainer">
+            <strong>⚡ Live KDS Infrastructure:</strong> Designed for high-volume crowds like the South Carolina Pecan Festival. Instead of shouted callouts or lost paper tickets, orders stream instantly from customer phones to the kitchen station. Modifiers like <em>"No Onions"</em> or custom flavor variants highlight automatically to eliminate remakes during peak rushes.
+        </div>
+
         <div id="kdsTicketContainer">
             <p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders. Place an order from the cart view!</p>
         </div>
@@ -621,6 +663,10 @@
                 cartNavBtn.style.display = 'none';
                 viewToggleBtn.textContent = 'Menu';
                 renderCartView();
+                // Reset button state when opening cart
+                document.getElementById('placeOrderBtn').textContent = 'Place Order →';
+                document.getElementById('placeOrderBtn').style.background = 'var(--success)';
+                document.getElementById('postOrderActions').style.display = 'none';
             } else if (view === 'kds') {
                 kdsView.style.display = 'block';
                 viewToggleBtn.textContent = 'Menu';
@@ -672,7 +718,7 @@
             renderCartView();
         }
 
-        function executeCheckout() {
+        function executeCheckout(event) {
             if (cart.length === 0) return;
 
             let newOrder = {
@@ -686,8 +732,22 @@
             updateCartCount();
             renderKDS();
 
-            alert("Order placed successfully! Sent to Kitchen Display.");
-            switchView('kds');
+            // Trigger Confetti from button position
+            const rect = event.target.getBoundingClientRect();
+            const x = (rect.left + rect.width / 2) / window.innerWidth;
+            const y = (rect.top + rect.height / 2) / window.innerHeight;
+            
+            confetti({
+                particleCount: 70,
+                spread: 60,
+                origin: { x: x, y: y }
+            });
+
+            // Update button state & reveal KDS link
+            const btn = document.getElementById('placeOrderBtn');
+            btn.textContent = 'Order Placed! ✓';
+            btn.style.background = '#27ae60';
+            document.getElementById('postOrderActions').style.display = 'block';
         }
 
         function getKDSGraphic(item) {
