@@ -2,333 +2,374 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O-Skeuos OS | Live Vendor Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>O-Skeuos Live Ordering Demo</title>
     <style>
         :root {
-            --bg-dark: #111111;
-            --bg-card: #1a1a1a;
-            --accent: #e67e22;
-            --accent-hover: #d35400;
-            --text-main: #ffffff;
-            --text-muted: #cccccc;
-            --border-color: #333333;
-            --success: #2ecc71;
+            --bg-ios: #f2f2f7;
+            --card-bg: #ffffff;
+            --text-primary: #0a1128;
+            --text-secondary: #6e6e73;
+            --accent: #4a90e2;       /* Carolina Blue Accent */
+            --accent-hover: #357abd;
+            --border: #c6c6c8;
+            --success: #34c759;
+            --header-dark: #0a1128;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            background-color: var(--bg-ios);
+            color: var(--text-primary);
+            padding-bottom: 100px;
         }
 
+        /* iOS Header */
         header {
-            background: var(--bg-card);
-            border-bottom: 2px solid var(--accent);
+            background: rgba(10, 17, 40, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
             padding: 1rem;
-            text-align: center;
-        }
-
-        .demo-badge {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 2px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            margin-bottom: 0.25rem;
-        }
-
-        h1 {
-            font-size: 1.4rem;
-        }
-
-        .tab-bar {
+            border-bottom: 1px solid #1f305e;
             display: flex;
-            background: #000;
-            border-bottom: 1px solid var(--border-color);
+            justify-content: space-between;
+            align-items: center;
+            color: white;
         }
 
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            background: transparent;
-            color: var(--text-muted);
+        header h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .view-toggle {
+            background: var(--accent);
             border: none;
-            font-weight: bold;
-            font-size: 0.9rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
             cursor: pointer;
-            text-align: center;
         }
 
-        .tab-btn.active {
-            color: var(--accent);
-            border-bottom: 3px solid var(--accent);
-            background: var(--bg-card);
-        }
-
-        .content-area {
-            flex: 1;
-            padding: 1rem;
-            max-width: 600px;
+        .container {
+            max-width: 500px;
             margin: 0 auto;
-            width: 100%;
+            padding: 1rem;
+        }
+
+        /* Menu Section Header */
+        .menu-section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 1.5rem 0 0.8rem 0.5rem;
+            color: var(--text-primary);
         }
 
         .menu-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            background: var(--card-bg);
+            border-radius: 12px;
             padding: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        .menu-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
+        .item-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
         }
 
-        .menu-info p {
+        .item-info p {
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
         }
 
-        .menu-price {
-            font-weight: bold;
+        .item-price {
+            font-size: 0.95rem;
+            font-weight: 600;
             color: var(--accent);
-            font-size: 1.1rem;
-            margin-top: 0.25rem;
         }
 
         .add-btn {
-            background: var(--accent);
-            color: white;
+            background: #eef5fc;
+            color: var(--accent);
             border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1.2rem;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
         }
 
-        .cart-bar {
-            position: sticky;
-            bottom: 1rem;
+        .add-btn:active {
+            transform: scale(0.92);
             background: var(--accent);
             color: white;
-            padding: 1rem;
-            border-radius: 8px;
+        }
+
+        /* Floating iOS Cart Bar */
+        .cart-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 460px;
+            background: var(--header-dark);
+            color: white;
+            border-radius: 24px;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             cursor: pointer;
+            transition: transform 0.2s;
         }
 
-        .kds-ticket {
-            background: var(--bg-card);
-            border-left: 4px solid var(--accent);
-            border-radius: 6px;
+        .cart-bar.hidden {
+            display: none;
+        }
+
+        .cart-left {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .cart-badge {
+            background: var(--accent);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* KDS View Overlay */
+        #kds-view {
+            display: none;
             padding: 1rem;
-            margin-bottom: 1rem;
         }
 
         .kds-header {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
             display: flex;
             justify-content: space-between;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
+            align-items: center;
         }
 
-        .kds-status {
-            color: var(--success);
-            font-size: 0.85rem;
-        }
-
-        .sms-toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ffffff;
-            color: #000000;
-            padding: 12px 20px;
+        .kds-ticket {
+            background: var(--card-bg);
+            border-left: 6px solid var(--accent);
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            display: none;
-            z-index: 1000;
-            width: 90%;
-            max-width: 400px;
-            font-size: 0.9rem;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .sms-header {
-            font-size: 0.75rem;
-            color: #666;
-            font-weight: bold;
-            margin-bottom: 4px;
-            display: flex;
-            justify-content: space-between;
+        .kds-ticket h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .kds-ticket ul {
+            list-style: none;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .kds-ticket li {
+            padding: 0.2rem 0;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .complete-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="demo-badge">Interactive Demo</div>
-        <h1>O-Skeuos Express ordering</h1>
+        <h1>O-Skeuos Demo App</h1>
+        <button class="view-toggle" onclick="toggleView()" id="viewToggleBtn">Switch to KDS</button>
     </header>
 
-    <div class="tab-bar">
-        <button class="tab-btn active" onclick="switchTab('customer')">📱 Customer View</button>
-        <button class="tab-btn" onclick="switchTab('kds')">👨‍🍳 Kitchen Screen</button>
-    </div>
-
-    <div class="content-area" id="customer-view">
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; text-align: center;">
-            Simulating customer phone view after scanning QR code:
-        </p>
+    <!-- CUSTOMER ORDERING VIEW -->
+    <div class="container" id="customerView">
+        <div class="menu-section-title">Festival Menu</div>
 
         <div class="menu-card">
-            <div class="menu-info">
-                <h3>Pulled Pork Sandwich</h3>
-                <p>Slow-smoked pork with homemade slaw</p>
-                <div class="menu-price">$12.00</div>
+            <div class="item-info">
+                <h3>Smash Burger Basket</h3>
+                <p>Double patty, American cheese, secret sauce.</p>
+                <div class="item-price">$12.00</div>
             </div>
-            <button class="add-btn" onclick="addOrder('Pulled Pork Sandwich', 12.00)">+ Add</button>
+            <button class="add-btn" onclick="addToOrder('Smash Burger Basket', 12.00)">+</button>
         </div>
 
         <div class="menu-card">
-            <div class="menu-info">
-                <h3>Smoked Mac & Cheese</h3>
-                <p>Four-cheese blend, topped with crispy onions</p>
-                <div class="menu-price">$6.00</div>
+            <div class="item-info">
+                <h3>Loaded Fries</h3>
+                <p>Cheddar, bacon bits, scallions, ranch drizzle.</p>
+                <div class="item-price">$8.50</div>
             </div>
-            <button class="add-btn" onclick="addOrder('Smoked Mac & Cheese', 6.00)">+ Add</button>
+            <button class="add-btn" onclick="addToOrder('Loaded Fries', 8.50)">+</button>
         </div>
 
         <div class="menu-card">
-            <div class="menu-info">
-                <h3>Southern Sweet Tea</h3>
-                <p>Freshly brewed 32oz cold cup</p>
-                <div class="menu-price">$4.00</div>
+            <div class="item-info">
+                <h3>Craft Lemonade</h3>
+                <p>Fresh squeezed daily with blackberry puree.</p>
+                <div class="item-price">$5.00</div>
             </div>
-            <button class="add-btn" onclick="addOrder('Southern Sweet Tea', 4.00)">+ Add</button>
-        </div>
-
-        <div class="cart-bar" id="cart-bar" style="display: none;" onclick="submitOrder()">
-            <span id="cart-count">0 items</span>
-            <span>Simulate Apple Pay Checkout ➔</span>
+            <button class="add-btn" onclick="addToOrder('Craft Lemonade', 5.00)">+</button>
         </div>
     </div>
 
-    <div class="content-area" id="kds-view" style="display: none;">
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; text-align: center;">
-            Simulating live kitchen queue (updates automatically when order is placed):
-        </p>
-        <div id="kds-list">
-            <div class="kds-ticket">
-                <div class="kds-header">
-                    <span>Order #101 • Marcus B.</span>
-                    <span class="kds-status">● Ready for Pickup</span>
-                </div>
-                <p style="font-size: 0.9rem; color: var(--text-muted);">1x Pulled Pork Sandwich, 1x Sweet Tea</p>
-            </div>
+    <!-- KITCHEN DISPLAY SYSTEM (KDS) VIEW -->
+    <div class="container" id="kds-view">
+        <div class="kds-header">
+            <span>Kitchen Display (Live)</span>
+            <span style="font-size: 0.85rem; color: var(--success);">● Connected</span>
+        </div>
+        <div id="kdsTicketContainer">
+            <p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders. Place an order from the customer view!</p>
         </div>
     </div>
 
-    <!-- Simulated SMS Notification -->
-    <div class="sms-toast" id="sms-toast">
-        <div class="sms-header">
-            <span>MESSAGES</span>
-            <span>Just now</span>
+    <!-- FLOATING CART CHECKOUT BAR -->
+    <div class="cart-bar hidden" id="cartBar" onclick="checkoutOrder()">
+        <div class="cart-left">
+            <div class="cart-badge" id="cartCount">0</div>
+            <span style="font-weight: 600;" id="cartTotal">$0.00</span>
         </div>
-        <strong>O-Skeuos Alerts:</strong> Order #102 is ready! Please step up to the pickup window.
+        <span style="font-weight: 600; color: var(--accent);">Place Order →</span>
     </div>
 
     <script>
-        let itemCount = 0;
-        let lastItem = '';
+        let cart = [];
+        let activeOrders = [];
+        let isKdsView = false;
 
-        function switchTab(tab) {
-            const customerView = document.getElementById('customer-view');
-            const kdsView = document.getElementById('kds-view');
-            const btns = document.querySelectorAll('.tab-btn');
+        function addToOrder(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+        }
 
-            if (tab === 'customer') {
-                customerView.style.display = 'block';
-                kdsView.style.display = 'none';
-                btns[0].classList.add('active');
-                btns[1].classList.remove('active');
+        function updateCartUI() {
+            const cartBar = document.getElementById('cartBar');
+            const cartCount = document.getElementById('cartCount');
+            const cartTotal = document.getElementById('cartTotal');
+
+            if (cart.length > 0) {
+                cartBar.classList.remove('hidden');
+                cartCount.textContent = cart.length;
+                let total = cart.reduce((sum, item) => sum + item.price, 0);
+                cartTotal.textContent = `$${total.toFixed(2)}`;
             } else {
-                customerView.style.display = 'none';
-                kdsView.style.display = 'block';
-                btns[0].classList.remove('active');
-                btns[1].classList.add('active');
+                cartBar.classList.add('hidden');
             }
         }
 
-        function addOrder(name, price) {
-            itemCount++;
-            lastItem = name;
-            const cartBar = document.getElementById('cart-bar');
-            const cartCount = document.getElementById('cart-count');
-            cartBar.style.display = 'flex';
-            cartCount.innerText = itemCount + (itemCount === 1 ? ' item' : ' items');
+        function checkoutOrder() {
+            if (cart.length === 0) return;
+            
+            let newOrder = {
+                id: Math.floor(100 + Math.random() * 900),
+                items: [...cart],
+                time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
+            };
+
+            activeOrders.push(newOrder);
+            cart = [];
+            updateCartUI();
+            renderKDS();
+
+            alert("Order placed successfully! Sent to Kitchen Display.");
+            toggleView(); // Flips to KDS to show vendor live ticket processing
         }
 
-        function submitOrder() {
-            // Add ticket to KDS
-            const kdsList = document.getElementById('kds-list');
-            const newTicket = document.createElement('div');
-            newTicket.className = 'kds-ticket';
-            newTicket.innerHTML = `
-                <div class="kds-header">
-                    <span>Order #102 • Customer (Live Demo)</span>
-                    <span class="kds-status" style="color: #f39c12;">● Preparing</span>
+        function toggleView() {
+            isKdsView = !isKdsView;
+            const customerView = document.getElementById('customerView');
+            const kdsView = document.getElementById('kds-view');
+            const toggleBtn = document.getElementById('viewToggleBtn');
+            const cartBar = document.getElementById('cartBar');
+
+            if (isKdsView) {
+                customerView.style.display = 'none';
+                kdsView.style.display = 'block';
+                toggleBtn.textContent = 'Switch to Menu';
+                cartBar.classList.add('hidden');
+            } else {
+                customerView.style.display = 'block';
+                kdsView.style.display = 'none';
+                toggleBtn.textContent = 'Switch to KDS';
+                updateCartUI();
+            }
+        }
+
+        function renderKDS() {
+            const container = document.getElementById('kdsTicketContainer');
+            if (activeOrders.length === 0) {
+                container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders.</p>`;
+                return;
+            }
+
+            container.innerHTML = activeOrders.map((order, index) => `
+                <div class="kds-ticket">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <h4 style="margin:0;">Order #${order.id}</h4>
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">${order.time}</span>
+                    </div>
+                    <ul>
+                        ${order.items.map(i => `<li>1x ${i.name}</li>`).join('')}
+                    </ul>
+                    <button class="complete-btn" onclick="completeOrder(${index})">Mark Ready / Complete</button>
                 </div>
-                <p style="font-size: 0.9rem; color: var(--text-muted);">${itemCount}x items (${lastItem})</p>
-                <button onclick="triggerSMS(this)" style="margin-top: 10px; background: #2ecc71; color: white; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; cursor: pointer;">Mark Ready & Send SMS</button>
-            `;
-            kdsList.prepend(newTicket);
-
-            // Reset cart
-            itemCount = 0;
-            document.getElementById('cart-bar').style.display = 'none';
-
-            // Switch to KDS tab to show vendor
-            switchTab('kds');
+            `).join('');
         }
 
-        function triggerSMS(btn) {
-            btn.innerText = "SMS Sent!";
-            btn.style.background = "#7f8c8d";
-            btn.disabled = true;
-
-            const sms = document.getElementById('sms-toast');
-            sms.style.display = 'block';
-            setTimeout(() => {
-                sms.style.display = 'none';
-            }, 4000);
+        function completeOrder(index) {
+            activeOrders.splice(index, 1);
+            renderKDS();
         }
     </script>
-
 </body>
 </html>
