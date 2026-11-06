@@ -10,11 +10,12 @@
             --card-bg: #ffffff;
             --text-primary: #0a1128;
             --text-secondary: #6e6e73;
-            --accent: #4a90e2;       /* Carolina Blue Accent */
+            --accent: #4a90e2;
             --accent-hover: #357abd;
             --border: #c6c6c8;
             --success: #34c759;
             --header-dark: #0a1128;
+            --danger: #ff3b30;
         }
 
         * {
@@ -28,10 +29,9 @@
         body {
             background-color: var(--bg-ios);
             color: var(--text-primary);
-            padding-bottom: 100px;
+            padding-bottom: 120px;
         }
 
-        /* iOS Header */
         header {
             background: rgba(10, 17, 40, 0.95);
             backdrop-filter: blur(20px);
@@ -69,7 +69,6 @@
             padding: 1rem;
         }
 
-        /* Menu Section Header */
         .menu-section-title {
             font-size: 1.2rem;
             font-weight: 700;
@@ -81,11 +80,30 @@
             background: var(--card-bg);
             border-radius: 12px;
             padding: 1rem;
-            margin-bottom: 0.8rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            margin-bottom: 1rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .menu-card-top {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .food-graphic {
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: #f9f9fb;
+            border: 1px solid #e5e5ea;
+        }
+
+        .item-info {
+            flex-grow: 1;
         }
 
         .item-info h3 {
@@ -95,7 +113,7 @@
         }
 
         .item-info p {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text-secondary);
             margin-bottom: 0.4rem;
         }
@@ -106,25 +124,77 @@
             color: var(--accent);
         }
 
-        .add-btn {
-            background: #eef5fc;
-            color: var(--accent);
-            border: none;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            font-weight: bold;
+        .options-group {
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px dashed #e5e5ea;
+        }
+
+        .options-title {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.4rem;
+        }
+
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .chip {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 14px;
+            background: #f0f0f5;
+            color: var(--text-primary);
+            border: 1px solid #e5e5ea;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 0.3rem;
+            user-select: none;
+        }
+
+        .chip.active {
+            background: #eef5fc;
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .chip-remove.active {
+            background: #fff0f0;
+            border-color: var(--danger);
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .dot-icon {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .add-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
             cursor: pointer;
+            margin-top: 0.8rem;
+            width: 100%;
         }
 
         .add-btn:active {
-            transform: scale(0.92);
-            background: var(--accent);
-            color: white;
+            transform: scale(0.98);
         }
 
         /* Floating iOS Cart Bar */
@@ -144,7 +214,7 @@
             align-items: center;
             box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             cursor: pointer;
-            transition: transform 0.2s;
+            z-index: 200;
         }
 
         .cart-bar.hidden {
@@ -194,21 +264,39 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .kds-ticket h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+        .kds-item-row {
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #f0f0f5;
         }
 
-        .kds-ticket ul {
-            list-style: none;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
+        .kds-item-row:last-child {
+            border-bottom: none;
         }
 
-        .kds-ticket li {
-            padding: 0.2rem 0;
-            font-size: 0.95rem;
-            color: var(--text-primary);
+        .kds-graphic {
+            width: 45px;
+            height: 45px;
+            flex-shrink: 0;
+        }
+
+        .kds-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            background: #f0f0f5;
+            margin-right: 0.3rem;
+            margin-top: 0.2rem;
+        }
+
+        .kds-tag.tag-remove {
+            background: #fff0f0;
+            color: var(--danger);
+            font-weight: 600;
         }
 
         .complete-btn {
@@ -220,6 +308,7 @@
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
+            margin-top: 0.5rem;
         }
     </style>
 </head>
@@ -234,31 +323,142 @@
     <div class="container" id="customerView">
         <div class="menu-section-title">Festival Menu</div>
 
+        <!-- Smash Burger -->
         <div class="menu-card">
-            <div class="item-info">
-                <h3>Smash Burger Basket</h3>
-                <p>Double patty, American cheese, secret sauce.</p>
-                <div class="item-price">$12.00</div>
+            <div class="menu-card-top">
+                <div class="food-graphic">
+                    <svg width="50" height="50" viewBox="0 0 100 100">
+                        <path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/>
+                        <rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/>
+                        <polygon points="20,55 35,53 50,57 65,53 80,55 80,59 20,59" fill="#f1c40f"/>
+                        <rect x="15" y="61" width="70" height="12" rx="4" fill="#5d4037"/>
+                        <rect x="18" y="75" width="64" height="10" rx="4" fill="#d35400"/>
+                        <!-- Topping Dots -->
+                        <circle id="burger-dot-cheese" cx="30" cy="56" r="3" fill="#f39c12" style="display:none;"/>
+                        <circle id="burger-dot-sauce" cx="50" cy="50" r="3" fill="#e74c3c" style="display:none;"/>
+                        <circle id="burger-dot-bacon" cx="70" cy="65" r="3" fill="#8e44ad" style="display:none;"/>
+                    </svg>
+                </div>
+                <div class="item-info">
+                    <h3>Smash Burger Basket</h3>
+                    <p>Double patty, American cheese, house sauce.</p>
+                    <div class="item-price">$12.00</div>
+                </div>
             </div>
-            <button class="add-btn" onclick="addToOrder('Smash Burger Basket', 12.00)">+</button>
+
+            <div class="options-group">
+                <div class="options-title">Add Extra Toppings</div>
+                <div class="chip-group">
+                    <div class="chip" onclick="toggleChip(this, 'burger', 'cheese', '#f39c12')">
+                        <span class="dot-icon" style="background:#f39c12;"></span> Extra Cheese
+                    </div>
+                    <div class="chip" onclick="toggleChip(this, 'burger', 'sauce', '#e74c3c')">
+                        <span class="dot-icon" style="background:#e74c3c;"></span> Extra Secret Sauce
+                    </div>
+                    <div class="chip" onclick="toggleChip(this, 'burger', 'bacon', '#8e44ad')">
+                        <span class="dot-icon" style="background:#8e44ad;"></span> Crispy Bacon
+                    </div>
+                </div>
+            </div>
+
+            <div class="options-group">
+                <div class="options-title">Removals</div>
+                <div class="chip-group">
+                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Onions</div>
+                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Pickles</div>
+                </div>
+            </div>
+
+            <button class="add-btn" onclick="addBurgerToCart()">Add Smash Burger Basket</button>
         </div>
 
+        <!-- Loaded Fries -->
         <div class="menu-card">
-            <div class="item-info">
-                <h3>Loaded Fries</h3>
-                <p>Cheddar, bacon bits, scallions, ranch drizzle.</p>
-                <div class="item-price">$8.50</div>
+            <div class="menu-card-top">
+                <div class="food-graphic">
+                    <svg width="50" height="50" viewBox="0 0 100 100">
+                        <polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/>
+                        <rect x="33" y="15" width="6" height="35" rx="3" fill="#f1c40f"/>
+                        <rect x="42" y="10" width="6" height="40" rx="3" fill="#f39c12"/>
+                        <rect x="51" y="12" width="6" height="38" rx="3" fill="#f1c40f"/>
+                        <rect x="60" y="18" width="6" height="32" rx="3" fill="#f39c12"/>
+                        <!-- Topping Dots -->
+                        <circle id="fries-dot-ranch" cx="45" cy="30" r="3.5" fill="#ecf0f1" style="display:none;"/>
+                        <circle id="fries-dot-jalapeno" cx="55" cy="25" r="3.5" fill="#27ae60" style="display:none;"/>
+                    </svg>
+                </div>
+                <div class="item-info">
+                    <h3>Loaded Fries</h3>
+                    <p>Crispy fries, melted cheese, bacon bits.</p>
+                    <div class="item-price">$8.50</div>
+                </div>
             </div>
-            <button class="add-btn" onclick="addToOrder('Loaded Fries', 8.50)">+</button>
+
+            <div class="options-group">
+                <div class="options-title">Add Extra Drizzle / Toppings</div>
+                <div class="chip-group">
+                    <div class="chip" onclick="toggleChip(this, 'fries', 'ranch', '#ecf0f1')">
+                        <span class="dot-icon" style="background:#bdc3c7;"></span> Ranch Drizzle
+                    </div>
+                    <div class="chip" onclick="toggleChip(this, 'fries', 'jalapeno', '#27ae60')">
+                        <span class="dot-icon" style="background:#27ae60;"></span> Jalapeños
+                    </div>
+                </div>
+            </div>
+
+            <div class="options-group">
+                <div class="options-title">Removals</div>
+                <div class="chip-group">
+                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Bacon</div>
+                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Green Onions</div>
+                </div>
+            </div>
+
+            <button class="add-btn" onclick="addFriesToCart()">Add Loaded Fries</button>
         </div>
 
+        <!-- Dynamic Craft Lemonade -->
         <div class="menu-card">
-            <div class="item-info">
-                <h3>Craft Lemonade</h3>
-                <p>Fresh squeezed daily with blackberry puree.</p>
-                <div class="item-price">$5.00</div>
+            <div class="menu-card-top">
+                <div class="food-graphic">
+                    <svg width="50" height="50" viewBox="0 0 100 100">
+                        <!-- Glass -->
+                        <path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/>
+                        <!-- Liquid with dynamic color -->
+                        <path id="lemonade-liquid" d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="#f1c40f"/>
+                        <!-- Straw -->
+                        <line x1="58" y1="10" x2="48" y2="75" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
+                        <!-- Ice Cubes -->
+                        <rect x="42" y="45" width="10" height="10" rx="2" fill="rgba(255,255,255,0.7)"/>
+                        <rect x="52" y="60" width="10" height="10" rx="2" fill="rgba(255,255,255,0.7)"/>
+                    </svg>
+                </div>
+                <div class="item-info">
+                    <h3>Craft Lemonade</h3>
+                    <p>Fresh squeezed fruit infused lemonade.</p>
+                    <div class="item-price" id="lemonade-price-display">$5.00</div>
+                </div>
             </div>
-            <button class="add-btn" onclick="addToOrder('Craft Lemonade', 5.00)">+</button>
+
+            <div class="options-group">
+                <div class="options-title">Select Flavor Variant</div>
+                <div class="chip-group">
+                    <div class="chip active" onclick="selectLemonadeFlavor(this, 'Classic Lemon', '#f1c40f', 5.00)">
+                        <span class="dot-icon" style="background:#f1c40f;"></span> Classic Yellow
+                    </div>
+                    <div class="chip" onclick="selectLemonadeFlavor(this, 'Blackberry Infused', '#8e44ad', 5.50)">
+                        <span class="dot-icon" style="background:#8e44ad;"></span> Blackberry
+                    </div>
+                    <div class="chip" onclick="selectLemonadeFlavor(this, 'Strawberry Electric', '#e74c3c', 5.50)">
+                        <span class="dot-icon" style="background:#e74c3c;"></span> Strawberry
+                    </div>
+                    <div class="chip" onclick="selectLemonadeFlavor(this, 'Blue Raspberry', '#3498db', 5.50)">
+                        <span class="dot-icon" style="background:#3498db;"></span> Blue Raspberry
+                    </div>
+                </div>
+            </div>
+
+            <button class="add-btn" onclick="addLemonadeToCart()">Add Craft Lemonade</button>
         </div>
     </div>
 
@@ -287,8 +487,77 @@
         let activeOrders = [];
         let isKdsView = false;
 
-        function addToOrder(name, price) {
-            cart.push({ name, price });
+        let selectedLemonade = {
+            flavor: 'Classic Lemon',
+            color: '#f1c40f',
+            price: 5.00
+        };
+
+        function toggleChip(element, itemKey, dotKey, color) {
+            element.classList.toggle('active');
+            const dot = document.getElementById(`${itemKey}-dot-${dotKey}`);
+            if (dot) {
+                dot.style.display = element.classList.contains('active') ? 'block' : 'none';
+            }
+        }
+
+        function toggleRemoveChip(element) {
+            element.classList.toggle('active');
+        }
+
+        function selectLemonadeFlavor(element, flavor, color, price) {
+            const group = element.parentElement.querySelectorAll('.chip');
+            group.forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+
+            selectedLemonade = { flavor, color, price };
+            document.getElementById('lemonade-liquid').setAttribute('fill', color);
+            document.getElementById('lemonade-price-display').textContent = `$${price.toFixed(2)}`;
+        }
+
+        function getSelectedOptions(cardElement) {
+            const addons = Array.from(cardElement.querySelectorAll('.options-group:nth-of-type(1) .chip.active'))
+                .map(c => c.textContent.trim());
+            const removals = Array.from(cardElement.querySelectorAll('.chip-remove.active'))
+                .map(c => c.textContent.trim());
+            return { addons, removals };
+        }
+
+        function addBurgerToCart() {
+            const card = event.target.closest('.menu-card');
+            const { addons, removals } = getSelectedOptions(card);
+            cart.push({
+                name: 'Smash Burger Basket',
+                price: 12.00,
+                addons,
+                removals,
+                type: 'burger'
+            });
+            updateCartUI();
+        }
+
+        function addFriesToCart() {
+            const card = event.target.closest('.menu-card');
+            const { addons, removals } = getSelectedOptions(card);
+            cart.push({
+                name: 'Loaded Fries',
+                price: 8.50,
+                addons,
+                removals,
+                type: 'fries'
+            });
+            updateCartUI();
+        }
+
+        function addLemonadeToCart() {
+            cart.push({
+                name: `Craft Lemonade (${selectedLemonade.flavor})`,
+                price: selectedLemonade.price,
+                addons: [],
+                removals: [],
+                type: 'lemonade',
+                color: selectedLemonade.color
+            });
             updateCartUI();
         }
 
@@ -309,7 +578,7 @@
 
         function checkoutOrder() {
             if (cart.length === 0) return;
-            
+
             let newOrder = {
                 id: Math.floor(100 + Math.random() * 900),
                 items: [...cart],
@@ -321,8 +590,8 @@
             updateCartUI();
             renderKDS();
 
-            alert("Order placed successfully! Sent to Kitchen Display.");
-            toggleView(); // Flips to KDS to show vendor live ticket processing
+            alert("Order placed successfully! Routing to Kitchen Display...");
+            toggleView();
         }
 
         function toggleView() {
@@ -345,6 +614,16 @@
             }
         }
 
+        function getKDSGraphic(item) {
+            if (item.type === 'burger') {
+                return `<svg viewBox="0 0 100 100" class="kds-graphic"><path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/><rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/><rect x="15" y="61" width="70" height="12" rx="4" fill="#5d4037"/><rect x="18" y="75" width="64" height="10" rx="4" fill="#d35400"/></svg>`;
+            } else if (item.type === 'fries') {
+                return `<svg viewBox="0 0 100 100" class="kds-graphic"><polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/><rect x="33" y="15" width="6" height="35" rx="3" fill="#f1c40f"/><rect x="42" y="10" width="6" height="40" rx="3" fill="#f39c12"/><rect x="51" y="12" width="6" height="38" rx="3" fill="#f1c40f"/></svg>`;
+            } else {
+                return `<svg viewBox="0 0 100 100" class="kds-graphic"><path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/><path d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="${item.color || '#f1c40f'}"/><line x1="58" y1="10" x2="48" y2="75" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/></svg>`;
+            }
+        }
+
         function renderKDS() {
             const container = document.getElementById('kdsTicketContainer');
             if (activeOrders.length === 0) {
@@ -354,13 +633,22 @@
 
             container.innerHTML = activeOrders.map((order, index) => `
                 <div class="kds-ticket">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
                         <h4 style="margin:0;">Order #${order.id}</h4>
                         <span style="font-size: 0.8rem; color: var(--text-secondary);">${order.time}</span>
                     </div>
-                    <ul>
-                        ${order.items.map(i => `<li>1x ${i.name}</li>`).join('')}
-                    </ul>
+                    <div>
+                        ${order.items.map(i => `
+                            <div class="kds-item-row">
+                                ${getKDSGraphic(i)}
+                                <div>
+                                    <div style="font-weight:600; font-size:0.95rem;">${i.name}</div>
+                                    ${i.addons.map(a => `<span class="kds-tag">+ ${a}</span>`).join('')}
+                                    ${i.removals.map(r => `<span class="kds-tag tag-remove">NO: ${r.replace('No ', '')}</span>`).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
                     <button class="complete-btn" onclick="completeOrder(${index})">Mark Ready / Complete</button>
                 </div>
             `).join('');
