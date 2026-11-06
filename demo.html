@@ -197,7 +197,7 @@
             transform: scale(0.98);
         }
 
-        /* Floating iOS Cart Bar */
+        /* Floating iOS Cart Button */
         .cart-bar {
             position: fixed;
             bottom: 20px;
@@ -207,12 +207,13 @@
             max-width: 460px;
             background: var(--header-dark);
             color: white;
+            border: 2px solid var(--accent);
             border-radius: 24px;
-            padding: 1rem 1.5rem;
+            padding: 0.9rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             cursor: pointer;
             z-index: 200;
         }
@@ -238,6 +239,15 @@
             justify-content: center;
             font-size: 0.8rem;
             font-weight: 600;
+        }
+
+        .cart-cta-text {
+            font-weight: 600;
+            color: white;
+            background: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 14px;
+            font-size: 0.9rem;
         }
 
         /* KDS View Overlay */
@@ -473,14 +483,14 @@
         </div>
     </div>
 
-    <!-- FLOATING CART CHECKOUT BAR -->
-    <div class="cart-bar hidden" id="cartBar">
+    <!-- FLOATING CART CHECKOUT BUTTON -->
+    <button class="cart-bar hidden" id="cartBar" onclick="checkoutOrder()">
         <div class="cart-left">
             <div class="cart-badge" id="cartCount">0</div>
             <span style="font-weight: 600;" id="cartTotal">$0.00</span>
         </div>
-        <span style="font-weight: 600; color: #ffffff; background: var(--accent); padding: 0.5rem 1rem; border-radius: 14px;" id="placeOrderText">Place Order →</span>
-    </div>
+        <span class="cart-cta-text">Place Order →</span>
+    </button>
 
     <script>
         let cart = [];
@@ -492,11 +502,6 @@
             color: '#f1c40f',
             price: 5.00
         };
-
-        // Explicitly attach event listener to cart bar for reliable mobile tapping
-        document.getElementById('cartBar').addEventListener('click', function(e) {
-            checkoutOrder();
-        });
 
         function toggleChip(element, itemKey, dotKey, color) {
             element.classList.toggle('active');
