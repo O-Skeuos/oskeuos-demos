@@ -474,12 +474,12 @@
     </div>
 
     <!-- FLOATING CART CHECKOUT BAR -->
-    <div class="cart-bar hidden" id="cartBar" onclick="checkoutOrder()">
+    <div class="cart-bar hidden" id="cartBar">
         <div class="cart-left">
             <div class="cart-badge" id="cartCount">0</div>
             <span style="font-weight: 600;" id="cartTotal">$0.00</span>
         </div>
-        <span style="font-weight: 600; color: var(--accent);">Place Order →</span>
+        <span style="font-weight: 600; color: #ffffff; background: var(--accent); padding: 0.5rem 1rem; border-radius: 14px;" id="placeOrderText">Place Order →</span>
     </div>
 
     <script>
@@ -492,6 +492,11 @@
             color: '#f1c40f',
             price: 5.00
         };
+
+        // Explicitly attach event listener to cart bar for reliable mobile tapping
+        document.getElementById('cartBar').addEventListener('click', function(e) {
+            checkoutOrder();
+        });
 
         function toggleChip(element, itemKey, dotKey, color) {
             element.classList.toggle('active');
