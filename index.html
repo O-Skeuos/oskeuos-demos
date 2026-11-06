@@ -127,7 +127,6 @@
     .accordion.open .accordion-content { display: block; padding-top: 16px; }
     .accordion-icon { font-size: 1.1rem; color: var(--accent); font-weight: 900; }
 
-    /* Form Elements & Specifications Descriptions */
     .spec-description {
       font-size: 0.78rem;
       color: var(--text-muted);
@@ -228,7 +227,7 @@
       <p class="hero-subtitle">We remove friction, limitation, and rigidity from local commerce. Built right here in Florence, SC.</p>
     </div>
 
-    <!-- PORTFOLIO / BLUEPRINTS WITH CLEAR DESCRIPTIONS -->
+    <!-- PORTFOLIO / BLUEPRINTS -->
     <div class="section-category">01 // Select Blueprint</div>
     <div class="portfolio-grid">
       
@@ -290,7 +289,7 @@
 
     </div>
 
-    <!-- ACCORDIONS WITH SPECIFICATION CLARITY -->
+    <!-- ACCORDIONS (TURNAROUND OPEN BY DEFAULT FOR MOBILE UX) -->
     <div class="section-category">02 // Studio Specifications</div>
     
     <div class="accordion" id="acc-addons">
@@ -335,12 +334,12 @@
       </div>
     </div>
 
-    <div class="accordion" id="acc-terms">
+    <div class="accordion open" id="acc-terms">
       <div class="accordion-header" onclick="toggleAccordion('acc-terms')">
-        <span>+ Turnaround & Payment Structure</span>
+        <span>- Turnaround & Payment Structure</span>
         <span class="accordion-icon">▾</span>
       </div>
-      <div class="accordion-content">
+      <div class="accordion-content" style="display: block; padding-top: 16px;">
         <div class="spec-description">Choose how fast you want your site live and how you prefer to invest:</div>
         <div style="margin-bottom: 14px;">
           <label style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted);">Build Timeline:</label>
@@ -382,7 +381,7 @@
 
   </div>
 
-  <!-- SUCCESS MODAL -->
+  <!-- SUCCESS MODAL WITH ACCURATE DYNAMIC MATH & FALLBACK -->
   <div class="modal-overlay" id="success-modal">
     <div class="modal-card">
       <h3>🎉 Build Slot Reserved</h3>
@@ -400,6 +399,9 @@
       </div>
 
       <button class="cta-btn" onclick="confirmOrder()">Send Automated SMS & Secure Link</button>
+      <div id="fallback-container" style="margin-top: 10px; display: none;">
+        <a id="fallback-pay-link" href="#" target="_blank" style="display: block; background: var(--success); color: #000; padding: 12px; border-radius: 10px; font-weight: 800; text-decoration: none; font-size: 0.85rem; text-transform: uppercase;">Direct Pay via Stripe / Apple Pay Now</a>
+      </div>
       <button class="close-modal" onclick="closeModal()">Back to Studio</button>
     </div>
   </div>
@@ -455,10 +457,11 @@
 
     function openModal() {
       document.getElementById('rec-pkg').innerText = packageNames[selectedKey];
-      document.getElementById('rec-total').innerText = document.getElementById('live-total').innerText;
+      let totalText = document.getElementById('live-total').innerText;
+      document.getElementById('rec-total').innerText = totalText;
       
       let plan = document.getElementById('plan-select').value;
-      let totalNum = parseFloat(document.getElementById('live-total').innerText.replace('$', ''));
+      let totalNum = parseFloat(totalText.replace('$', ''));
       let due = plan === 'installments' ? (totalNum / 3) : (totalNum / 2);
       
       document.getElementById('rec-due').innerText = `$${due.toFixed(2)}`;
@@ -467,6 +470,7 @@
 
     function closeModal() {
       document.getElementById('success-modal').style.display = 'none';
+      document.getElementById('fallback-container').style.display = 'none';
     }
 
     function confirmOrder() {
@@ -476,7 +480,14 @@
         return;
       }
       
-      let msg = encodeURIComponent(`Hey! I just locked in my O-Skeuos build slot for the ${packageNames[selectedKey]} package. Total: ${document.getElementById('live-total').innerText}. Let's get started!`);
+      let totalText = document.getElementById('live-total').innerText;
+      let dueText = document.getElementById('rec-due').innerText;
+      let msg = encodeURIComponent(`Hey! I just locked in my O-Skeuos build slot for the ${packageNames[selectedKey]} package. Total: ${totalText} (Due Today: ${dueText}). Let's get started!`);
+      
+      // Show direct fallback button in case sms: protocol fails on mobile webview
+      document.getElementById('fallback-container').style.display = 'block';
+      
+      // Trigger SMS protocol
       window.location.href = `sms:8034633531?body=${msg}`;
     }
 
@@ -484,4 +495,3 @@
   </script>
 </body>
 </html>
-
