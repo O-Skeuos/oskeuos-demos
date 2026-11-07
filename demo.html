@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>O-Skeuos Live Ordering Demo</title>
     <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -25,6 +25,8 @@
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         body {
@@ -169,7 +171,6 @@
             color: var(--text-primary);
             border: 1px solid #e5e5ea;
             cursor: pointer;
-            user-select: none;
         }
 
         .chip.selected {
@@ -229,7 +230,7 @@
             margin-bottom: 1.2rem;
         }
 
-        /* Confimation Popup Modal Overlay */
+        /* Confirmation Modal */
         #orderConfirmationModal {
             display: none;
             position: fixed;
@@ -252,12 +253,6 @@
             width: 100%;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: modalPop 0.25s ease-out;
-        }
-
-        @keyframes modalPop {
-            0% { transform: scale(0.9); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
         }
 
         .modal-card h3 {
@@ -468,127 +463,232 @@
 
     </div>
 
-    <!-- ORDER PLACED CONFIRMATION MODAL -->
+    <!-- ORDER PLACED MODAL -->
     <div id="orderConfirmationModal">
         <div class="modal-card">
             <h3>🎉 Order Placed!</h3>
             <p>Your order has been placed<br><strong>(Check KDS)</strong></p>
-            <button class="action-btn" onclick="openKdsFromModal()">View Live KDS Display →</button>
+            <button class="action-btn" id="modalKdsBtn">View Live KDS Display →</button>
         </div>
     </div>
 
     <script>
-        // State Management
-        var cartState = [];
-        var kdsOrders = [];
-        var activeLemonade = { flavor: 'Classic Lemon', price: 5.00, color: '#f1c40f' };
+        document.addEventListener('DOMContentLoaded', function() {
+            var cartState = [];
+            var kdsOrders = [];
+            var activeLemonade = { flavor: 'Classic Lemon', price: 5.00, color: '#f1c40f' };
 
-        // DOM Elements
-        var menuView = document.getElementById('menuView');
-        var cartView = document.getElementById('cartView');
-        var kdsView = document.getElementById('kdsView');
-        
-        var cartNavBtn = document.getElementById('cartNavBtn');
-        var kdsNavBtn = document.getElementById('kdsNavBtn');
-        var backToMenuBtn = document.getElementById('backToMenuBtn');
-        
-        var cartCount = document.getElementById('cartCount');
-        var cartItemsList = document.getElementById('cartItemsList');
-        var cartTotalDisplay = document.getElementById('cartTotalDisplay');
-        var placeOrderBtn = document.getElementById('placeOrderBtn');
-        var kdsTicketsList = document.getElementById('kdsTicketsList');
-        var orderConfirmationModal = document.getElementById('orderConfirmationModal');
+            var menuView = document.getElementById('menuView');
+            var cartView = document.getElementById('cartView');
+            var kdsView = document.getElementById('kdsView');
+            
+            var cartNavBtn = document.getElementById('cartNavBtn');
+            var kdsNavBtn = document.getElementById('kdsNavBtn');
+            var backToMenuBtn = document.getElementById('backToMenuBtn');
+            
+            var cartCount = document.getElementById('cartCount');
+            var cartItemsList = document.getElementById('cartItemsList');
+            var cartTotalDisplay = document.getElementById('cartTotalDisplay');
+            var placeOrderBtn = document.getElementById('placeOrderBtn');
+            var kdsTicketsList = document.getElementById('kdsTicketsList');
+            var orderConfirmationModal = document.getElementById('orderConfirmationModal');
+            var modalKdsBtn = document.getElementById('modalKdsBtn');
 
-        // Navigation Router
-        function showView(targetView) {
-            menuView.classList.remove('active');
-            cartView.classList.remove('active');
-            kdsView.classList.remove('active');
+            function showView(target) {
+                menuView.classList.remove('active');
+                cartView.classList.remove('active');
+                kdsView.classList.remove('active');
 
-            if (targetView === 'menu') {
-                menuView.classList.add('active');
-                kdsNavBtn.textContent = 'KDS View';
-                if (cartState.length > 0) cartNavBtn.style.display = 'inline-block';
-            } else if (targetView === 'cart') {
-                cartView.classList.add('active');
-                cartNavBtn.style.display = 'none';
-                kdsNavBtn.textContent = 'Menu';
-                renderCart();
-            } else if (targetView === 'kds') {
-                kdsView.classList.add('active');
-                kdsNavBtn.textContent = 'Menu';
-                cartNavBtn.style.display = 'none';
-                renderKDS();
+                if (target === 'menu') {
+                    menuView.classList.add('active');
+                    kdsNavBtn.textContent = 'KDS View';
+                    if (cartState.length > 0) cartNavBtn.style.display = 'inline-block';
+                } else if (target === 'cart') {
+                    cartView.classList.add('active');
+                    cartNavBtn.style.display = 'none';
+                    kdsNavBtn.textContent = 'Menu';
+                    renderCart();
+                } else if (target === 'kds') {
+                    kdsView.classList.add('active');
+                    kdsNavBtn.textContent = 'Menu';
+                    cartNavBtn.style.display = 'none';
+                    renderKDS();
+                }
             }
-        }
 
-        // Event Listeners for Nav
-        cartNavBtn.onclick = function() { showView('cart'); };
-        kdsNavBtn.onclick = function() {
-            if (kdsView.classList.contains('active')) {
-                showView('menu');
-            } else {
+            cartNavBtn.addEventListener('click', function() { showView('cart'); });
+            kdsNavBtn.addEventListener('click', function() {
+                if (kdsView.classList.contains('active')) {
+                    showView('menu');
+                } else {
+                    showView('kds');
+                }
+            });
+            backToMenuBtn.addEventListener('click', function() { showView('menu'); });
+
+            // Chip selection
+            document.querySelectorAll('.option-chip, .remove-chip').forEach(function(chip) {
+                chip.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+
+            // Flavor chips
+            var flavorChips = document.querySelectorAll('.flavor-chip');
+            flavorChips.forEach(function(chip) {
+                chip.addEventListener('click', function() {
+                    flavorChips.forEach(function(c) { c.classList.remove('selected'); });
+                    this.classList.add('selected');
+                    
+                    activeLemonade.flavor = this.getAttribute('data-flavor');
+                    activeLemonade.price = parseFloat(this.getAttribute('data-price'));
+                    activeLemonade.color = this.getAttribute('data-color');
+
+                    document.getElementById('lemonadeLiquid').setAttribute('fill', activeLemonade.color);
+                    document.getElementById('lemonadePrice').textContent = '$' + activeLemonade.price.toFixed(2);
+                });
+            });
+
+            function getSelectedOptions(cardId) {
+                var card = document.getElementById(cardId);
+                var addons = [];
+                var removals = [];
+                card.querySelectorAll('.option-chip.selected').forEach(function(c) { addons.push(c.textContent.trim()); });
+                card.querySelectorAll('.remove-chip.selected').forEach(function(c) { removals.push(c.textContent.trim()); });
+                return { addons: addons, removals: removals };
+            }
+
+            function updateBadge() {
+                cartCount.textContent = cartState.length;
+                cartNavBtn.style.display = cartState.length > 0 ? 'inline-block' : 'none';
+            }
+
+            document.getElementById('addBurgerBtn').addEventListener('click', function() {
+                var opts = getSelectedOptions('card-burger');
+                cartState.push({ name: 'Smash Burger Basket', price: 12.00, addons: opts.addons, removals: opts.removals });
+                updateBadge();
+                alert('Added Smash Burger to Cart!');
+            });
+
+            document.getElementById('addFriesBtn').addEventListener('click', function() {
+                var opts = getSelectedOptions('card-fries');
+                cartState.push({ name: 'Loaded Fries', price: 8.50, addons: opts.addons, removals: opts.removals });
+                updateBadge();
+                alert('Added Loaded Fries to Cart!');
+            });
+
+            document.getElementById('addLemonadeBtn').addEventListener('click', function() {
+                cartState.push({ name: 'Craft Lemonade (' + activeLemonade.flavor + ')', price: activeLemonade.price, addons: [], removals: [] });
+                updateBadge();
+                alert('Added Craft Lemonade to Cart!');
+            });
+
+            function renderCart() {
+                cartItemsList.innerHTML = '';
+                if (cartState.length === 0) {
+                    cartItemsList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin: 2rem 0;">Your cart is empty.</p>';
+                    cartTotalDisplay.textContent = '$0.00';
+                    return;
+                }
+
+                var total = 0;
+                cartState.forEach(function(item, index) {
+                    total += item.price;
+                    var div = document.createElement('div');
+                    div.className = 'cart-item-card';
+                    var sub = [
+                        item.addons.length ? '+ ' + item.addons.join(', ') : '',
+                        item.removals.length ? 'NO ' + item.removals.join(', ') : ''
+                    ].filter(Boolean).join(' | ');
+
+                    div.innerHTML = `
+                        <div>
+                            <div style="font-weight: 600;">${item.name}</div>
+                            <div style="font-size: 0.82rem; color: var(--text-secondary);">${sub}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 600; color: var(--accent);">$${item.price.toFixed(2)}</div>
+                            <button class="remove-item-btn" data-index="${index}" style="background:none; border:none; color:var(--danger); font-size:0.8rem; cursor:pointer;">Remove</button>
+                        </div>
+                    `;
+                    cartItemsList.appendChild(div);
+                });
+
+                cartTotalDisplay.textContent = '$' + total.toFixed(2);
+
+                // Bind remove buttons
+                document.querySelectorAll('.remove-item-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var idx = parseInt(this.getAttribute('data-index'));
+                        cartState.splice(idx, 1);
+                        updateBadge();
+                        renderCart();
+                    });
+                });
+            }
+
+            placeOrderBtn.addEventListener('click', function(e) {
+                if (cartState.length === 0) return;
+
+                kdsOrders.push({
+                    id: Math.floor(100 + Math.random() * 900),
+                    items: cartState.slice(),
+                    time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
+                });
+
+                cartState = [];
+                updateBadge();
+
+                if (typeof confetti === 'function') {
+                    confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
+                }
+
+                orderConfirmationModal.style.display = 'flex';
+            });
+
+            modalKdsBtn.addEventListener('click', function() {
+                orderConfirmationModal.style.display = 'none';
                 showView('kds');
+            });
+
+            function renderKDS() {
+                kdsTicketsList.innerHTML = '';
+                if (kdsOrders.length === 0) {
+                    kdsTicketsList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders yet!</p>';
+                    return;
+                }
+
+                kdsOrders.forEach(function(order, index) {
+                    var ticket = document.createElement('div');
+                    ticket.className = 'kds-ticket';
+                    var itemsHtml = '';
+
+                    order.items.forEach(function(i) {
+                        var addons = i.addons.map(function(a) { return `<span class="kds-tag">+ ${a}</span>`; }).join('');
+                        var removals = i.removals.map(function(r) { return `<span class="kds-tag tag-remove">${r}</span>`; }).join('');
+                        itemsHtml += `<div class="kds-item-row"><div><div style="font-weight:600;">${i.name}</div><div>${addons} ${removans || removals}</div></div></div>`;
+                    });
+
+                    ticket.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+                            <h4 style="margin:0;">Order #${order.id}</h4>
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);">${order.time}</span>
+                        </div>
+                        <div>${itemsHtml}</div>
+                        <button class="add-btn complete-order-btn" data-index="${index}" style="background: var(--success); margin-top: 0.5rem;">Mark Ready / Complete</button>
+                    `;
+                    kdsTicketsList.appendChild(ticket);
+                });
+
+                document.querySelectorAll('.complete-order-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var idx = parseInt(this.getAttribute('data-index'));
+                        kdsOrders.splice(idx, 1);
+                        renderKDS();
+                    });
+                });
             }
-        };
-        backToMenuBtn.onclick = function() { showView('menu'); };
-
-        // Chip Selections
-        var allChips = document.querySelectorAll('.option-chip, .remove-chip');
-        allChips.forEach(function(chip) {
-            chip.onclick = function() {
-                this.classList.toggle('selected');
-            };
         });
-
-        // Lemonade Flavor Selector
-        var flavorChips = document.querySelectorAll('.flavor-chip');
-        flavorChips.forEach(function(chip) {
-            chip.onclick = function() {
-                flavorChips.forEach(function(c) { c.classList.remove('selected'); });
-                this.classList.add('selected');
-                
-                activeLemonade.flavor = this.getAttribute('data-flavor');
-                activeLemonade.price = parseFloat(this.getAttribute('data-price'));
-                activeLemonade.color = this.getAttribute('data-color');
-
-                document.getElementById('lemonadeLiquid').setAttribute('fill', activeLemonade.color);
-                document.getElementById('lemonadePrice').textContent = '$' + activeLemonade.price.toFixed(2);
-            };
-        });
-
-        // Add to Cart Helper
-        function getSelectedOptions(cardId) {
-            var card = document.getElementById(cardId);
-            var selectedAddons = [];
-            var selectedRemovals = [];
-
-            card.querySelectorAll('.option-chip.selected').forEach(function(c) {
-                selectedAddons.push(c.textContent.trim());
-            });
-            card.querySelectorAll('.remove-chip.selected').forEach(function(c) {
-                selectedRemovals.push(c.textContent.trim());
-            });
-
-            return { addons: selectedAddons, removals: selectedRemovals };
-        }
-
-        function updateCartBadge() {
-            cartCount.textContent = cartState.length;
-            if (cartState.length > 0) {
-                cartNavBtn.style.display = 'inline-block';
-            } else {
-                cartNavBtn.style.display = 'none';
-            }
-        }
-
-        // Add Buttons
-        document.getElementById('addBurgerBtn').onclick = function() {
-            var opts = getSelectedOptions('card-burger');
-            cartState.push({
-                name: 'Smash Burger Basket',
-                price: 12.00,
-                addons: opts.addons,
-                removals: opts.removals,
-                type: 'burger'
-            });
+    </script>
+</body>
+</html>
