@@ -6,15 +6,14 @@
     <title>O-Skeuos Digital Studio | High-Performance Infrastructure for Local Vendors</title>
     <style>
         :root {
-            --bg-dark: #0a1128;      /* Deep Navy */
-            --bg-card: #101c3d;      /* Lighter Navy Card */
-            --accent: #4a90e2;       /* Carolina Blue Accent */
-            --accent-hover: #357abd; /* Darker Carolina Blue */
+            --bg-dark: #0a1128;
+            --bg-card: #101c3d;
+            --accent: #4a90e2;
+            --accent-hover: #357abd;
             --text-main: #ffffff;
             --text-muted: #d0d7de;
             --border-color: #1f305e;
             --success: #2ecc71;
-            --tan: #d2b48c;
         }
 
         * {
@@ -28,31 +27,30 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             line-height: 1.6;
-            padding: 0;
         }
 
         header {
             background: #060b1b;
             border-bottom: 3px solid var(--accent);
-            padding: 2.5rem 1rem;
+            padding: 3rem 1rem;
             text-align: center;
         }
 
         header h1 {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             margin-bottom: 0.5rem;
             letter-spacing: -0.5px;
         }
 
         header p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.15rem;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 2.5rem 1rem;
         }
 
         .hero-demo-box {
@@ -62,36 +60,44 @@
             padding: 2.5rem 1.5rem;
             text-align: center;
             margin-bottom: 3rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
         }
 
         .hero-demo-box h2 {
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             margin-bottom: 0.8rem;
         }
 
         .hero-demo-box p {
             color: var(--text-muted);
             margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .btn-primary {
             background-color: var(--accent);
             color: white;
-            padding: 0.9rem 2rem;
+            padding: 0.9rem 2.2rem;
             text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
+            border-radius: 8px;
+            font-weight: 600;
             font-size: 1.1rem;
             display: inline-block;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, transform 0.1s ease;
         }
 
         .btn-primary:hover {
             background-color: var(--accent-hover);
         }
 
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
         .section-title {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 1.5rem;
             border-left: 4px solid var(--accent);
             padding-left: 0.75rem;
@@ -100,42 +106,44 @@
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            gap: 2rem;
             margin-bottom: 3rem;
         }
 
         .pricing-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 2rem;
+            border-radius: 10px;
+            padding: 2.2rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         .pricing-card h3 {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             margin-bottom: 0.5rem;
         }
 
         .price {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 2.2rem;
+            font-weight: 700;
             color: var(--accent);
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .pricing-card ul {
             list-style: none;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             color: var(--text-muted);
         }
 
         .pricing-card ul li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.7rem;
             position: relative;
-            padding-left: 1.2rem;
+            padding-left: 1.4rem;
+            font-size: 0.95rem;
         }
 
         .pricing-card ul li::before {
@@ -143,14 +151,16 @@
             position: absolute;
             left: 0;
             color: var(--success);
+            font-weight: bold;
         }
 
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem;
             color: var(--text-muted);
             font-size: 0.9rem;
             border-top: 1px solid var(--border-color);
+            background: #060b1b;
         }
     </style>
 </head>
@@ -161,53 +171,53 @@
         <p>High-Performance Mobile Ordering & Kitchen Display Systems for Festival Vendors</p>
     </header>
 
-    <div class="container">
-
-        <!-- Instant Live Demo CTA Banner -->
-        <div class="hero-demo-box">
+    <main class="container">
+        <section class="hero-demo-box">
             <h2>Experience the Vendor Advantage</h2>
-            <p>Test drive our lightning-fast mobile ordering and live Kitchen Display System (KDS) right now.</p>
+            <p>Test drive our lightning-fast mobile ordering and live Kitchen Display System (KDS) configured for high-volume crowds.</p>
             <a href="demo.html" class="btn-primary">🚀 Launch Live Demo</a>
-        </div>
+        </section>
 
-        <h2 class="section-title">Deployment Packages</h2>
-
-        <div class="pricing-grid">
-            <!-- Festival Express -->
-            <div class="pricing-card">
-                <div>
-                    <h3>Festival Express</h3>
-                    <div class="price">$175 <span style="font-size: 0.9rem; color: var(--text-muted);">deposit</span></div>
-                    <ul>
-                        <li>Instant Mobile Ordering Page</li>
-                        <li>QR Code Table/Booth Generation</li>
-                        <li>Stripe Checkout Integration</li>
-                        <li>Rapid Deployment</li>
-                    </ul>
+        <section>
+            <h2 class="section-title">Deployment Packages</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div>
+                        <h3>Festival Express</h3>
+                        <div class="price">$175 <span style="font-size: 0.9rem; color: var(--text-muted);">deposit</span></div>
+                        <ul>
+                            <li>Instant Mobile Ordering Page</li>
+                            <li>QR Code Table/Booth Generation</li>
+                            <li>Stripe Checkout Integration</li>
+                            <li>Rapid 24-Hour Deployment</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/bJeaEQ4rW2l67k25FX7ok01" class="btn-primary" style="text-align: center;">Secure Festival Express</a>
                 </div>
-                <a href="https://buy.stripe.com/bJeaEQ4rW2l67k25FX7ok01" class="btn-primary" style="text-align: center;">Secure Festival Express</a>
-            </div>
 
-            <!-- Full Kitchen Suite -->
-            <div class="pricing-card">
-                <div>
-                    <h3>Full Kitchen Suite</h3>
-                    <div class="price">$285 <span style="font-size: 0.9rem; color: var(--text-muted);">installment</span></div>
-                    <ul>
-                        <li>Complete Mobile Ordering System</li>
-                        <li>Real-Time Kitchen Display (KDS)</li>
-                        <li>Order Status & Routing Dashboard</li>
-                        <li>Priority Support & Custom Setup</li>
-                    </ul>
+                <div class="pricing-card">
+                    <div>
+                        <h3>Full Kitchen Suite</h3>
+                        <div class="price">$285 <span style="font-size: 0.9rem; color: var(--text-muted);">installment</span></div>
+                        <ul>
+                            <li>Complete Mobile Ordering System</li>
+                            <li>Real-Time Kitchen Display (KDS)</li>
+                            <li>Order Status & Routing Dashboard</li>
+                            <li>Priority Support & Custom Setup</li>
+                        </ul>
+                    </div>
+                    <a href="https://buy.stripe.com/cNidR2cYs1h25bUb0h7ok00" class="btn-primary" style="text-align: center;">Secure Full Kitchen Suite</a>
                 </div>
-                <a href="https://buy.stripe.com/cNidR2cYs1h25bUb0h7ok00" class="btn-primary" style="text-align: center;">Secure Full Kitchen Suite</a>
             </div>
-        </div>
-
-    </div>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 O-Skeuos. Florence, South Carolina. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
     </footer>
 
 </body>
