@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O-Skeuos Live Ordering Demo</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --bg-ios: #f2f2f7;
@@ -68,11 +69,6 @@
             font-weight: 600;
             color: white;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .view-toggle:hover, .cart-nav-btn:hover {
-            background: var(--accent-hover);
         }
 
         .cart-nav-btn {
@@ -174,7 +170,6 @@
             align-items: center;
             gap: 0.3rem;
             user-select: none;
-            transition: all 0.15s ease;
         }
 
         .chip.active {
@@ -209,7 +204,6 @@
             cursor: pointer;
             margin-top: 1rem;
             width: 100%;
-            transition: background 0.2s, transform 0.1s;
         }
 
         .add-btn:active {
@@ -259,7 +253,6 @@
             font-weight: 700;
             cursor: pointer;
             text-align: center;
-            transition: background 0.2s;
         }
 
         .post-order-actions {
@@ -362,11 +355,6 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 0.5rem;
-            transition: opacity 0.2s;
-        }
-
-        .complete-btn:hover {
-            opacity: 0.9;
         }
     </style>
 </head>
@@ -375,20 +363,20 @@
     <header>
         <h1>O-Skeuos Demo</h1>
         <div class="header-actions">
-            <button class="cart-nav-btn" id="cartNavBtn" onclick="App.switchView('cart')">🛒 View Cart (<span id="navCartCount">0</span>)</button>
-            <button class="view-toggle" onclick="App.toggleMainKDSView()" id="viewToggleBtn">KDS View</button>
+            <button class="cart-nav-btn" id="cartNavBtn" onclick="switchView('cart')">🛒 View Cart (<span id="navCartCount">0</span>)</button>
+            <button class="view-toggle" onclick="toggleMainKDSView()" id="viewToggleBtn">KDS View</button>
         </div>
     </header>
 
     <!-- CUSTOMER MENU VIEW -->
-    <main class="container" id="customerView">
+    <div class="container" id="customerView">
         <div class="menu-section-title">Festival Menu</div>
 
         <!-- Smash Burger -->
-        <article class="menu-card" data-item-key="burger">
+        <div class="menu-card" id="card-burger">
             <div class="menu-card-top">
                 <div class="food-graphic">
-                    <svg width="50" height="50" viewBox="0 0 100 100" aria-hidden="true">
+                    <svg width="50" height="50" viewBox="0 0 100 100">
                         <path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/>
                         <rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/>
                         <polygon points="20,55 35,53 50,57 65,53 80,55 80,59 20,59" fill="#f1c40f"/>
@@ -409,13 +397,13 @@
             <div class="options-group">
                 <div class="options-title">Add Extra Toppings</div>
                 <div class="chip-group">
-                    <div class="chip" onclick="App.toggleChip(this, 'burger', 'cheese')">
+                    <div class="chip" onclick="toggleChip(this, 'burger', 'cheese')">
                         <span class="dot-icon" style="background:#f39c12;"></span> Extra Cheese
                     </div>
-                    <div class="chip" onclick="App.toggleChip(this, 'burger', 'sauce')">
+                    <div class="chip" onclick="toggleChip(this, 'burger', 'sauce')">
                         <span class="dot-icon" style="background:#e74c3c;"></span> Extra Secret Sauce
                     </div>
-                    <div class="chip" onclick="App.toggleChip(this, 'burger', 'bacon')">
+                    <div class="chip" onclick="toggleChip(this, 'burger', 'bacon')">
                         <span class="dot-icon" style="background:#8e44ad;"></span> Crispy Bacon
                     </div>
                 </div>
@@ -424,19 +412,19 @@
             <div class="options-group">
                 <div class="options-title">Removals</div>
                 <div class="chip-group">
-                    <div class="chip chip-remove" onclick="App.toggleRemoveChip(this)">No Onions</div>
-                    <div class="chip chip-remove" onclick="App.toggleRemoveChip(this)">No Pickles</div>
+                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Onions</div>
+                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Pickles</div>
                 </div>
             </div>
 
-            <button class="add-btn" onclick="App.addBurgerToCart(event)">Add to Cart</button>
-        </article>
+            <button class="add-btn" onclick="addBurgerToCart()">Add to Cart</button>
+        </div>
 
         <!-- Loaded Fries -->
-        <article class="menu-card" data-item-key="fries">
+        <div class="menu-card" id="card-fries">
             <div class="menu-card-top">
                 <div class="food-graphic">
-                    <svg width="50" height="50" viewBox="0 0 100 100" aria-hidden="true">
+                    <svg width="50" height="50" viewBox="0 0 100 100">
                         <polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/>
                         <rect x="33" y="15" width="6" height="35" rx="3" fill="#f1c40f"/>
                         <rect x="42" y="10" width="6" height="40" rx="3" fill="#f39c12"/>
@@ -456,10 +444,10 @@
             <div class="options-group">
                 <div class="options-title">Add Extra Drizzle / Toppings</div>
                 <div class="chip-group">
-                    <div class="chip" onclick="App.toggleChip(this, 'fries', 'ranch')">
+                    <div class="chip" onclick="toggleChip(this, 'fries', 'ranch')">
                         <span class="dot-icon" style="background:#bdc3c7;"></span> Ranch Drizzle
                     </div>
-                    <div class="chip" onclick="App.toggleChip(this, 'fries', 'jalapeno')">
+                    <div class="chip" onclick="toggleChip(this, 'fries', 'jalapeno')">
                         <span class="dot-icon" style="background:#27ae60;"></span> Jalapeños
                     </div>
                 </div>
@@ -468,19 +456,19 @@
             <div class="options-group">
                 <div class="options-title">Removals</div>
                 <div class="chip-group">
-                    <div class="chip chip-remove" onclick="App.toggleRemoveChip(this)">No Bacon</div>
-                    <div class="chip chip-remove" onclick="App.toggleRemoveChip(this)">No Green Onions</div>
+                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Bacon</div>
+                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Green Onions</div>
                 </div>
             </div>
 
-            <button class="add-btn" onclick="App.addFriesToCart(event)">Add to Cart</button>
-        </article>
+            <button class="add-btn" onclick="addFriesToCart()">Add to Cart</button>
+        </div>
 
         <!-- Craft Lemonade -->
-        <article class="menu-card" data-item-key="lemonade">
+        <div class="menu-card" id="card-lemonade">
             <div class="menu-card-top">
                 <div class="food-graphic">
-                    <svg width="50" height="50" viewBox="0 0 100 100" aria-hidden="true">
+                    <svg width="50" height="50" viewBox="0 0 100 100">
                         <path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/>
                         <path id="lemonade-liquid" d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="#f1c40f"/>
                         <line x1="58" y1="10" x2="48" y2="75" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
@@ -498,30 +486,30 @@
             <div class="options-group">
                 <div class="options-title">Select Flavor Variant</div>
                 <div class="chip-group">
-                    <div class="chip active" onclick="App.selectLemonadeFlavor(this, 'Classic Lemon', '#f1c40f', 5.00)">
+                    <div class="chip active" onclick="selectLemonadeFlavor(this, 'Classic Lemon', '#f1c40f', 5.00)">
                         <span class="dot-icon" style="background:#f1c40f;"></span> Classic Yellow
                     </div>
-                    <div class="chip" onclick="App.selectLemonadeFlavor(this, 'Blackberry Infused', '#8e44ad', 5.50)">
+                    <div class="chip" onclick="selectLemonadeFlavor(this, 'Blackberry Infused', '#8e44ad', 5.50)">
                         <span class="dot-icon" style="background:#8e44ad;"></span> Blackberry
                     </div>
-                    <div class="chip" onclick="selectLemonadeFlavorAdapter(this, 'Strawberry Electric', '#e74c3c', 5.50)">
+                    <div class="chip" onclick="selectLemonadeFlavor(this, 'Strawberry Electric', '#e74c3c', 5.50)">
                         <span class="dot-icon" style="background:#e74c3c;"></span> Strawberry
                     </div>
-                    <div class="chip" onclick="App.selectLemonadeFlavor(this, 'Blue Raspberry', '#3498db', 5.50)">
+                    <div class="chip" onclick="selectLemonadeFlavor(this, 'Blue Raspberry', '#3498db', 5.50)">
                         <span class="dot-icon" style="background:#3498db;"></span> Blue Raspberry
                     </div>
                 </div>
             </div>
 
-            <button class="add-btn" onclick="App.addLemonadeToCart(event)">Add to Cart</button>
-        </article>
-    </main>
+            <button class="add-btn" onclick="addLemonadeToCart()">Add to Cart</button>
+        </div>
+    </div>
 
     <!-- DEDICATED CART VIEW -->
-    <section class="container" id="cartView">
+    <div class="container" id="cartView">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <h2 class="menu-section-title" style="margin:0;">Your Order Cart</h2>
-            <button onclick="App.switchView('menu')" style="background:none; border:none; color:var(--accent); font-weight:600; cursor:pointer;">← Back to Menu</button>
+            <button onclick="switchView('menu')" style="background:none; border:none; color:var(--accent); font-weight:600; cursor:pointer;">← Back to Menu</button>
         </div>
         
         <div id="cartItemsContainer"></div>
@@ -531,16 +519,16 @@
                 <span>Total Amount:</span>
                 <span id="cartViewTotal">$0.00</span>
             </div>
-            <button class="place-order-main-btn" id="placeOrderBtn" onclick="App.executeCheckout(event)">Place Order →</button>
+            <button class="place-order-main-btn" id="placeOrderBtn" onclick="executeCheckout(event)">Place Order →</button>
             
             <div class="post-order-actions" id="postOrderActions">
-                <button class="go-to-kds-btn" onclick="App.switchView('kds')">👀 Open Live KDS Display →</button>
+                <button class="go-to-kds-btn" onclick="switchView('kds')">👀 Open Live KDS Display →</button>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- KITCHEN DISPLAY SYSTEM (KDS) VIEW -->
-    <section class="container" id="kds-view">
+    <div class="container" id="kds-view">
         <div class="kds-header">
             <span>Kitchen Display (Live)</span>
             <span style="font-size: 0.85rem; color: var(--success);">● Connected</span>
@@ -553,300 +541,229 @@
         <div id="kdsTicketContainer">
             <p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders. Place an order from the cart view!</p>
         </div>
-    </section>
+    </div>
 
     <script>
-        // Backward compatibility helper for inline click binding
-        function selectLemonadeFlavorAdapter(el, flavor, color, price) {
-            App.selectLemonadeFlavor(el, flavor, color, price);
+        // Global state variables
+        var cart = [];
+        var activeOrders = [];
+        var currentView = 'menu';
+        var selectedLemonade = {
+            flavor: 'Classic Lemon',
+            color: '#f1c40f',
+            price: 5.00
+        };
+
+        function toggleChip(element, itemKey, dotKey) {
+            element.classList.toggle('active');
+            var dot = document.getElementById(itemKey + '-dot-' + dotKey);
+            if (dot) {
+                dot.style.display = element.classList.contains('active') ? 'block' : 'none';
+            }
         }
 
-        const App = (() => {
-            let state = {
-                cart: [],
-                activeOrders: [],
-                currentView: 'menu',
-                selectedLemonade: {
-                    flavor: 'Classic Lemon',
-                    color: '#f1c40f',
-                    price: 5.00
-                }
-            };
+        function toggleRemoveChip(element) {
+            element.classList.toggle('active');
+        }
 
-            function init() {
-                try {
-                    const cachedOrders = localStorage.getItem('oskeuos_orders');
-                    if (cachedOrders) state.activeOrders = JSON.parse(cachedOrders);
-                } catch (e) {
-                    console.warn('Storage sync unavailable');
-                }
-                updateCartCount();
-                renderKDS();
+        function selectLemonadeFlavor(element, flavor, color, price) {
+            var group = element.parentElement.querySelectorAll('.chip');
+            for (var i = 0; i < group.length; i++) {
+                group[i].classList.remove('active');
+            }
+            element.classList.add('active');
+
+            selectedLemonade = { flavor: flavor, color: color, price: price };
+            var liquid = document.getElementById('lemonade-liquid');
+            var priceDisplay = document.getElementById('lemonade-price-display');
+            if (liquid) liquid.setAttribute('fill', color);
+            if (priceDisplay) priceDisplay.textContent = '$' + price.toFixed(2);
+        }
+
+        function getSelectedOptions(cardElement) {
+            var activeAddons = cardElement.querySelectorAll('.options-group:nth-of-type(1) .chip.active');
+            var addons = [];
+            for (var i = 0; i < activeAddons.length; i++) {
+                addons.push(activeAddons[i].textContent.trim());
             }
 
-            function toggleChip(element, itemKey, dotKey) {
-                element.classList.toggle('active');
-                const dot = document.getElementById(`${itemKey}-dot-${dotKey}`);
-                if (dot) {
-                    dot.style.display = element.classList.contains('active') ? 'block' : 'none';
-                }
+            var activeRemovals = cardElement.querySelectorAll('.chip-remove.active');
+            var removals = [];
+            for (var j = 0; j < activeRemovals.length; j++) {
+                removals.push(activeRemovals[j].textContent.trim());
             }
+            return { addons: addons, removals: removals };
+        }
 
-            function toggleRemoveChip(element) {
-                element.classList.toggle('active');
+        function addBurgerToCart() {
+            var card = document.getElementById('card-burger');
+            var opts = getSelectedOptions(card);
+            cart.push({
+                name: 'Smash Burger Basket',
+                price: 12.00,
+                addons: opts.addons,
+                removals: opts.removals,
+                type: 'burger'
+            });
+            updateCartCount();
+            alert("Added Smash Burger to Cart!");
+        }
+
+        function addFriesToCart() {
+            var card = document.getElementById('card-fries');
+            var opts = getSelectedOptions(card);
+            cart.push({
+                name: 'Loaded Fries',
+                price: 8.50,
+                addons: opts.addons,
+                removals: opts.removals,
+                type: 'fries'
+            });
+            updateCartCount();
+            alert("Added Loaded Fries to Cart!");
+        }
+
+        function addLemonadeToCart() {
+            cart.push({
+                name: 'Craft Lemonade (' + selectedLemonade.flavor + ')',
+                price: selectedLemonade.price,
+                addons: [],
+                removals: [],
+                type: 'lemonade',
+                color: selectedLemonade.color
+            });
+            updateCartCount();
+            alert("Added Craft Lemonade to Cart!");
+        }
+
+        function updateCartCount() {
+            var countElem = document.getElementById('navCartCount');
+            var cartNavBtn = document.getElementById('cartNavBtn');
+            if (countElem) countElem.textContent = cart.length;
+            if (cartNavBtn) {
+                cartNavBtn.style.display = cart.length > 0 ? 'inline-block' : 'none';
             }
+        }
 
-            function selectLemonadeFlavor(element, flavor, color, price) {
-                const group = element.parentElement.querySelectorAll('.chip');
-                group.forEach(c => c.classList.remove('active'));
-                element.classList.add('active');
+        function switchView(view) {
+            currentView = view;
+            var menuView = document.getElementById('customerView');
+            var cartView = document.getElementById('cartView');
+            var kdsView = document.getElementById('kds-view');
+            var viewToggleBtn = document.getElementById('viewToggleBtn');
+            var cartNavBtn = document.getElementById('cartNavBtn');
 
-                state.selectedLemonade = { flavor, color, price };
-                const liquid = document.getElementById('lemonade-liquid');
-                const priceDisplay = document.getElementById('lemonade-price-display');
-                if (liquid) liquid.setAttribute('fill', color);
-                if (priceDisplay) priceDisplay.textContent = `$${price.toFixed(2)}`;
-            }
+            if (menuView) menuView.style.display = 'none';
+            if (cartView) cartView.style.display = 'none';
+            if (kdsView) kdsView.style.display = 'none';
 
-            function getSelectedOptions(cardElement) {
-                const addons = Array.from(cardElement.querySelectorAll('.options-group:nth-of-type(1) .chip.active'))
-                    .map(c => c.textContent.trim());
-                const removals = Array.from(cardElement.querySelectorAll('.chip-remove.active'))
-                    .map(c => c.textContent.trim());
-                return { addons, removals };
-            }
-
-            function addBurgerToCart(event) {
-                const card = event.target.closest('.menu-card');
-                const { addons, removals } = getSelectedOptions(card);
-                state.cart.push({
-                    name: 'Smash Burger Basket',
-                    price: 12.00,
-                    addons,
-                    removals,
-                    type: 'burger'
-                });
-                updateCartCount();
-                alert("Added Smash Burger to Cart!");
-            }
-
-            function addFriesToCart(event) {
-                const card = event.target.closest('.menu-card');
-                const { addons, removals } = getSelectedOptions(card);
-                state.cart.push({
-                    name: 'Loaded Fries',
-                    price: 8.50,
-                    addons,
-                    removals,
-                    type: 'fries'
-                });
-                updateCartCount();
-                alert("Added Loaded Fries to Cart!");
-            }
-
-            function addLemonadeToCart(event) {
-                state.cart.push({
-                    name: `Craft Lemonade (${state.selectedLemonade.flavor})`,
-                    price: state.selectedLemonade.price,
-                    addons: [],
-                    removals: [],
-                    type: 'lemonade',
-                    color: state.selectedLemonade.color
-                });
-                updateCartCount();
-                alert("Added Craft Lemonade to Cart!");
-            }
-
-            function updateCartCount() {
-                const countElem = document.getElementById('navCartCount');
-                const cartNavBtn = document.getElementById('cartNavBtn');
-                if (countElem) countElem.textContent = state.cart.length;
-                if (cartNavBtn) {
-                    cartNavBtn.style.display = state.cart.length > 0 ? 'inline-block' : 'none';
-                }
-            }
-
-            function switchView(view) {
-                state.currentView = view;
-                const menuView = document.getElementById('customerView');
-                const cartView = document.getElementById('cartView');
-                const kdsView = document.getElementById('kds-view');
-                const viewToggleBtn = document.getElementById('viewToggleBtn');
-                const cartNavBtn = document.getElementById('cartNavBtn');
-
-                if (menuView) menuView.style.display = 'none';
-                if (cartView) cartView.style.display = 'none';
-                if (kdsView) kdsView.style.display = 'none';
-
-                if (view === 'menu') {
-                    if (menuView) menuView.style.display = 'block';
-                    if (viewToggleBtn) viewToggleBtn.textContent = 'KDS View';
-                    if (state.cart.length > 0 && cartNavBtn) cartNavBtn.style.display = 'inline-block';
-                } else if (view === 'cart') {
-                    if (cartView) cartView.style.display = 'block';
-                    if (cartNavBtn) cartNavBtn.style.display = 'none';
-                    if (viewToggleBtn) viewToggleBtn.textContent = 'Menu';
-                    renderCartView();
-                    const placeOrderBtn = document.getElementById('placeOrderBtn');
-                    const postOrderActions = document.getElementById('postOrderActions');
-                    if (placeOrderBtn) {
-                        placeOrderBtn.textContent = 'Place Order →';
-                        placeOrderBtn.style.background = 'var(--success)';
-                    }
-                    if (postOrderActions) postOrderActions.style.display = 'none';
-                } else if (view === 'kds') {
-                    if (kdsView) kdsView.style.display = 'block';
-                    if (viewToggleBtn) viewToggleBtn.textContent = 'Menu';
-                    if (cartNavBtn) cartNavBtn.style.display = 'none';
-                }
-            }
-
-            function toggleMainKDSView() {
-                if (state.currentView === 'kds') {
-                    switchView('menu');
-                } else {
-                    switchView('kds');
-                }
-            }
-
-            function renderCartView() {
-                const container = document.getElementById('cartItemsContainer');
-                const totalElem = document.getElementById('cartViewTotal');
-                if (!container || !totalElem) return;
-
-                if (state.cart.length === 0) {
-                    container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; margin: 2rem 0;">Your cart is empty.</p>`;
-                    totalElem.textContent = '$0.00';
-                    return;
-                }
-
-                let total = state.cart.reduce((sum, item) => sum + item.price, 0);
-                totalElem.textContent = `$${total.toFixed(2)}`;
-
-                container.innerHTML = state.cart.map((item, index) => `
-                    <div class="cart-item-card">
-                        <div>
-                            <div style="font-weight: 600; font-size: 1rem;">${item.name}</div>
-                            <div style="font-size: 0.82rem; color: var(--text-secondary);">
-                                ${item.addons.map(a => `+ ${a}`).join(', ')}
-                                ${item.removals.map(r => `NO ${r.replace('No ', '')}`).join(', ')}
-                            </div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-weight: 600; color: var(--accent); margin-bottom: 0.3rem;">$${item.price.toFixed(2)}</div>
-                            <button onclick="App.removeFromCart(${index})" style="background:none; border:none; color:var(--danger); font-size:0.8rem; cursor:pointer;">Remove</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            function removeFromCart(index) {
-                state.cart.splice(index, 1);
-                updateCartCount();
+            if (view === 'menu') {
+                if (menuView) menuView.style.display = 'block';
+                if (viewToggleBtn) viewToggleBtn.textContent = 'KDS View';
+                if (cart.length > 0 && cartNavBtn) cartNavBtn.style.display = 'inline-block';
+            } else if (view === 'cart') {
+                if (cartView) cartView.style.display = 'block';
+                if (cartNavBtn) cartNavBtn.style.display = 'none';
+                if (viewToggleBtn) viewToggleBtn.textContent = 'Menu';
                 renderCartView();
-            }
-
-            function executeCheckout(event) {
-                if (state.cart.length === 0) return;
-
-                let newOrder = {
-                    id: Math.floor(100 + Math.random() * 900),
-                    items: [...state.cart],
-                    time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
-                };
-
-                state.activeOrders.push(newOrder);
-                try {
-                    localStorage.setItem('oskeuos_orders', JSON.stringify(state.activeOrders));
-                } catch (e) {}
-
-                state.cart = [];
-                updateCartCount();
-                renderKDS();
-
-                if (typeof confetti === 'function') {
-                    const rect = event.target.getBoundingClientRect();
-                    const x = (rect.left + rect.width / 2) / window.innerWidth;
-                    const y = (rect.top + rect.height / 2) / window.innerHeight;
-                    confetti({ particleCount: 70, spread: 60, origin: { x, y } });
+                var placeOrderBtn = document.getElementById('placeOrderBtn');
+                var postOrderActions = document.getElementById('postOrderActions');
+                if (placeOrderBtn) {
+                    placeOrderBtn.textContent = 'Place Order →';
+                    placeOrderBtn.style.background = 'var(--success)';
                 }
+                if (postOrderActions) postOrderActions.style.display = 'none';
+            } else if (view === 'kds') {
+                if (kdsView) kdsView.style.display = 'block';
+                if (viewToggleBtn) viewToggleBtn.textContent = 'Menu';
+                if (cartNavBtn) cartNavBtn.style.display = 'none';
+            }
+        }
 
-                const btn = document.getElementById('placeOrderBtn');
-                const postActions = document.getElementById('postOrderActions');
-                if (btn) {
-                    btn.textContent = 'Order Placed! ✓';
-                    btn.style.background = '#27ae60';
-                }
-                if (postActions) postActions.style.display = 'block';
+        function toggleMainKDSView() {
+            if (currentView === 'kds') {
+                switchView('menu');
+            } else {
+                switchView('kds');
+            }
+        }
+
+        function renderCartView() {
+            var container = document.getElementById('cartItemsContainer');
+            var totalElem = document.getElementById('cartViewTotal');
+            if (!container || !totalElem) return;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin: 2rem 0;">Your cart is empty.</p>';
+                totalElem.textContent = '$0.00';
+                return;
             }
 
-            function getKDSGraphic(item) {
-                if (item.type === 'burger') {
-                    return `<svg viewBox="0 0 100 100" class="kds-graphic"><path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/><rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/><rect x="15" y="61" width="70" height="12" rx="4" fill="#5d4037"/><rect x="18" y="75" width="64" height="10" rx="4" fill="#d35400"/></svg>`;
-                } else if (item.type === 'fries') {
-                    return `<svg viewBox="0 0 100 100" class="kds-graphic"><polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/><rect x="33" y="15" width="6" height="35" rx="3" fill="#f1c40f"/><rect x="42" y="10" width="6" height="40" rx="3" fill="#f39c12"/><rect x="51" y="12" width="6" height="38" rx="3" fill="#f1c40f"/></svg>`;
-                } else {
-                    return `<svg viewBox="0 0 100 100" class="kds-graphic"><path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/><path d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="${item.color || '#f1c40f'}"/><line x1="58" y1="10" x2="48" y2="75" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/></svg>`;
-                }
+            var total = 0;
+            for (var i = 0; i < cart.length; i++) {
+                total += cart[i].price;
             }
+            totalElem.textContent = '$' + total.toFixed(2);
 
-            function renderKDS() {
-                const container = document.getElementById('kdsTicketContainer');
-                if (!container) return;
+            var html = '';
+            for (var j = 0; j < cart.length; j++) {
+                var item = cart[j];
+                var addonsText = item.addons.join(', ');
+                var removalsText = item.removals.map(function(r) { return 'NO ' + r.replace('No ', ''); }).join(', ');
+                var details = [addonsText, removalsText].filter(Boolean).join(' | ');
 
-                if (state.activeOrders.length === 0) {
-                    container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders.</p>`;
-                    return;
-                }
-
-                container.innerHTML = state.activeOrders.map((order, index) => `
-                    <div class="kds-ticket">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
-                            <h4 style="margin:0;">Order #${order.id}</h4>
-                            <span style="font-size: 0.8rem; color: var(--text-secondary);">${order.time}</span>
-                        </div>
-                        <div>
-                            ${order.items.map(i => `
-                                <div class="kds-item-row">
-                                    ${getKDSGraphic(i)}
-                                    <div>
-                                        <div style="font-weight:600; font-size:0.95rem;">${i.name}</div>
-                                        ${i.addons.map(a => `<span class="kds-tag">+ ${a}</span>`).join('')}
-                                        ${i.removals.map(r => `<span class="kds-tag tag-remove">NO: ${r.replace('No ', '')}</span>`).join('')}
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <button class="complete-btn" onclick="App.completeOrder(${index})">Mark Ready / Complete</button>
-                    </div>
-                `).join('');
+                html += '<div class="cart-item-card">' +
+                    '<div>' +
+                        '<div style="font-weight: 600; font-size: 1rem;">' + item.name + '</div>' +
+                        '<div style="font-size: 0.82rem; color: var(--text-secondary);">' + details + '</div>' +
+                    '</div>' +
+                    '<div style="text-align: right;">' +
+                        '<div style="font-weight: 600; color: var(--accent); margin-bottom: 0.3rem;">$' + item.price.toFixed(2) + '</div>' +
+                        '<button onclick="removeFromCart(' + j + ')" style="background:none; border:none; color:var(--danger); font-size:0.8rem; cursor:pointer;">Remove</button>' +
+                    '</div>' +
+                '</div>';
             }
+            container.innerHTML = html;
+        }
 
-            function completeOrder(index) {
-                state.activeOrders.splice(index, 1);
-                try {
-                    localStorage.setItem('oskeuos_orders', JSON.stringify(state.activeOrders));
-                } catch (e) {}
-                renderKDS();
-            }
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            renderCartView();
+        }
 
-            return {
-                init,
-                toggleChip,
-                toggleRemoveChip,
-                selectLemonadeFlavor,
-                addBurgerToCart,
-                addFriesToCart,
-                addLemonadeToCart,
-                switchView,
-                toggleMainKDSView,
-                removeFromCart,
-                executeCheckout,
-                completeOrder
+        function executeCheckout(event) {
+            if (cart.length === 0) return;
+
+            var newOrder = {
+                id: Math.floor(100 + Math.random() * 900),
+                items: cart.slice(),
+                time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
             };
-        })();
 
-        document.addEventListener('DOMContentLoaded', App.init);
-    </script>
-</body>
-</html>
+            activeOrders.push(newOrder);
+            cart = [];
+            updateCartCount();
+            renderKDS();
+
+            if (typeof confetti === 'function') {
+                var rect = event.target.getBoundingClientRect();
+                var x = (rect.left + rect.width / 2) / window.innerWidth;
+                var y = (rect.top + rect.height / 2) / window.innerHeight;
+                confetti({ particleCount: 70, spread: 60, origin: { x: x, y: y } });
+            }
+
+            var btn = document.getElementById('placeOrderBtn');
+            var postActions = document.getElementById('postOrderActions');
+            if (btn) {
+                btn.textContent = 'Order Placed! ✓';
+                btn.style.background = '#27ae60';
+            }
+            if (postActions) postActions.style.display = 'block';
+        }
+
+        function getKDSGraphic(item) {
+            if (item.type === 'burger') {
+                return '<svg viewBox="0 0 100 100" class="kds-graphic"><path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/><rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/><rect x="15" y="61" width="70" height="12" rx="4" fill="#5d4037"/><rect x="18" y="75" width="64" height="10" rx="4" fill="#d35400"/></svg>';
+            } else if (item.type === 'fries') {
+                return '<svg viewBox="0 0 100 100" class="kds-graphic"><polygon points="30,45 70,45 62,90 38,90" fill
