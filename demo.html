@@ -517,11 +517,11 @@
             </div>
             
             <div class="kds-explainer">
-                <strong>⚡ Live KDS Infrastructure:</strong> Built for high-volume crowds like the South Carolina Pecan Festival. Orders route instantly from customer mobile browsers straight to kitchen stations. Modifiers like <em>"No Onions"</em> highlight in red to prevent order remakes.
+                <strong>⚡ Live KDS Infrastructure:</strong> Built for high-volume crowds like the South Carolina Pecan Festival. Items added to cart instantly route to kitchen stations. Modifiers like <em>"No Onions"</em> highlight in red to prevent order remakes.
             </div>
 
             <div id="kdsTicketsList">
-                <p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders yet!</p>
+                <p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active items in cart yet!</p>
             </div>
         </section>
 
@@ -530,7 +530,6 @@
     <script>
         // Global Application State
         var cartState = [];
-        var kdsOrders = [];
         var activeLemonade = { flavor: 'Classic Lemon', price: 5.00, color: '#f1c40f' };
 
         // View Switching Controller
@@ -599,7 +598,7 @@
             document.getElementById('lemonadePrice').textContent = '$' + activeLemonade.price.toFixed(2);
         }
 
-        // Add Standard Item to Cart
+        // Add Standard Item to Cart & Sync to KDS immediately
         function addItemToCart(name, price, cardId) {
             var card = document.getElementById(cardId);
             var addons = [];
@@ -610,10 +609,10 @@
 
             cartState.push({ name: name, price: price, addons: addons, removals: removals });
             updateCartBadge();
-            alert('Added ' + name + ' to Cart!');
+            alert('Added ' + name + ' to Cart & KDS!');
         }
 
-        // Add Lemonade to Cart
+        // Add Lemonade to Cart & Sync to KDS immediately
         function addLemonadeToCart() {
             cartState.push({
                 name: 'Craft Lemonade (' + activeLemonade.flavor + ')',
@@ -622,7 +621,7 @@
                 removals: []
             });
             updateCartBadge();
-            alert('Added Craft Lemonade to Cart!');
+            alert('Added Craft Lemonade to Cart & KDS!');
         }
 
         // Update Cart Badge
@@ -679,62 +678,55 @@
             renderCart();
         }
 
-        // Execute Checkout & Send to KDS
+        // Execute Checkout (Clears cart with celebration)
         function executeCheckout() {
             if (cartState.length === 0) return;
-
-            kdsOrders.push({
-                id: Math.floor(100 + Math.random() * 900),
-                items: cartState.slice(),
-                time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
-            });
-
-            cartState = [];
-            updateCartBadge();
 
             if (typeof confetti === 'function') {
                 confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
             }
+
+            cartState = [];
+            updateCartBadge();
 
             document.getElementById('checkoutBoxContainer').style.display = 'none';
             document.getElementById('cartItemsList').innerHTML = '';
             document.getElementById('successView').style.display = 'block';
         }
 
-        // Render Kitchen Display System Tickets
+        // Render Kitchen Display System directly from Cart State
         function renderKDS() {
             var kdsList = document.getElementById('kdsTicketsList');
             kdsList.innerHTML = '';
 
-            if (kdsOrders.length === 0) {
-                kdsList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders yet!</p>';
+            if (cartState.length === 0) {
+                kdsList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active items in cart yet!</p>';
                 return;
             }
 
-            kdsOrders.forEach(function(order, index) {
-                var itemsHtml = '';
-                order.items.forEach(function(i) {
-                    var addons = i.addons.map(function(a) { return `<span class="kds-tag">+ ${a}</span>`; }).join('');
-                    var removals = i.removals.map(function(r) { return `<span class="kds-tag tag-remove">${r}</span>`; }).join('');
-                    itemsHtml += `<div class="kds-item-row"><div><div style="font-weight:600;">${i.name}</div><div>${addons} ${removals}</div></div></div>`;
-                });
-
-                var ticket = document.createElement('div');
-                ticket.className = 'kds-ticket';
-                ticket.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
-                        <h4 style="margin:0;">Order #${order.id}</h4>
-                        <span style="font-size: 0.8rem; color: var(--text-secondary);">${order.time}</span>
-                    </div>
-                    <div>${itemsHtml}</div>
-                    <button class="add-btn" onclick="completeOrder(${index})" style="background: var(--success); margin-top: 0.5rem;">Mark Ready / Complete</button>
-                `;
-                kdsList.appendChild(ticket);
+            var itemsHtml = '';
+            cartState.forEach(function(i) {
+                var addons = i.addons.map(function(a) { return `<span class="kds-tag">+ ${a}</span>`; }).join('');
+                var removals = i.removals.map(function(r) { return `<span class="kds-tag tag-remove">${r}</span>`; }).join('');
+                itemsHtml += `<div class="kds-item-row"><div><div style="font-weight:600;">${i.name}</div><div>${addons} ${removals}</div></div></div>`;
             });
+
+            var ticket = document.createElement('div');
+            ticket.className = 'kds-ticket';
+            ticket.innerHTML = `
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+                    <h4 style="margin:0;">Live Cart Order</h4>
+                    <span style="font-size: 0.8rem; color: var(--success); font-weight: 600;">Active Live Stream</span>
+                </div>
+                <div>${itemsHtml}</div>
+                <button class="add-btn" onclick="clearLiveOrder()" style="background: var(--success); margin-top: 0.5rem;">Mark Ready / Complete</button>
+            `;
+            kdsList.appendChild(ticket);
         }
 
-        function completeOrder(index) {
-            kdsOrders.splice(index, 1);
+        function clearLiveOrder() {
+            cartState = [];
+            updateCartBadge();
             renderKDS();
         }
     </script>
