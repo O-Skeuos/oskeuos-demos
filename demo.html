@@ -15,7 +15,6 @@
             --accent: #4a90e2;
             --border: #c6c6c8;
             --success: #34c759;
-            --header-dark: #0a1128;
             --danger: #ff3b30;
         }
 
@@ -25,8 +24,8 @@
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
             user-select: none;
-            -webkit-user-select: none;
         }
 
         body {
@@ -191,9 +190,9 @@
             background: var(--accent);
             color: white;
             border: none;
-            padding: 0.8rem 1rem;
+            padding: 0.9rem 1rem;
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             margin-top: 1rem;
@@ -230,41 +229,29 @@
             margin-bottom: 1.2rem;
         }
 
-        /* Confirmation Modal */
-        #orderConfirmationModal {
+        /* Success Confirmation View */
+        #successView {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-
-        .modal-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            max-width: 400px;
-            width: 100%;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 3rem 1rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            margin-top: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        .modal-card h3 {
-            font-size: 1.3rem;
+        #successView h2 {
             color: var(--success);
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
         }
 
-        .modal-card p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+        #successView p {
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 2rem;
+            line-height: 1.4;
         }
 
         .kds-explainer {
@@ -364,15 +351,17 @@
                 <button class="add-btn" id="addBurgerBtn">Add to Cart</button>
             </div>
 
-            <!-- Loaded Fries -->
+            <!-- Loaded Fries (Fixed with full basket of fries) -->
             <div class="menu-card" id="card-fries">
                 <div class="menu-card-top">
                     <div class="food-graphic">
                         <svg width="50" height="50" viewBox="0 0 100 100">
                             <polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/>
-                            <rect x="33" y="15" width="6" height="35" rx="3" fill="#f1c40f"/>
-                            <rect x="42" y="10" width="6" height="40" rx="3" fill="#f39c12"/>
-                            <rect x="51" y="12" width="6" height="38" rx="3" fill="#f1c40f"/>
+                            <rect x="32" y="15" width="5" height="35" rx="2" fill="#f1c40f"/>
+                            <rect x="39" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
+                            <rect x="46" y="12" width="5" height="38" rx="2" fill="#f1c40f"/>
+                            <rect x="53" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
+                            <rect x="60" y="16" width="5" height="34" rx="2" fill="#f1c40f"/>
                         </svg>
                     </div>
                     <div class="item-info">
@@ -436,12 +425,19 @@
             
             <div id="cartItemsList"></div>
 
-            <div class="checkout-box">
+            <div class="checkout-box" id="checkoutBoxContainer">
                 <div class="checkout-total-row">
                     <span>Total Amount:</span>
                     <span id="cartTotalDisplay">$0.00</span>
                 </div>
                 <button class="action-btn success" id="placeOrderBtn">Place Order →</button>
+            </div>
+
+            <!-- Success Confirmation Screen -->
+            <div id="successView">
+                <h2>🎉 Success!</h2>
+                <p>Your order has been submitted,<br>please check kds</p>
+                <button class="action-btn" id="goToKdsFromSuccess">View Live KDS Display →</button>
             </div>
         </section>
 
@@ -463,15 +459,6 @@
 
     </div>
 
-    <!-- ORDER PLACED MODAL -->
-    <div id="orderConfirmationModal">
-        <div class="modal-card">
-            <h3>🎉 Order Placed!</h3>
-            <p>Your order has been placed<br><strong>(Check KDS)</strong></p>
-            <button class="action-btn" id="modalKdsBtn">View Live KDS Display →</button>
-        </div>
-    </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var cartState = [];
@@ -491,8 +478,10 @@
             var cartTotalDisplay = document.getElementById('cartTotalDisplay');
             var placeOrderBtn = document.getElementById('placeOrderBtn');
             var kdsTicketsList = document.getElementById('kdsTicketsList');
-            var orderConfirmationModal = document.getElementById('orderConfirmationModal');
-            var modalKdsBtn = document.getElementById('modalKdsBtn');
+            
+            var checkoutBoxContainer = document.getElementById('checkoutBoxContainer');
+            var successView = document.getElementById('successView');
+            var goToKdsFromSuccess = document.getElementById('goToKdsFromSuccess');
 
             function showView(target) {
                 menuView.classList.remove('active');
@@ -507,6 +496,8 @@
                     cartView.classList.add('active');
                     cartNavBtn.style.display = 'none';
                     kdsNavBtn.textContent = 'Menu';
+                    checkoutBoxContainer.style.display = 'block';
+                    successView.style.display = 'none';
                     renderCart();
                 } else if (target === 'kds') {
                     kdsView.classList.add('active');
@@ -528,7 +519,8 @@
 
             // Chip selection
             document.querySelectorAll('.option-chip, .remove-chip').forEach(function(chip) {
-                chip.addEventListener('click', function() {
+                chip.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     this.classList.toggle('selected');
                 });
             });
@@ -536,7 +528,8 @@
             // Flavor chips
             var flavorChips = document.querySelectorAll('.flavor-chip');
             flavorChips.forEach(function(chip) {
-                chip.addEventListener('click', function() {
+                chip.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     flavorChips.forEach(function(c) { c.classList.remove('selected'); });
                     this.classList.add('selected');
                     
@@ -563,21 +556,24 @@
                 cartNavBtn.style.display = cartState.length > 0 ? 'inline-block' : 'none';
             }
 
-            document.getElementById('addBurgerBtn').addEventListener('click', function() {
+            document.getElementById('addBurgerBtn').addEventListener('click', function(e) {
+                e.preventDefault();
                 var opts = getSelectedOptions('card-burger');
                 cartState.push({ name: 'Smash Burger Basket', price: 12.00, addons: opts.addons, removals: opts.removals });
                 updateBadge();
                 alert('Added Smash Burger to Cart!');
             });
 
-            document.getElementById('addFriesBtn').addEventListener('click', function() {
+            document.getElementById('addFriesBtn').addEventListener('click', function(e) {
+                e.preventDefault();
                 var opts = getSelectedOptions('card-fries');
                 cartState.push({ name: 'Loaded Fries', price: 8.50, addons: opts.addons, removals: opts.removals });
                 updateBadge();
                 alert('Added Loaded Fries to Cart!');
             });
 
-            document.getElementById('addLemonadeBtn').addEventListener('click', function() {
+            document.getElementById('addLemonadeBtn').addEventListener('click', function(e) {
+                e.preventDefault();
                 cartState.push({ name: 'Craft Lemonade (' + activeLemonade.flavor + ')', price: activeLemonade.price, addons: [], removals: [] });
                 updateBadge();
                 alert('Added Craft Lemonade to Cart!');
@@ -608,7 +604,7 @@
                         </div>
                         <div style="text-align: right;">
                             <div style="font-weight: 600; color: var(--accent);">$${item.price.toFixed(2)}</div>
-                            <button class="remove-item-btn" data-index="${index}" style="background:none; border:none; color:var(--danger); font-size:0.8rem; cursor:pointer;">Remove</button>
+                            <button class="remove-item-btn" data-index="${index}" style="background:none; border:none; color:var(--danger); font-size:0.8rem; cursor:pointer; padding:5px;">Remove</button>
                         </div>
                     `;
                     cartItemsList.appendChild(div);
@@ -616,9 +612,9 @@
 
                 cartTotalDisplay.textContent = '$' + total.toFixed(2);
 
-                // Bind remove buttons
                 document.querySelectorAll('.remove-item-btn').forEach(function(btn) {
-                    btn.addEventListener('click', function() {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
                         var idx = parseInt(this.getAttribute('data-index'));
                         cartState.splice(idx, 1);
                         updateBadge();
@@ -628,6 +624,7 @@
             }
 
             placeOrderBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 if (cartState.length === 0) return;
 
                 kdsOrders.push({
@@ -643,11 +640,14 @@
                     confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
                 }
 
-                orderConfirmationModal.style.display = 'flex';
+                // Swap checkout box view to success view
+                checkoutBoxContainer.style.display = 'none';
+                cartItemsList.innerHTML = '';
+                successView.style.display = 'block';
             });
 
-            modalKdsBtn.addEventListener('click', function() {
-                orderConfirmationModal.style.display = 'none';
+            goToKdsFromSuccess.addEventListener('click', function(e) {
+                e.preventDefault();
                 showView('kds');
             });
 
@@ -666,7 +666,7 @@
                     order.items.forEach(function(i) {
                         var addons = i.addons.map(function(a) { return `<span class="kds-tag">+ ${a}</span>`; }).join('');
                         var removals = i.removals.map(function(r) { return `<span class="kds-tag tag-remove">${r}</span>`; }).join('');
-                        itemsHtml += `<div class="kds-item-row"><div><div style="font-weight:600;">${i.name}</div><div>${addons} ${removans || removals}</div></div></div>`;
+                        itemsHtml += `<div class="kds-item-row"><div><div style="font-weight:600;">${i.name}</div><div>${addons} ${removals}</div></div></div>`;
                     });
 
                     ticket.innerHTML = `
@@ -681,7 +681,8 @@
                 });
 
                 document.querySelectorAll('.complete-order-btn').forEach(function(btn) {
-                    btn.addEventListener('click', function() {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
                         var idx = parseInt(this.getAttribute('data-index'));
                         kdsOrders.splice(idx, 1);
                         renderKDS();
