@@ -82,6 +82,7 @@
             padding: 3px;
             border-radius: 10px;
             gap: 4px;
+            overflow-x: auto;
         }
 
         .mode-btn {
@@ -96,6 +97,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
+            white-space: nowrap;
         }
 
         .mode-btn.active {
@@ -259,19 +261,37 @@
             font-weight: 700;
         }
 
+        .btn-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+
         .add-btn, .action-btn {
             background: var(--accent);
             color: white;
             border: none;
             padding: 0.75rem 1rem;
             border-radius: 10px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 0.8rem;
             width: 100%;
             text-align: center;
             box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+
+        .counter-btn {
+            background: var(--warning);
+            color: white;
+            border: none;
+            padding: 0.75rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(217, 119, 6, 0.2);
         }
 
         .action-btn.success {
@@ -341,7 +361,7 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
-        .kds-ticket.ticket-rush {
+        .kds-ticket.ticket-walkup {
             border-left-color: var(--warning);
         }
 
@@ -438,10 +458,10 @@
         
         <div id="mainLayout" class="layout-split">
 
-            <!-- LEFT PANEL: CUSTOMER ORDERING INTERFACE -->
+            <!-- LEFT PANEL: CUSTOMER / CASHIER ORDERING INTERFACE -->
             <div class="phone-frame" id="panelCustomer">
                 <div class="frame-header">
-                    <span>Customer Mobile POS</span>
+                    <span>Vendor POS / Ordering</span>
                     <span style="color:var(--accent);">Live Preview</span>
                 </div>
 
@@ -455,6 +475,7 @@
 
                     <!-- FOOD SECTION -->
                     <div class="menu-category-section active" id="cat-food">
+                        <!-- Smash Burger -->
                         <div class="menu-card" id="card-burger">
                             <div class="menu-card-top">
                                 <div class="food-graphic">
@@ -485,16 +506,25 @@
                                     <div class="chip chip-remove remove-chip" onclick="toggleChip(this)">No Pickles</div>
                                 </div>
                             </div>
-                            <button class="add-btn" onclick="addItemToCart('Smash Burger Basket', 12.00, 'card-burger')">Add to Cart & Sync KDS</button>
+                            <div class="btn-row">
+                                <button class="add-btn" onclick="addItemToCart('Smash Burger Basket', 12.00, 'card-burger')">Add to Cart</button>
+                                <button class="counter-btn" onclick="takeCounterOrder('Smash Burger Basket', 12.00, 'card-burger')">⚡ Walk-Up Order</button>
+                            </div>
                         </div>
 
+                        <!-- Loaded Fries (Upgraded Full Graphic) -->
                         <div class="menu-card" id="card-fries">
                             <div class="menu-card-top">
                                 <div class="food-graphic">
                                     <svg width="40" height="40" viewBox="0 0 100 100">
-                                        <polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/>
-                                        <rect x="39" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
-                                        <rect x="53" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
+                                        <polygon points="28,42 72,42 64,90 36,90" fill="#dc2626"/>
+                                        <path d="M 32 42 Q 50 32 68 42 Z" fill="#b91c1c"/>
+                                        <!-- Multiple Fries -->
+                                        <rect x="35" y="12" width="5" height="35" rx="2" transform="rotate(-15 35 12)" fill="#fbbf24"/>
+                                        <rect x="44" y="8" width="5" height="38" rx="2" transform="rotate(-5 44 8)" fill="#f59e0b"/>
+                                        <rect x="52" y="10" width="5" height="36" rx="2" transform="rotate(8 52 10)" fill="#fbbf24"/>
+                                        <rect x="60" y="14" width="5" height="33" rx="2" transform="rotate(18 60 14)" fill="#f59e0b"/>
+                                        <rect x="39" y="16" width="4" height="32" rx="2" transform="rotate(-8 39 16)" fill="#f59e0b"/>
                                     </svg>
                                 </div>
                                 <div class="item-info">
@@ -509,7 +539,10 @@
                                     <div class="chip chip-remove remove-chip" onclick="toggleChip(this)">No Bacon</div>
                                 </div>
                             </div>
-                            <button class="add-btn" onclick="addItemToCart('Loaded Fries', 8.50, 'card-fries')">Add to Cart & Sync KDS</button>
+                            <div class="btn-row">
+                                <button class="add-btn" onclick="addItemToCart('Loaded Fries', 8.50, 'card-fries')">Add to Cart</button>
+                                <button class="counter-btn" onclick="takeCounterOrder('Loaded Fries', 8.50, 'card-fries')">⚡ Walk-Up Order</button>
+                            </div>
                         </div>
                     </div>
 
@@ -537,7 +570,10 @@
                                     <div class="chip flavor-chip" data-flavor="Strawberry" data-color="#e74c3c" data-price="5.50" onclick="selectFlavor(this)">Strawberry</div>
                                 </div>
                             </div>
-                            <button class="add-btn" onclick="addLemonadeToCart()">Add to Cart & Sync KDS</button>
+                            <div class="btn-row">
+                                <button class="add-btn" onclick="addLemonadeToCart()">Add to Cart</button>
+                                <button class="counter-btn" onclick="takeCounterLemonadeOrder()">⚡ Walk-Up Order</button>
+                            </div>
                         </div>
                     </div>
 
@@ -556,7 +592,10 @@
                                     <div class="item-price">$6.00</div>
                                 </div>
                             </div>
-                            <button class="add-btn" onclick="addItemToCart('Artisan Pecan Brownie', 6.00, 'card-brownie')">Add to Cart & Sync KDS</button>
+                            <div class="btn-row">
+                                <button class="add-btn" onclick="addItemToCart('Artisan Pecan Brownie', 6.00, 'card-brownie')">Add to Cart</button>
+                                <button class="counter-btn" onclick="takeCounterOrder('Artisan Pecan Brownie', 6.00, 'card-brownie')">⚡ Walk-Up Order</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -596,11 +635,11 @@
                 </div>
 
                 <div class="kds-explainer">
-                    <strong>Vendor UX Highlight:</strong> Live real-time syncing. Items stream directly to the line as customers add them. High-contrast tags prevent kitchen remakes.
+                    <strong>Vendor UX Highlight:</strong> Dual-stream ordering. QR customer self-orders & counter walk-up cash sales route instantly to this screen.
                 </div>
 
                 <div id="kdsTicketsList">
-                    <p style="color: var(--text-muted); text-align: center; margin-top: 2rem; font-size: 0.88rem;">No active items queued on line.</p>
+                    <p style="color: var(--text-muted); text-align: center; margin-top: 2rem; font-size: 0.88rem;">No active orders queued on line.</p>
                 </div>
             </div>
 
@@ -609,6 +648,7 @@
 
     <script>
         var cartState = [];
+        var kdsOrders = [];
         var activeLemonade = { flavor: 'Classic Lemon', price: 5.00, color: '#f1c40f' };
 
         function setDemoMode(mode) {
@@ -672,17 +712,21 @@
             document.getElementById('lemonadePrice').textContent = '$' + activeLemonade.price.toFixed(2);
         }
 
+        // Add to cart AND instantly mirror to KDS
         function addItemToCart(name, price, cardId) {
             var card = document.getElementById(cardId);
             var addons = [];
             var removals = [];
 
-            card.querySelectorAll('.option-chip.selected').forEach(function(c) { addons.push(c.textContent.trim()); });
-            card.querySelectorAll('.remove-chip.selected').forEach(function(c) { removals.push(c.textContent.trim()); });
+            if (card) {
+                card.querySelectorAll('.option-chip.selected').forEach(function(c) { addons.push(c.textContent.trim()); });
+                card.querySelectorAll('.remove-chip.selected').forEach(function(c) { removals.push(c.textContent.trim()); });
+            }
 
             cartState.push({ name: name, price: price, addons: addons, removals: removals });
             updateCartBadge();
             renderKDS();
+            alert('Added ' + name + ' to Cart & KDS!');
         }
 
         function addLemonadeToCart() {
@@ -694,6 +738,54 @@
             });
             updateCartBadge();
             renderKDS();
+            alert('Added Craft Lemonade to Cart & KDS!');
+        }
+
+        /* Face-to-Face Counter Register Walk-Up Order Generators */
+        function takeCounterOrder(name, price, cardId) {
+            var card = document.getElementById(cardId);
+            var addons = [];
+            var removals = [];
+
+            if (card) {
+                card.querySelectorAll('.option-chip.selected').forEach(function(c) { addons.push(c.textContent.trim()); });
+                card.querySelectorAll('.remove-chip.selected').forEach(function(c) { removals.push(c.textContent.trim()); });
+            }
+
+            kdsOrders.push({
+                id: 'C-' + Math.floor(100 + Math.random() * 900),
+                type: 'WALK-UP',
+                items: [{ name: name, price: price, addons: addons, removals: removals }],
+                time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
+            });
+
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 50, spread: 50, origin: { y: 0.7 } });
+            }
+
+            renderKDS();
+            alert('Walk-Up Order sent straight to KDS!');
+        }
+
+        function takeCounterLemonadeOrder() {
+            kdsOrders.push({
+                id: 'C-' + Math.floor(100 + Math.random() * 900),
+                type: 'WALK-UP',
+                items: [{
+                    name: 'Craft Lemonade (' + activeLemonade.flavor + ')',
+                    price: activeLemonade.price,
+                    addons: [],
+                    removals: []
+                }],
+                time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
+            });
+
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 50, spread: 50, origin: { y: 0.7 } });
+            }
+
+            renderKDS();
+            alert('Walk-Up Order sent straight to KDS!');
         }
 
         function updateCartBadge() {
@@ -752,8 +844,15 @@
         function executeCheckout() {
             if (cartState.length === 0) return;
 
+            kdsOrders.push({
+                id: Math.floor(100 + Math.random() * 900),
+                type: 'ONLINE',
+                items: cartState.slice(),
+                time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
+            });
+
             if (typeof confetti === 'function') {
-                confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
+                confetti({ particleCount: 80, spread: 70, origin: { y: 0.7 } });
             }
 
             cartState = [];
@@ -769,38 +868,62 @@
             var kdsList = document.getElementById('kdsTicketsList');
             kdsList.innerHTML = '';
 
-            if (cartState.length === 0) {
-                kdsList.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 2rem; font-size: 0.88rem;">No active items queued on line.</p>';
+            // Combine active cart state items + formal kds orders
+            var allDisplayOrders = [];
+            if (cartState.length > 0) {
+                allDisplayOrders.push({
+                    id: 'LIVE',
+                    type: 'CART STREAM',
+                    items: cartState.slice(),
+                    time: 'Just Now'
+                });
+            }
+            kdsOrders.forEach(function(o) { allDisplayOrders.push(o); });
+
+            if (allDisplayOrders.length === 0) {
+                kdsList.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 2rem; font-size: 0.88rem;">No active orders queued on line.</p>';
                 return;
             }
 
-            var itemsHtml = '';
-            cartState.forEach(function(i) {
-                var addons = i.addons.map(function(a) { return `<span class="kds-tag tag-add">+ ${a}</span>`; }).join('');
-                var removals = i.removals.map(function(r) { return `<span class="kds-tag tag-remove">NO ${r.replace(/^No\s+/i, '')}</span>`; }).join('');
-                itemsHtml += `
-                    <div class="kds-item-row">
-                        <div class="kds-item-name">${i.name}</div>
-                        <div class="kds-tags-group">${addons} ${removals}</div>
-                    </div>`;
-            });
+            allDisplayOrders.forEach(function(order, index) {
+                var itemsHtml = '';
+                order.items.forEach(function(i) {
+                    var addons = i.addons && i.addons.map(function(a) { return `<span class="kds-tag tag-add">+ ${a}</span>`; }).join('');
+                    var removals = i.removals && i.removals.map(function(r) { return `<span class="kds-tag tag-remove">NO ${r.replace(/^No\s+/i, '')}</span>`; }).join('');
+                    itemsHtml += `
+                        <div class="kds-item-row">
+                            <div class="kds-item-name">${i.name}</div>
+                            <div class="kds-tags-group">${addons || ''} ${removals || ''}</div>
+                        </div>`;
+                });
 
-            var ticket = document.createElement('div');
-            ticket.className = 'kds-ticket';
-            ticket.innerHTML = `
-                <div class="kds-header-row">
-                    <span style="font-weight: 800; font-size: 0.9rem;">TICKET #101</span>
-                    <span style="font-size: 0.75rem; background: var(--accent-light); color: var(--accent); padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: 700;">PREP IN PROGRESS</span>
-                </div>
-                <div>${itemsHtml}</div>
-                <button class="add-btn" onclick="clearLiveOrder()" style="background: var(--success); margin-top: 0.8rem; padding: 0.6rem; font-size: 0.85rem;">Mark Order Complete</button>
-            `;
-            kdsList.appendChild(ticket);
+                var isWalkup = order.type === 'WALK-UP';
+                var isLiveCart = order.id === 'LIVE';
+                var badgeLabel = isWalkup ? '⚡ WALK-UP CASH/COUNTER' : (isLiveCart ? '🛒 LIVE CART STREAM' : 'MOBILE QR ORDER');
+                var badgeColor = isWalkup ? 'background: var(--warning-light); color: var(--warning);' : (isLiveCart ? 'background: var(--success-light); color: var(--success);' : 'background: var(--accent-light); color: var(--accent);');
+
+                var ticket = document.createElement('div');
+                ticket.className = 'kds-ticket' + (isWalkup ? ' ticket-walkup' : '');
+                ticket.innerHTML = `
+                    <div class="kds-header-row">
+                        <span style="font-weight: 800; font-size: 0.9rem;">ORDER #${order.id}</span>
+                        <span style="font-size: 0.72rem; ${badgeColor} padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: 700;">${badgeLabel}</span>
+                    </div>
+                    <div>${itemsHtml}</div>
+                    <button class="add-btn" onclick="completeKDSOrder(${index})" style="background: var(--success); margin-top: 0.8rem; padding: 0.6rem; font-size: 0.85rem;">Mark Order Complete</button>
+                `;
+                kdsList.appendChild(ticket);
+            });
         }
 
-        function clearLiveOrder() {
-            cartState = [];
-            updateCartBadge();
+        function completeKDSOrder(index) {
+            if (cartState.length > 0 && index === 0) {
+                cartState = [];
+                updateCartBadge();
+            } else {
+                var adjustedIndex = cartState.length > 0 ? index - 1 : index;
+                kdsOrders.splice(adjustedIndex, 1);
+            }
             renderKDS();
         }
     </script>
