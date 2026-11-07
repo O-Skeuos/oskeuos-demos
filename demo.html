@@ -25,7 +25,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
-            user-select: none;
         }
 
         body {
@@ -108,7 +107,6 @@
             color: var(--text-secondary);
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.2s;
         }
 
         .tab-btn.active {
@@ -500,7 +498,8 @@
                     <span>Total Amount:</span>
                     <span id="cartTotalDisplay">$0.00</span>
                 </div>
-                <button class="action-btn success" id="placeOrderBtn">Place Order →</button>
+                <!-- Direct Inline onclick guarantee for absolute click reliability -->
+                <button class="action-btn success" id="placeOrderBtn" onclick="executeCheckoutGlobal()">Place Order →</button>
             </div>
 
             <!-- Success Confirmation Screen -->
@@ -530,9 +529,41 @@
     </div>
 
     <script>
+        // Global State
+        var cartState = [];
+        var kdsOrders = [];
+
+        // Global Checkout Function exposed directly to the DOM click handler
+        function executeCheckoutGlobal() {
+            if (cartState.length === 0) return;
+
+            kdsOrders.push({
+                id: Math.floor(100 + Math.random() * 900),
+                items: cartState.slice(),
+                time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
+            });
+
+            cartState = [];
+            
+            var cartCount = document.getElementById('cartCount');
+            var cartNavBtn = document.getElementById('cartNavBtn');
+            if (cartCount) cartCount.textContent = '0';
+            if (cartNavBtn) cartNavBtn.style.display = 'none';
+
+            if (typeof confetti === 'function') {
+                confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
+            }
+
+            var checkoutBoxContainer = document.getElementById('checkoutBoxContainer');
+            var cartItemsList = document.getElementById('cartItemsList');
+            var successView = document.getElementById('successView');
+
+            if (checkoutBoxContainer) checkoutBoxContainer.style.display = 'none';
+            if (cartItemsList) cartItemsList.innerHTML = '';
+            if (successView) successView.style.display = 'block';
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
-            var cartState = [];
-            var kdsOrders = [];
             var activeLemonade = { flavor: 'Classic Lemon', price: 5.00, color: '#f1c40f' };
 
             var menuView = document.getElementById('menuView');
@@ -546,7 +577,6 @@
             var cartCount = document.getElementById('cartCount');
             var cartItemsList = document.getElementById('cartItemsList');
             var cartTotalDisplay = document.getElementById('cartTotalDisplay');
-            var placeOrderBtn = document.getElementById('placeOrderBtn');
             var kdsTicketsList = document.getElementById('kdsTicketsList');
             
             var checkoutBoxContainer = document.getElementById('checkoutBoxContainer');
@@ -716,35 +746,6 @@
                     });
                 });
             }
-
-            // Bulletproof checkout trigger for mobile Safari & desktop
-            function handleCheckout(e) {
-                if (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-                if (cartState.length === 0) return;
-
-                kdsOrders.push({
-                    id: Math.floor(100 + Math.random() * 900),
-                    items: cartState.slice(),
-                    time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
-                });
-
-                cartState = [];
-                updateBadge();
-
-                if (typeof confetti === 'function') {
-                    confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
-                }
-
-                checkoutBoxContainer.style.display = 'none';
-                cartItemsList.innerHTML = '';
-                successView.style.display = 'block';
-            }
-
-            placeOrderBtn.addEventListener('click', handleCheckout);
-            placeOrderBtn.addEventListener('touchend', handleCheckout);
 
             goToKdsFromSuccess.addEventListener('click', function(e) {
                 e.preventDefault();
