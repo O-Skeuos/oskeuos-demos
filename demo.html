@@ -229,6 +229,49 @@
             margin-bottom: 1.2rem;
         }
 
+        /* Confimation Popup Modal Overlay */
+        #orderConfirmationModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: modalPop 0.25s ease-out;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-card h3 {
+            font-size: 1.3rem;
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
         .kds-explainer {
             background: var(--card-bg);
             border-radius: 10px;
@@ -404,7 +447,6 @@
                     <span id="cartTotalDisplay">$0.00</span>
                 </div>
                 <button class="action-btn success" id="placeOrderBtn">Place Order →</button>
-                <button class="action-btn" id="postCheckoutKdsBtn" style="display: none; margin-top: 0.8rem;">👀 Open Live KDS Display →</button>
             </div>
         </section>
 
@@ -426,6 +468,15 @@
 
     </div>
 
+    <!-- ORDER PLACED CONFIRMATION MODAL -->
+    <div id="orderConfirmationModal">
+        <div class="modal-card">
+            <h3>🎉 Order Placed!</h3>
+            <p>Your order has been placed<br><strong>(Check KDS)</strong></p>
+            <button class="action-btn" onclick="openKdsFromModal()">View Live KDS Display →</button>
+        </div>
+    </div>
+
     <script>
         // State Management
         var cartState = [];
@@ -445,8 +496,8 @@
         var cartItemsList = document.getElementById('cartItemsList');
         var cartTotalDisplay = document.getElementById('cartTotalDisplay');
         var placeOrderBtn = document.getElementById('placeOrderBtn');
-        var postCheckoutKdsBtn = document.getElementById('postCheckoutKdsBtn');
         var kdsTicketsList = document.getElementById('kdsTicketsList');
+        var orderConfirmationModal = document.getElementById('orderConfirmationModal');
 
         // Navigation Router
         function showView(targetView) {
@@ -541,154 +592,3 @@
                 removals: opts.removals,
                 type: 'burger'
             });
-            updateCartBadge();
-            alert('Added Smash Burger to Cart!');
-        };
-
-        document.getElementById('addFriesBtn').onclick = function() {
-            var opts = getSelectedOptions('card-fries');
-            cartState.push({
-                name: 'Loaded Fries',
-                price: 8.50,
-                addons: opts.addons,
-                removals: opts.removals,
-                type: 'fries'
-            });
-            updateCartBadge();
-            alert('Added Loaded Fries to Cart!');
-        };
-
-        document.getElementById('addLemonadeBtn').onclick = function() {
-            cartState.push({
-                name: 'Craft Lemonade (' + activeLemonade.flavor + ')',
-                price: activeLemonade.price,
-                addons: [],
-                removals: [],
-                type: 'lemonade',
-                color: activeLemonade.color
-            });
-            updateCartBadge();
-            alert('Added Craft Lemonade to Cart!');
-        };
-
-        // Render Cart View
-        function renderCart() {
-            cartItemsList.innerHTML = '';
-            postCheckoutKdsBtn.style.display = 'none';
-            placeOrderBtn.textContent = 'Place Order →';
-            placeOrderBtn.style.background = 'var(--success)';
-
-            if (cartState.length === 0) {
-                cartItemsList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin: 2rem 0;">Your cart is empty.</p>';
-                cartTotalDisplay.textContent = '$0.00';
-                return;
-            }
-
-            var total = 0;
-            cartState.forEach(function(item, index) {
-                total += item.price;
-                var div = document.createElement('div');
-                div.className = 'cart-item-card';
-
-                var addonsText = item.addons.length ? '+ ' + item.addons.join(', ') : '';
-                var removalsText = item.removals.length ? 'NO ' + item.removals.join(', ') : '';
-                var subText = [addonsText, removalsText].filter(Boolean).join(' | ');
-
-                div.innerHTML = `
-                    <div>
-                        <div style="font-weight: 600;">${item.name}</div>
-                        <div style="font-size: 0.82rem; color: var(--text-secondary);">${subText}</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-weight: 600; color: var(--accent);">$${item.price.toFixed(2)}</div>
-                        <button onclick="removeCartItem(${index})" style="background:none; border:none; color:var(--danger); font-size:0.8rem; cursor:pointer;">Remove</button>
-                    </div>
-                `;
-                cartItemsList.appendChild(div);
-            });
-
-            cartTotalDisplay.textContent = '$' + total.toFixed(2);
-        }
-
-        window.removeCartItem = function(index) {
-            cartState.splice(index, 1);
-            updateCartBadge();
-            renderCart();
-        };
-
-        // Place Order Logic
-        placeOrderBtn.onclick = function(e) {
-            if (cartState.length === 0) return;
-
-            var newOrder = {
-                id: Math.floor(100 + Math.random() * 900),
-                items: cartState.slice(),
-                time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
-            };
-
-            kdsOrders.push(newOrder);
-            cartState = [];
-            updateCartBadge();
-
-            // Trigger Confetti
-            if (typeof confetti === 'function') {
-                confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
-            }
-
-            placeOrderBtn.textContent = 'Order Placed! ✓';
-            placeOrderBtn.style.background = '#27ae60';
-            postCheckoutKdsBtn.style.display = 'block';
-        };
-
-        postCheckoutKdsBtn.onclick = function() {
-            showView('kds');
-        };
-
-        // Render KDS View
-        function renderKDS() {
-            kdsTicketsList.innerHTML = '';
-
-            if (kdsOrders.length === 0) {
-                kdsTicketsList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders yet!</p>';
-                return;
-            }
-
-            kdsOrders.forEach(function(order, index) {
-                var ticket = document.createElement('div');
-                ticket.className = 'kds-ticket';
-
-                var itemsHtml = '';
-                order.items.forEach(function(i) {
-                    var addonsHtml = i.addons.map(function(a) { return `<span class="kds-tag">+ ${a}</span>`; }).join('');
-                    var removalsHtml = i.removals.map(function(r) { return `<span class="kds-tag tag-remove">${r}</span>`; }).join('');
-
-                    itemsHtml += `
-                        <div class="kds-item-row">
-                            <div>
-                                <div style="font-weight:600;">${i.name}</div>
-                                <div>${addonsHtml} ${removalsHtml}</div>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                ticket.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
-                        <h4 style="margin:0;">Order #${order.id}</h4>
-                        <span style="font-size: 0.8rem; color: var(--text-secondary);">${order.time}</span>
-                    </div>
-                    <div>${itemsHtml}</div>
-                    <button class="add-btn" style="background: var(--success); margin-top: 0.5rem;" onclick="completeKdsOrder(${index})">Mark Ready / Complete</button>
-                `;
-
-                kdsTicketsList.appendChild(ticket);
-            });
-        }
-
-        window.completeKdsOrder = function(index) {
-            kdsOrders.splice(index, 1);
-            renderKDS();
-        };
-    </script>
-</body>
-</html>
