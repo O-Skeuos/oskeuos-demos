@@ -89,10 +89,39 @@
             display: block;
         }
 
-        .menu-section-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin: 1rem 0 0.8rem 0.5rem;
+        /* Category Filter Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            padding-bottom: 0.2rem;
+        }
+
+        .tab-btn {
+            background: #e5e5ea;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .menu-category-section {
+            display: none;
+        }
+
+        .menu-category-section.active {
+            display: block;
         }
 
         .menu-card {
@@ -313,106 +342,147 @@
 
         <!-- 1. MENU VIEW -->
         <section id="menuView" class="view-section active">
-            <div class="menu-section-title">Festival Menu</div>
-
-            <!-- Smash Burger -->
-            <div class="menu-card" id="card-burger">
-                <div class="menu-card-top">
-                    <div class="food-graphic">
-                        <svg width="50" height="50" viewBox="0 0 100 100">
-                            <path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/>
-                            <rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/>
-                            <polygon points="20,55 35,53 50,57 65,53 80,55 80,59 20,59" fill="#f1c40f"/>
-                            <rect x="15" y="61" width="70" height="12" rx="4" fill="#5d4037"/>
-                            <rect x="18" y="75" width="64" height="10" rx="4" fill="#d35400"/>
-                        </svg>
-                    </div>
-                    <div class="item-info">
-                        <h3>Smash Burger Basket</h3>
-                        <p>Double patty, American cheese, house sauce.</p>
-                        <div class="item-price">$12.00</div>
-                    </div>
-                </div>
-                <div class="options-group">
-                    <div class="options-title">Add Extra Toppings</div>
-                    <div class="chip-group">
-                        <div class="chip option-chip">Extra Cheese</div>
-                        <div class="chip option-chip">Extra Secret Sauce</div>
-                        <div class="chip option-chip">Crispy Bacon</div>
-                    </div>
-                </div>
-                <div class="options-group">
-                    <div class="options-title">Removals</div>
-                    <div class="chip-group">
-                        <div class="chip chip-remove remove-chip">No Onions</div>
-                        <div class="chip chip-remove remove-chip">No Pickles</div>
-                    </div>
-                </div>
-                <button class="add-btn" id="addBurgerBtn">Add to Cart</button>
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <button class="tab-btn active" data-category="food">🍔 Food</button>
+                <button class="tab-btn" data-category="drinks">🥤 Drinks</button>
+                <button class="tab-btn" data-category="desserts">🥧 Desserts</button>
             </div>
 
-            <!-- Loaded Fries (Fixed with full basket of fries) -->
-            <div class="menu-card" id="card-fries">
-                <div class="menu-card-top">
-                    <div class="food-graphic">
-                        <svg width="50" height="50" viewBox="0 0 100 100">
-                            <polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/>
-                            <rect x="32" y="15" width="5" height="35" rx="2" fill="#f1c40f"/>
-                            <rect x="39" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
-                            <rect x="46" y="12" width="5" height="38" rx="2" fill="#f1c40f"/>
-                            <rect x="53" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
-                            <rect x="60" y="16" width="5" height="34" rx="2" fill="#f1c40f"/>
-                        </svg>
+            <!-- FOOD SECTION -->
+            <div class="menu-category-section active" id="cat-food">
+                <!-- Smash Burger -->
+                <div class="menu-card" id="card-burger">
+                    <div class="menu-card-top">
+                        <div class="food-graphic">
+                            <svg width="50" height="50" viewBox="0 0 100 100">
+                                <path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/>
+                                <rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/>
+                                <polygon points="20,55 35,53 50,57 65,53 80,55 80,59 20,59" fill="#f1c40f"/>
+                                <rect x="15" y="61" width="70" height="12" rx="4" fill="#5d4037"/>
+                                <rect x="18" y="75" width="64" height="10" rx="4" fill="#d35400"/>
+                            </svg>
+                        </div>
+                        <div class="item-info">
+                            <h3>Smash Burger Basket</h3>
+                            <p>Double patty, American cheese, house sauce.</p>
+                            <div class="item-price">$12.00</div>
+                        </div>
                     </div>
-                    <div class="item-info">
-                        <h3>Loaded Fries</h3>
-                        <p>Crispy fries, melted cheese, bacon bits.</p>
-                        <div class="item-price">$8.50</div>
+                    <div class="options-group">
+                        <div class="options-title">Add Extra Toppings</div>
+                        <div class="chip-group">
+                            <div class="chip option-chip">Extra Cheese</div>
+                            <div class="chip option-chip">Extra Secret Sauce</div>
+                            <div class="chip option-chip">Crispy Bacon</div>
+                        </div>
                     </div>
+                    <div class="options-group">
+                        <div class="options-title">Removals</div>
+                        <div class="chip-group">
+                            <div class="chip chip-remove remove-chip">No Onions</div>
+                            <div class="chip chip-remove remove-chip">No Pickles</div>
+                        </div>
+                    </div>
+                    <button class="add-btn" id="addBurgerBtn">Add to Cart</button>
                 </div>
-                <div class="options-group">
-                    <div class="options-title">Add Extra Toppings</div>
-                    <div class="chip-group">
-                        <div class="chip option-chip">Ranch Drizzle</div>
-                        <div class="chip option-chip">Jalapeños</div>
+
+                <!-- Loaded Fries -->
+                <div class="menu-card" id="card-fries">
+                    <div class="menu-card-top">
+                        <div class="food-graphic">
+                            <svg width="50" height="50" viewBox="0 0 100 100">
+                                <polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/>
+                                <rect x="32" y="15" width="5" height="35" rx="2" fill="#f1c40f"/>
+                                <rect x="39" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
+                                <rect x="46" y="12" width="5" height="38" rx="2" fill="#f1c40f"/>
+                                <rect x="53" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
+                                <rect x="60" y="16" width="5" height="34" rx="2" fill="#f1c40f"/>
+                            </svg>
+                        </div>
+                        <div class="item-info">
+                            <h3>Loaded Fries</h3>
+                            <p>Crispy fries, melted cheese, bacon bits.</p>
+                            <div class="item-price">$8.50</div>
+                        </div>
                     </div>
-                </div>
-                <div class="options-group">
-                    <div class="options-title">Removals</div>
-                    <div class="chip-group">
-                        <div class="chip chip-remove remove-chip">No Bacon</div>
-                        <div class="chip chip-remove remove-chip">No Green Onions</div>
+                    <div class="options-group">
+                        <div class="options-title">Add Extra Toppings</div>
+                        <div class="chip-group">
+                            <div class="chip option-chip">Ranch Drizzle</div>
+                            <div class="chip option-chip">Jalapeños</div>
+                        </div>
                     </div>
+                    <div class="options-group">
+                        <div class="options-title">Removals</div>
+                        <div class="chip-group">
+                            <div class="chip chip-remove remove-chip">No Bacon</div>
+                            <div class="chip chip-remove remove-chip">No Green Onions</div>
+                        </div>
+                    </div>
+                    <button class="add-btn" id="addFriesBtn">Add to Cart</button>
                 </div>
-                <button class="add-btn" id="addFriesBtn">Add to Cart</button>
             </div>
 
-            <!-- Lemonade -->
-            <div class="menu-card" id="card-lemonade">
-                <div class="menu-card-top">
-                    <div class="food-graphic">
-                        <svg width="50" height="50" viewBox="0 0 100 100">
-                            <path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/>
-                            <path id="lemonadeLiquid" d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="#f1c40f"/>
-                            <line x1="58" y1="10" x2="48" y2="75" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
-                        </svg>
+            <!-- DRINKS SECTION -->
+            <div class="menu-category-section" id="cat-drinks">
+                <!-- Lemonade -->
+                <div class="menu-card" id="card-lemonade">
+                    <div class="menu-card-top">
+                        <div class="food-graphic">
+                            <svg width="50" height="50" viewBox="0 0 100 100">
+                                <path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/>
+                                <path id="lemonadeLiquid" d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="#f1c40f"/>
+                                <line x1="58" y1="10" x2="48" y2="75" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="item-info">
+                            <h3>Craft Lemonade</h3>
+                            <p>Fresh squeezed fruit infused lemonade.</p>
+                            <div class="item-price" id="lemonadePrice">$5.00</div>
+                        </div>
                     </div>
-                    <div class="item-info">
-                        <h3>Craft Lemonade</h3>
-                        <p>Fresh squeezed fruit infused lemonade.</p>
-                        <div class="item-price" id="lemonadePrice">$5.00</div>
+                    <div class="options-group">
+                        <div class="options-title">Select Flavor</div>
+                        <div class="chip-group">
+                            <div class="chip flavor-chip selected" data-flavor="Classic Lemon" data-color="#f1c40f" data-price="5.00">Classic Yellow</div>
+                            <div class="chip flavor-chip" data-flavor="Blackberry" data-color="#8e44ad" data-price="5.50">Blackberry</div>
+                            <div class="chip flavor-chip" data-flavor="Strawberry" data-color="#e74c3c" data-price="5.50">Strawberry</div>
+                            <div class="chip flavor-chip" data-flavor="Blue Raspberry" data-color="#3498db" data-price="5.50">Blue Raspberry</div>
+                        </div>
                     </div>
+                    <button class="add-btn" id="addLemonadeBtn">Add to Cart</button>
                 </div>
-                <div class="options-group">
-                    <div class="options-title">Select Flavor</div>
-                    <div class="chip-group">
-                        <div class="chip flavor-chip selected" data-flavor="Classic Lemon" data-color="#f1c40f" data-price="5.00">Classic Yellow</div>
-                        <div class="chip flavor-chip" data-flavor="Blackberry" data-color="#8e44ad" data-price="5.50">Blackberry</div>
-                        <div class="chip flavor-chip" data-flavor="Strawberry" data-color="#e74c3c" data-price="5.50">Strawberry</div>
-                        <div class="chip flavor-chip" data-flavor="Blue Raspberry" data-color="#3498db" data-price="5.50">Blue Raspberry</div>
+            </div>
+
+            <!-- DESSERTS SECTION -->
+            <div class="menu-category-section" id="cat-desserts">
+                <!-- Pecan Praline Brownie -->
+                <div class="menu-card" id="card-brownie">
+                    <div class="menu-card-top">
+                        <div class="food-graphic">
+                            <svg width="50" height="50" viewBox="0 0 100 100">
+                                <rect x="25" y="30" width="50" height="45" rx="6" fill="#5d4037"/>
+                                <circle cx="40" cy="45" r="5" fill="#d2b48c"/>
+                                <circle cx="60" cy="55" r="5" fill="#d2b48c"/>
+                                <path d="M 25 35 Q 50 25 75 35" fill="none" stroke="#d2b48c" stroke-width="4"/>
+                            </svg>
+                        </div>
+                        <div class="item-info">
+                            <h3>Artisan Pecan Praline Brownie</h3>
+                            <p>Fudgy scratch-made brownie topped with southern caramelized pecans.</p>
+                            <div class="item-price">$6.00</div>
+                        </div>
                     </div>
+                    <div class="options-group">
+                        <div class="options-title">Add-ons</div>
+                        <div class="chip-group">
+                            <div class="chip option-chip">Extra Praline Drizzle</div>
+                            <div class="chip option-chip">Served Warm</div>
+                        </div>
+                    </div>
+                    <button class="add-btn" id="addBrownieBtn">Add to Cart</button>
                 </div>
-                <button class="add-btn" id="addLemonadeBtn">Add to Cart</button>
             </div>
         </section>
 
@@ -482,6 +552,22 @@
             var checkoutBoxContainer = document.getElementById('checkoutBoxContainer');
             var successView = document.getElementById('successView');
             var goToKdsFromSuccess = document.getElementById('goToKdsFromSuccess');
+
+            // Category Tab Switching Logic
+            var tabBtns = document.querySelectorAll('.tab-btn');
+            var categorySections = document.querySelectorAll('.menu-category-section');
+
+            tabBtns.forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    tabBtns.forEach(function(b) { b.classList.remove('active'); });
+                    categorySections.forEach(function(s) { s.classList.remove('active'); });
+
+                    this.classList.add('active');
+                    var category = this.getAttribute('data-category');
+                    document.getElementById('cat-' + category).classList.add('active');
+                });
+            });
 
             function showView(target) {
                 menuView.classList.remove('active');
@@ -579,6 +665,14 @@
                 alert('Added Craft Lemonade to Cart!');
             });
 
+            document.getElementById('addBrownieBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                var opts = getSelectedOptions('card-brownie');
+                cartState.push({ name: 'Artisan Pecan Praline Brownie', price: 6.00, addons: opts.addons, removals: [] });
+                updateBadge();
+                alert('Added Brownie to Cart!');
+            });
+
             function renderCart() {
                 cartItemsList.innerHTML = '';
                 if (cartState.length === 0) {
@@ -623,8 +717,12 @@
                 });
             }
 
-            placeOrderBtn.addEventListener('click', function(e) {
-                e.preventDefault();
+            // Bulletproof checkout trigger for mobile Safari & desktop
+            function handleCheckout(e) {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
                 if (cartState.length === 0) return;
 
                 kdsOrders.push({
@@ -640,11 +738,13 @@
                     confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
                 }
 
-                // Swap checkout box view to success view
                 checkoutBoxContainer.style.display = 'none';
                 cartItemsList.innerHTML = '';
                 successView.style.display = 'block';
-            });
+            }
+
+            placeOrderBtn.addEventListener('click', handleCheckout);
+            placeOrderBtn.addEventListener('touchend', handleCheckout);
 
             goToKdsFromSuccess.addEventListener('click', function(e) {
                 e.preventDefault();
