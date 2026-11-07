@@ -3,109 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>O-Skeuos Live Ordering Demo</title>
+    <title>O-Skeuos High-Volume Vendor & KDS System</title>
     <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --bg-ios: #f2f2f7;
+            --bg-dark: #0f172a;
+            --bg-app: #f8fafc;
             --card-bg: #ffffff;
-            --text-primary: #0a1128;
-            --text-secondary: #6e6e73;
-            --accent: #4a90e2;
-            --border: #c6c6c8;
-            --success: #34c759;
-            --danger: #ff3b30;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #2563eb;
+            --accent-light: #eff6ff;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+            --border: #e2e8f0;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            user-select: none;
         }
 
         body {
-            background-color: var(--bg-ios);
-            color: var(--text-primary);
-            padding-bottom: 120px;
+            background-color: var(--bg-app);
+            color: var(--text-main);
+            padding-bottom: 60px;
         }
 
+        /* Top Bar & Demo Pitch Controller */
         header {
-            background: rgba(10, 17, 40, 0.95);
-            backdrop-filter: blur(20px);
+            background: var(--bg-dark);
+            color: white;
+            padding: 0.8rem 1rem;
             position: sticky;
             top: 0;
-            z-index: 100;
-            padding: 1rem;
-            border-bottom: 1px solid #1f305e;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: white;
+            margin-bottom: 0.6rem;
         }
 
-        header h1 {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .header-actions {
+        .brand-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
             display: flex;
-            gap: 0.5rem;
             align-items: center;
+            gap: 0.5rem;
         }
 
-        .nav-btn {
-            background: var(--accent);
+        .badge-live {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .mode-toggle-bar {
+            display: flex;
+            background: rgba(255,255,255,0.1);
+            padding: 3px;
+            border-radius: 10px;
+            gap: 4px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            background: none;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 16px;
-            font-size: 0.85rem;
+            color: #94a3b8;
+            padding: 0.45rem 0.6rem;
+            border-radius: 7px;
+            font-size: 0.78rem;
             font-weight: 600;
-            color: white;
             cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
         }
 
-        #cartNavBtn {
-            background: var(--success);
-            display: none;
+        .mode-btn.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .container {
-            max-width: 500px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 1rem;
         }
 
-        .view-section {
-            display: none;
+        /* Mode Layout Containers */
+        .layout-single {
+            display: block;
         }
 
-        .view-section.active {
-            display: block;
+        .layout-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .layout-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .phone-frame {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .frame-header {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
         }
 
         /* Category Filter Tabs */
         .category-tabs {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.4rem;
             margin-bottom: 1rem;
             overflow-x: auto;
-            padding-bottom: 0.2rem;
         }
 
         .tab-btn {
-            background: #e5e5ea;
-            border: none;
-            padding: 0.5rem 1.2rem;
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+            padding: 0.45rem 0.9rem;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             cursor: pointer;
             white-space: nowrap;
         }
@@ -113,6 +171,7 @@
         .tab-btn.active {
             background: var(--accent);
             color: white;
+            border-color: var(--accent);
         }
 
         .menu-category-section {
@@ -123,120 +182,110 @@
             display: block;
         }
 
+        /* Menu Cards */
         .menu-card {
             background: var(--card-bg);
+            border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 1.2rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            padding: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .menu-card-top {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             align-items: center;
         }
 
         .food-graphic {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 10px;
-            background: #f9f9fb;
-            border: 1px solid #e5e5ea;
+            background: #f8fafc;
+            border: 1px solid var(--border);
         }
 
-        .item-info {
-            flex-grow: 1;
-        }
-
-        .item-info h3 {
-            font-size: 1.05rem;
-            font-weight: 600;
-        }
-
-        .item-info p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .item-price {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-top: 0.2rem;
-        }
+        .item-info { flex-grow: 1; }
+        .item-info h3 { font-size: 0.95rem; font-weight: 700; }
+        .item-info p { font-size: 0.8rem; color: var(--text-muted); }
+        .item-price { font-size: 0.95rem; font-weight: 700; color: var(--accent); margin-top: 0.2rem; }
 
         .options-group {
-            margin-top: 0.9rem;
-            padding-top: 0.9rem;
-            border-top: 1px dashed #e5e5ea;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--border);
         }
 
         .options-title {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--text-secondary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
 
         .chip-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 0.35rem;
         }
 
         .chip {
-            font-size: 0.78rem;
-            padding: 0.35rem 0.7rem;
+            font-size: 0.75rem;
+            padding: 0.3rem 0.65rem;
             border-radius: 14px;
-            background: #f0f0f5;
-            color: var(--text-primary);
-            border: 1px solid #e5e5ea;
+            background: #f1f5f9;
+            color: var(--text-main);
+            border: 1px solid var(--border);
             cursor: pointer;
+            user-select: none;
         }
 
         .chip.selected {
-            background: #eef5fc;
+            background: var(--accent-light);
             border-color: var(--accent);
             color: var(--accent);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .chip-remove.selected {
-            background: #fff0f0;
+            background: var(--danger-light);
             border-color: var(--danger);
             color: var(--danger);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .add-btn, .action-btn {
             background: var(--accent);
             color: white;
             border: none;
-            padding: 0.9rem 1rem;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 1rem;
+            margin-top: 0.8rem;
             width: 100%;
             text-align: center;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
         }
 
         .action-btn.success {
             background: var(--success);
+            box-shadow: 0 2px 4px rgba(22, 163, 74, 0.2);
         }
 
+        /* Cart View Component */
         .cart-item-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 0.8rem;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.8rem;
+            margin-bottom: 0.6rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -245,336 +294,359 @@
         .checkout-box {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 1.2rem;
-            margin-top: 1.5rem;
+            border: 1px solid var(--border);
+            padding: 1rem;
+            margin-top: 1rem;
         }
 
         .checkout-total-row {
             display: flex;
             justify-content: space-between;
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 1.2rem;
-        }
-
-        /* Success Confirmation View */
-        #successView {
-            display: none;
-            text-align: center;
-            padding: 3rem 1rem;
-            background: var(--card-bg);
-            border-radius: 16px;
-            margin-top: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        #successView h2 {
-            color: var(--success);
-            font-size: 1.5rem;
+            font-size: 1.05rem;
+            font-weight: 800;
             margin-bottom: 0.8rem;
         }
 
-        #successView p {
-            font-size: 1.05rem;
-            color: var(--text-primary);
-            font-weight: 500;
-            margin-bottom: 2rem;
-            line-height: 1.4;
+        #successView {
+            display: none;
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
         }
 
+        #successView h2 { color: var(--success); font-size: 1.3rem; margin-bottom: 0.5rem; }
+        #successView p { font-size: 0.95rem; color: var(--text-main); font-weight: 500; margin-bottom: 1.2rem; }
+
+        /* KDS Display Optimization */
         .kds-explainer {
-            background: var(--card-bg);
+            background: #0f172a;
+            color: #f8fafc;
             border-radius: 10px;
-            padding: 1.1rem;
-            margin-bottom: 1.2rem;
-            font-size: 0.88rem;
-            color: var(--text-secondary);
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            line-height: 1.4;
             border-left: 4px solid var(--accent);
-            line-height: 1.5;
         }
 
         .kds-ticket {
             background: var(--card-bg);
+            border: 2px solid var(--border);
             border-left: 6px solid var(--accent);
             border-radius: 12px;
-            padding: 1.2rem;
+            padding: 1rem;
             margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .kds-ticket.ticket-rush {
+            border-left-color: var(--warning);
+        }
+
+        .kds-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border);
         }
 
         .kds-item-row {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #cbd5e1;
+        }
+
+        .kds-item-row:last-child {
+            border-bottom: none;
+        }
+
+        .kds-item-name {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .kds-tags-group {
             display: flex;
-            gap: 0.8rem;
-            align-items: flex-start;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid #f0f0f5;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: 0.3rem;
         }
 
         .kds-tag {
-            display: inline-block;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             padding: 0.2rem 0.5rem;
             border-radius: 6px;
-            background: #eef5fc;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .kds-tag.tag-add {
+            background: var(--accent-light);
             color: var(--accent);
-            font-weight: 600;
-            margin-right: 0.3rem;
-            margin-top: 0.2rem;
+            border: 1px solid rgba(37, 99, 235, 0.3);
         }
 
         .kds-tag.tag-remove {
-            background: #fff0f0;
+            background: var(--danger-light);
             color: var(--danger);
-            font-weight: 700;
+            border: 1px solid rgba(220, 38, 38, 0.3);
         }
+
+        /* Banner for Offline Resilience Demo */
+        .offline-status-bar {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid rgba(22, 163, 74, 0.3);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+
+        .view-section { display: none; }
+        .view-section.active { display: block; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>O-Skeuos Demo</h1>
-        <div class="header-actions">
-            <button class="nav-btn" id="cartNavBtn" onclick="showView('cart')">🛒 Cart (<span id="cartCount">0</span>)</button>
-            <button class="nav-btn" id="kdsNavBtn" onclick="toggleKdsNav()">KDS View</button>
+        <div class="header-top">
+            <div class="brand-title">
+                ⚡ O-Skeuos Vendor Engine
+                <span class="badge-live">Live Sync</span>
+            </div>
+            <button id="cartHeaderBadge" onclick="setSingleView('cart')" style="background:var(--success); border:none; color:white; padding:0.3rem 0.7rem; border-radius:12px; font-size:0.75rem; font-weight:700; cursor:pointer; display:none;">
+                🛒 Cart (<span id="cartCount">0</span>)
+            </button>
+        </div>
+        <div class="mode-toggle-bar">
+            <button class="mode-btn active" id="btnModeSplit" onclick="setDemoMode('split')">📱 Split-Screen Pitch</button>
+            <button class="mode-btn" id="btnModeCustomer" onclick="setDemoMode('customer')">🍔 Customer View</button>
+            <button class="mode-btn" id="btnModeKds" onclick="setDemoMode('kds')">🖥️ KDS Station</button>
         </div>
     </header>
 
     <div class="container">
+        
+        <div id="mainLayout" class="layout-split">
 
-        <!-- 1. MENU VIEW -->
-        <section id="menuView" class="view-section active">
-            <!-- Category Tabs -->
-            <div class="category-tabs">
-                <button class="tab-btn active" onclick="switchCategory('food', this)">🍔 Food</button>
-                <button class="tab-btn" onclick="switchCategory('drinks', this)">🥤 Drinks</button>
-                <button class="tab-btn" onclick="switchCategory('desserts', this)">🥧 Desserts</button>
-            </div>
-
-            <!-- FOOD SECTION -->
-            <div class="menu-category-section active" id="cat-food">
-                <!-- Smash Burger -->
-                <div class="menu-card" id="card-burger">
-                    <div class="menu-card-top">
-                        <div class="food-graphic">
-                            <svg width="50" height="50" viewBox="0 0 100 100">
-                                <path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/>
-                                <rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/>
-                                <polygon points="20,55 35,53 50,57 65,53 80,55 80,59 20,59" fill="#f1c40f"/>
-                                <rect x="15" y="61" width="70" height="12" rx="4" fill="#5d4037"/>
-                                <rect x="18" y="75" width="64" height="10" rx="4" fill="#d35400"/>
-                            </svg>
-                        </div>
-                        <div class="item-info">
-                            <h3>Smash Burger Basket</h3>
-                            <p>Double patty, American cheese, house sauce.</p>
-                            <div class="item-price">$12.00</div>
-                        </div>
-                    </div>
-                    <div class="options-group">
-                        <div class="options-title">Add Extra Toppings</div>
-                        <div class="chip-group">
-                            <div class="chip option-chip" onclick="toggleChip(this)">Extra Cheese</div>
-                            <div class="chip option-chip" onclick="toggleChip(this)">Extra Secret Sauce</div>
-                            <div class="chip option-chip" onclick="toggleChip(this)">Crispy Bacon</div>
-                        </div>
-                    </div>
-                    <div class="options-group">
-                        <div class="options-title">Removals</div>
-                        <div class="chip-group">
-                            <div class="chip chip-remove remove-chip" onclick="toggleChip(this)">No Onions</div>
-                            <div class="chip chip-remove remove-chip" onclick="toggleChip(this)">No Pickles</div>
-                        </div>
-                    </div>
-                    <button class="add-btn" onclick="addItemToCart('Smash Burger Basket', 12.00, 'card-burger')">Add to Cart</button>
+            <!-- LEFT PANEL: CUSTOMER ORDERING INTERFACE -->
+            <div class="phone-frame" id="panelCustomer">
+                <div class="frame-header">
+                    <span>Customer Mobile POS</span>
+                    <span style="color:var(--accent);">Live Preview</span>
                 </div>
 
-                <!-- Loaded Fries -->
-                <div class="menu-card" id="card-fries">
-                    <div class="menu-card-top">
-                        <div class="food-graphic">
-                            <svg width="50" height="50" viewBox="0 0 100 100">
-                                <polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/>
-                                <rect x="32" y="15" width="5" height="35" rx="2" fill="#f1c40f"/>
-                                <rect x="39" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
-                                <rect x="46" y="12" width="5" height="38" rx="2" fill="#f1c40f"/>
-                                <rect x="53" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
-                                <rect x="60" y="16" width="5" height="34" rx="2" fill="#f1c40f"/>
-                            </svg>
+                <!-- MENU VIEW -->
+                <div id="viewCustomerMenu" class="view-section active">
+                    <div class="category-tabs">
+                        <button class="tab-btn active" onclick="switchCategory('food', this)">🍔 Food</button>
+                        <button class="tab-btn" onclick="switchCategory('drinks', this)">🥤 Drinks</button>
+                        <button class="tab-btn" onclick="switchCategory('desserts', this)">🥧 Desserts</button>
+                    </div>
+
+                    <!-- FOOD SECTION -->
+                    <div class="menu-category-section active" id="cat-food">
+                        <div class="menu-card" id="card-burger">
+                            <div class="menu-card-top">
+                                <div class="food-graphic">
+                                    <svg width="40" height="40" viewBox="0 0 100 100">
+                                        <path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/>
+                                        <rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/>
+                                        <rect x="15" y="61" width="70" height="12" rx="4" fill="#5d4037"/>
+                                        <rect x="18" y="75" width="64" height="10" rx="4" fill="#d35400"/>
+                                    </svg>
+                                </div>
+                                <div class="item-info">
+                                    <h3>Smash Burger Basket</h3>
+                                    <p>Double patty, cheese, special sauce.</p>
+                                    <div class="item-price">$12.00</div>
+                                </div>
+                            </div>
+                            <div class="options-group">
+                                <div class="options-title">Add Extra Toppings</div>
+                                <div class="chip-group">
+                                    <div class="chip option-chip" onclick="toggleChip(this)">Extra Cheese</div>
+                                    <div class="chip option-chip" onclick="toggleChip(this)">Crispy Bacon</div>
+                                </div>
+                            </div>
+                            <div class="options-group">
+                                <div class="options-title">Removals</div>
+                                <div class="chip-group">
+                                    <div class="chip chip-remove remove-chip" onclick="toggleChip(this)">No Onions</div>
+                                    <div class="chip chip-remove remove-chip" onclick="toggleChip(this)">No Pickles</div>
+                                </div>
+                            </div>
+                            <button class="add-btn" onclick="addItemToCart('Smash Burger Basket', 12.00, 'card-burger')">Add to Cart & Sync KDS</button>
                         </div>
-                        <div class="item-info">
-                            <h3>Loaded Fries</h3>
-                            <p>Crispy fries, melted cheese, bacon bits.</p>
-                            <div class="item-price">$8.50</div>
+
+                        <div class="menu-card" id="card-fries">
+                            <div class="menu-card-top">
+                                <div class="food-graphic">
+                                    <svg width="40" height="40" viewBox="0 0 100 100">
+                                        <polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/>
+                                        <rect x="39" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
+                                        <rect x="53" y="10" width="5" height="40" rx="2" fill="#f39c12"/>
+                                    </svg>
+                                </div>
+                                <div class="item-info">
+                                    <h3>Loaded Fries</h3>
+                                    <p>Melted cheese & bacon bits.</p>
+                                    <div class="item-price">$8.50</div>
+                                </div>
+                            </div>
+                            <div class="options-group">
+                                <div class="options-title">Removals</div>
+                                <div class="chip-group">
+                                    <div class="chip chip-remove remove-chip" onclick="toggleChip(this)">No Bacon</div>
+                                </div>
+                            </div>
+                            <button class="add-btn" onclick="addItemToCart('Loaded Fries', 8.50, 'card-fries')">Add to Cart & Sync KDS</button>
                         </div>
                     </div>
-                    <div class="options-group">
-                        <div class="options-title">Add Extra Toppings</div>
-                        <div class="chip-group">
-                            <div class="chip option-chip" onclick="toggleChip(this)">Ranch Drizzle</div>
-                            <div class="chip option-chip" onclick="toggleChip(this)">Jalapeños</div>
+
+                    <!-- DRINKS SECTION -->
+                    <div class="menu-category-section" id="cat-drinks">
+                        <div class="menu-card" id="card-lemonade">
+                            <div class="menu-card-top">
+                                <div class="food-graphic">
+                                    <svg width="40" height="40" viewBox="0 0 100 100">
+                                        <path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/>
+                                        <path id="lemonadeLiquid" d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="#f1c40f"/>
+                                    </svg>
+                                </div>
+                                <div class="item-info">
+                                    <h3>Craft Lemonade</h3>
+                                    <p>Fresh squeezed fruit infused.</p>
+                                    <div class="item-price" id="lemonadePrice">$5.00</div>
+                                </div>
+                            </div>
+                            <div class="options-group">
+                                <div class="options-title">Select Flavor</div>
+                                <div class="chip-group" id="flavorGroup">
+                                    <div class="chip flavor-chip selected" data-flavor="Classic Lemon" data-color="#f1c40f" data-price="5.00" onclick="selectFlavor(this)">Classic Yellow</div>
+                                    <div class="chip flavor-chip" data-flavor="Blackberry" data-color="#8e44ad" data-price="5.50" onclick="selectFlavor(this)">Blackberry</div>
+                                    <div class="chip flavor-chip" data-flavor="Strawberry" data-color="#e74c3c" data-price="5.50" onclick="selectFlavor(this)">Strawberry</div>
+                                </div>
+                            </div>
+                            <button class="add-btn" onclick="addLemonadeToCart()">Add to Cart & Sync KDS</button>
                         </div>
                     </div>
-                    <div class="options-group">
-                        <div class="options-title">Removals</div>
-                        <div class="chip-group">
-                            <div class="chip chip-remove remove-chip" onclick="toggleChip(this)">No Bacon</div>
-                            <div class="chip chip-remove remove-chip" onclick="toggleChip(this)">No Green Onions</div>
+
+                    <!-- DESSERTS SECTION -->
+                    <div class="menu-category-section" id="cat-desserts">
+                        <div class="menu-card" id="card-brownie">
+                            <div class="menu-card-top">
+                                <div class="food-graphic">
+                                    <svg width="40" height="40" viewBox="0 0 100 100">
+                                        <rect x="25" y="30" width="50" height="45" rx="6" fill="#5d4037"/>
+                                    </svg>
+                                </div>
+                                <div class="item-info">
+                                    <h3>Artisan Pecan Brownie</h3>
+                                    <p>Southern caramelized pecans.</p>
+                                    <div class="item-price">$6.00</div>
+                                </div>
+                            </div>
+                            <button class="add-btn" onclick="addItemToCart('Artisan Pecan Brownie', 6.00, 'card-brownie')">Add to Cart & Sync KDS</button>
                         </div>
                     </div>
-                    <button class="add-btn" onclick="addItemToCart('Loaded Fries', 8.50, 'card-fries')">Add to Cart</button>
+                </div>
+
+                <!-- CART VIEW -->
+                <div id="viewCustomerCart" class="view-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                        <h3 style="font-size: 1rem;">Review Cart</h3>
+                        <button onclick="setSingleView('menu')" style="background:none; border:none; color:var(--accent); font-weight:700; cursor:pointer;">← Menu</button>
+                    </div>
+                    <div id="cartItemsList"></div>
+                    <div class="checkout-box" id="checkoutBoxContainer">
+                        <div class="checkout-total-row">
+                            <span>Total:</span>
+                            <span id="cartTotalDisplay">$0.00</span>
+                        </div>
+                        <button class="action-btn success" onclick="executeCheckout()">Place Order →</button>
+                    </div>
+                    <div id="successView">
+                        <h2>🎉 Order Submitted!</h2>
+                        <p>Kitchen ticket generated automatically.</p>
+                        <button class="action-btn" onclick="setSingleView('menu')">Add Another Order</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- DRINKS SECTION -->
-            <div class="menu-category-section" id="cat-drinks">
-                <!-- Lemonade -->
-                <div class="menu-card" id="card-lemonade">
-                    <div class="menu-card-top">
-                        <div class="food-graphic">
-                            <svg width="50" height="50" viewBox="0 0 100 100">
-                                <path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/>
-                                <path id="lemonadeLiquid" d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="#f1c40f"/>
-                                <line x1="58" y1="10" x2="48" y2="75" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <div class="item-info">
-                            <h3>Craft Lemonade</h3>
-                            <p>Fresh squeezed fruit infused lemonade.</p>
-                            <div class="item-price" id="lemonadePrice">$5.00</div>
-                        </div>
-                    </div>
-                    <div class="options-group">
-                        <div class="options-title">Select Flavor</div>
-                        <div class="chip-group" id="flavorGroup">
-                            <div class="chip flavor-chip selected" data-flavor="Classic Lemon" data-color="#f1c40f" data-price="5.00" onclick="selectFlavor(this)">Classic Yellow</div>
-                            <div class="chip flavor-chip" data-flavor="Blackberry" data-color="#8e44ad" data-price="5.50" onclick="selectFlavor(this)">Blackberry</div>
-                            <div class="chip flavor-chip" data-flavor="Strawberry" data-color="#e74c3c" data-price="5.50" onclick="selectFlavor(this)">Strawberry</div>
-                            <div class="chip flavor-chip" data-flavor="Blue Raspberry" data-color="#3498db" data-price="5.50" onclick="selectFlavor(this)">Blue Raspberry</div>
-                        </div>
-                    </div>
-                    <button class="add-btn" onclick="addLemonadeToCart()">Add to Cart</button>
+            <!-- RIGHT PANEL: KITCHEN DISPLAY SYSTEM (KDS) -->
+            <div class="phone-frame" id="panelKds" style="background:#f1f5f9;">
+                <div class="frame-header">
+                    <span>Kitchen Prep Station (KDS)</span>
+                    <span style="color:var(--success);">● Active Stream</span>
+                </div>
+
+                <div class="offline-status-bar">
+                    <span>📶 Offline Cache Enabled</span>
+                    <span>100% Data Safe</span>
+                </div>
+
+                <div class="kds-explainer">
+                    <strong>Vendor UX Highlight:</strong> Live real-time syncing. Items stream directly to the line as customers add them. High-contrast tags prevent kitchen remakes.
+                </div>
+
+                <div id="kdsTicketsList">
+                    <p style="color: var(--text-muted); text-align: center; margin-top: 2rem; font-size: 0.88rem;">No active items queued on line.</p>
                 </div>
             </div>
 
-            <!-- DESSERTS SECTION -->
-            <div class="menu-category-section" id="cat-desserts">
-                <!-- Pecan Praline Brownie -->
-                <div class="menu-card" id="card-brownie">
-                    <div class="menu-card-top">
-                        <div class="food-graphic">
-                            <svg width="50" height="50" viewBox="0 0 100 100">
-                                <rect x="25" y="30" width="50" height="45" rx="6" fill="#5d4037"/>
-                                <circle cx="40" cy="45" r="5" fill="#d2b48c"/>
-                                <circle cx="60" cy="55" r="5" fill="#d2b48c"/>
-                                <path d="M 25 35 Q 50 25 75 35" fill="none" stroke="#d2b48c" stroke-width="4"/>
-                            </svg>
-                        </div>
-                        <div class="item-info">
-                            <h3>Artisan Pecan Praline Brownie</h3>
-                            <p>Fudgy scratch-made brownie topped with southern caramelized pecans.</p>
-                            <div class="item-price">$6.00</div>
-                        </div>
-                    </div>
-                    <div class="options-group">
-                        <div class="options-title">Add-ons</div>
-                        <div class="chip-group">
-                            <div class="chip option-chip" onclick="toggleChip(this)">Extra Praline Drizzle</div>
-                            <div class="chip option-chip" onclick="toggleChip(this)">Served Warm</div>
-                        </div>
-                    </div>
-                    <button class="add-btn" onclick="addItemToCart('Artisan Pecan Praline Brownie', 6.00, 'card-brownie')">Add to Cart</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. CART CONFIRMATION VIEW -->
-        <section id="cartView" class="view-section">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h2 class="menu-section-title" style="margin:0;">Your Cart</h2>
-                <button onclick="showView('menu')" style="background:none; border:none; color:var(--accent); font-weight:600; cursor:pointer;">← Back to Menu</button>
-            </div>
-            
-            <div id="cartItemsList"></div>
-
-            <div class="checkout-box" id="checkoutBoxContainer">
-                <div class="checkout-total-row">
-                    <span>Total Amount:</span>
-                    <span id="cartTotalDisplay">$0.00</span>
-                </div>
-                <button class="action-btn success" id="placeOrderBtn" onclick="executeCheckout()">Place Order →</button>
-            </div>
-
-            <!-- Success Confirmation Screen -->
-            <div id="successView">
-                <h2>🎉 Success!</h2>
-                <p>Your order has been submitted,<br>please check kds</p>
-                <button class="action-btn" onclick="showView('kds')">View Live KDS Display →</button>
-            </div>
-        </section>
-
-        <!-- 3. KITCHEN DISPLAY SYSTEM (KDS) VIEW -->
-        <section id="kdsView" class="view-section">
-            <div class="kds-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <span style="font-weight: 700; font-size: 1.15rem;">Kitchen Display (Live)</span>
-                <span style="font-size: 0.85rem; color: var(--success); font-weight: 600;">● Connected</span>
-            </div>
-            
-            <div class="kds-explainer">
-                <strong>⚡ Live KDS Infrastructure:</strong> Built for high-volume crowds like the South Carolina Pecan Festival. Orders route instantly from customer mobile browsers straight to kitchen stations. Modifiers like <em>"No Onions"</em> highlight in red to prevent order remakes.
-            </div>
-
-            <div id="kdsTicketsList">
-                <p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders yet!</p>
-            </div>
-        </section>
-
+        </div>
     </div>
 
     <script>
-        // Global Application State
         var cartState = [];
-        var kdsOrders = [];
         var activeLemonade = { flavor: 'Classic Lemon', price: 5.00, color: '#f1c40f' };
 
-        // View Switching Controller
-        function showView(target) {
-            document.getElementById('menuView').classList.remove('active');
-            document.getElementById('cartView').classList.remove('active');
-            document.getElementById('kdsView').classList.remove('active');
+        function setDemoMode(mode) {
+            document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+            var mainLayout = document.getElementById('mainLayout');
+            var panelCustomer = document.getElementById('panelCustomer');
+            var panelKds = document.getElementById('panelKds');
 
-            var kdsNavBtn = document.getElementById('kdsNavBtn');
-            var cartNavBtn = document.getElementById('cartNavBtn');
+            if (mode === 'split') {
+                document.getElementById('btnModeSplit').classList.add('active');
+                mainLayout.className = 'layout-split';
+                panelCustomer.style.display = 'block';
+                panelKds.style.display = 'block';
+            } else if (mode === 'customer') {
+                document.getElementById('btnModeCustomer').classList.add('active');
+                mainLayout.className = 'layout-single';
+                panelCustomer.style.display = 'block';
+                panelKds.style.display = 'none';
+            } else if (mode === 'kds') {
+                document.getElementById('btnModeKds').classList.add('active');
+                mainLayout.className = 'layout-single';
+                panelCustomer.style.display = 'none';
+                panelKds.style.display = 'block';
+            }
+        }
 
-            if (target === 'menu') {
-                document.getElementById('menuView').classList.add('active');
-                kdsNavBtn.textContent = 'KDS View';
-                if (cartState.length > 0) {
-                    cartNavBtn.style.display = 'inline-block';
-                }
-            } else if (target === 'cart') {
-                document.getElementById('cartView').classList.add('active');
-                cartNavBtn.style.display = 'none';
-                kdsNavBtn.textContent = 'Menu';
-                document.getElementById('checkoutBoxContainer').style.display = 'block';
-                document.getElementById('successView').style.display = 'none';
+        function setSingleView(view) {
+            document.getElementById('viewCustomerMenu').classList.remove('active');
+            document.getElementById('viewCustomerCart').classList.remove('active');
+
+            if (view === 'menu') {
+                document.getElementById('viewCustomerMenu').classList.add('active');
+            } else if (view === 'cart') {
+                document.getElementById('viewCustomerCart').classList.add('active');
                 renderCart();
-            } else if (target === 'kds') {
-                document.getElementById('kdsView').classList.add('active');
-                kdsNavBtn.textContent = 'Menu';
-                cartNavBtn.style.display = 'none';
-                renderKDS();
             }
         }
 
-        function toggleKdsNav() {
-            if (document.getElementById('kdsView').classList.contains('active')) {
-                showView('menu');
-            } else {
-                showView('kds');
-            }
-        }
-
-        // Category Tab Switcher
         function switchCategory(categoryName, btnElement) {
             document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
             document.querySelectorAll('.menu-category-section').forEach(function(s) { s.classList.remove('active'); });
@@ -583,12 +655,10 @@
             document.getElementById('cat-' + categoryName).classList.add('active');
         }
 
-        // Chip Toggles
         function toggleChip(chipElement) {
             chipElement.classList.toggle('selected');
         }
 
-        // Lemonade Flavor Selector
         function selectFlavor(chipElement) {
             var group = document.getElementById('flavorGroup');
             group.querySelectorAll('.flavor-chip').forEach(function(c) { c.classList.remove('selected'); });
@@ -602,7 +672,6 @@
             document.getElementById('lemonadePrice').textContent = '$' + activeLemonade.price.toFixed(2);
         }
 
-        // Add Standard Item to Cart & Sync to Live State
         function addItemToCart(name, price, cardId) {
             var card = document.getElementById(cardId);
             var addons = [];
@@ -613,10 +682,9 @@
 
             cartState.push({ name: name, price: price, addons: addons, removals: removals });
             updateCartBadge();
-            alert('Added ' + name + ' to Cart!');
+            renderKDS();
         }
 
-        // Add Lemonade to Cart
         function addLemonadeToCart() {
             cartState.push({
                 name: 'Craft Lemonade (' + activeLemonade.flavor + ')',
@@ -625,27 +693,25 @@
                 removals: []
             });
             updateCartBadge();
-            alert('Added Craft Lemonade to Cart!');
+            renderKDS();
         }
 
-        // Update Cart Badge
         function updateCartBadge() {
             var badge = document.getElementById('cartCount');
-            var cartNavBtn = document.getElementById('cartNavBtn');
+            var cartHeaderBadge = document.getElementById('cartHeaderBadge');
             if (badge) badge.textContent = cartState.length;
-            if (cartNavBtn) {
-                cartNavBtn.style.display = cartState.length > 0 ? 'inline-block' : 'none';
+            if (cartHeaderBadge) {
+                cartHeaderBadge.style.display = cartState.length > 0 ? 'inline-block' : 'none';
             }
         }
 
-        // Render Cart Items
         function renderCart() {
             var list = document.getElementById('cartItemsList');
             var totalDisplay = document.getElementById('cartTotalDisplay');
             list.innerHTML = '';
 
             if (cartState.length === 0) {
-                list.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin: 2rem 0;">Your cart is empty.</p>';
+                list.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin: 1.5rem 0; font-size: 0.85rem;">Cart is empty.</p>';
                 totalDisplay.textContent = '$0.00';
                 return;
             }
@@ -662,12 +728,12 @@
                 div.className = 'cart-item-card';
                 div.innerHTML = `
                     <div>
-                        <div style="font-weight: 600;">${item.name}</div>
-                        <div style="font-size: 0.82rem; color: var(--text-secondary);">${sub}</div>
+                        <div style="font-weight: 700; font-size: 0.88rem;">${item.name}</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">${sub}</div>
                     </div>
                     <div style="text-align: right;">
-                        <div style="font-weight: 600; color: var(--accent);">$${item.price.toFixed(2)}</div>
-                        <button onclick="removeCartItem(${index})" style="background:none; border:none; color:var(--danger); font-size:0.8rem; cursor:pointer; padding:5px;">Remove</button>
+                        <div style="font-weight: 700; color: var(--accent); font-size: 0.88rem;">$${item.price.toFixed(2)}</div>
+                        <button onclick="removeCartItem(${index})" style="background:none; border:none; color:var(--danger); font-size:0.75rem; cursor:pointer; font-weight:600;">Remove</button>
                     </div>
                 `;
                 list.appendChild(div);
@@ -680,64 +746,61 @@
             cartState.splice(index, 1);
             updateCartBadge();
             renderCart();
+            renderKDS();
         }
 
-        // Execute Checkout (Clears cart with confetti celebration and routes ticket to KDS)
         function executeCheckout() {
             if (cartState.length === 0) return;
-
-            kdsOrders.push({
-                id: Math.floor(100 + Math.random() * 900),
-                items: cartState.slice(),
-                time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
-            });
-
-            cartState = [];
-            updateCartBadge();
 
             if (typeof confetti === 'function') {
                 confetti({ particleCount: 70, spread: 60, origin: { y: 0.7 } });
             }
 
+            cartState = [];
+            updateCartBadge();
+
             document.getElementById('checkoutBoxContainer').style.display = 'none';
             document.getElementById('cartItemsList').innerHTML = '';
             document.getElementById('successView').style.display = 'block';
+            renderKDS();
         }
 
-        // Render Kitchen Display System Tickets
         function renderKDS() {
             var kdsList = document.getElementById('kdsTicketsList');
             kdsList.innerHTML = '';
 
-            if (kdsOrders.length === 0) {
-                kdsList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders yet!</p>';
+            if (cartState.length === 0) {
+                kdsList.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 2rem; font-size: 0.88rem;">No active items queued on line.</p>';
                 return;
             }
 
-            kdsOrders.forEach(function(order, index) {
-                var itemsHtml = '';
-                order.items.forEach(function(i) {
-                    var addons = i.addons.map(function(a) { return `<span class="kds-tag">+ ${a}</span>`; }).join('');
-                    var removals = i.removals.map(function(r) { return `<span class="kds-tag tag-remove">${r}</span>`; }).join('');
-                    itemsHtml += `<div class="kds-item-row"><div><div style="font-weight:600;">${i.name}</div><div>${addons} ${removals}</div></div></div>`;
-                });
-
-                var ticket = document.createElement('div');
-                ticket.className = 'kds-ticket';
-                ticket.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
-                        <h4 style="margin:0;">Order #${order.id}</h4>
-                        <span style="font-size: 0.8rem; color: var(--text-secondary);">${order.time}</span>
-                    </div>
-                    <div>${itemsHtml}</div>
-                    <button class="add-btn" onclick="completeOrder(${index})" style="background: var(--success); margin-top: 0.5rem;">Mark Ready / Complete</button>
-                `;
-                kdsList.appendChild(ticket);
+            var itemsHtml = '';
+            cartState.forEach(function(i) {
+                var addons = i.addons.map(function(a) { return `<span class="kds-tag tag-add">+ ${a}</span>`; }).join('');
+                var removals = i.removals.map(function(r) { return `<span class="kds-tag tag-remove">NO ${r.replace(/^No\s+/i, '')}</span>`; }).join('');
+                itemsHtml += `
+                    <div class="kds-item-row">
+                        <div class="kds-item-name">${i.name}</div>
+                        <div class="kds-tags-group">${addons} ${removals}</div>
+                    </div>`;
             });
+
+            var ticket = document.createElement('div');
+            ticket.className = 'kds-ticket';
+            ticket.innerHTML = `
+                <div class="kds-header-row">
+                    <span style="font-weight: 800; font-size: 0.9rem;">TICKET #101</span>
+                    <span style="font-size: 0.75rem; background: var(--accent-light); color: var(--accent); padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: 700;">PREP IN PROGRESS</span>
+                </div>
+                <div>${itemsHtml}</div>
+                <button class="add-btn" onclick="clearLiveOrder()" style="background: var(--success); margin-top: 0.8rem; padding: 0.6rem; font-size: 0.85rem;">Mark Order Complete</button>
+            `;
+            kdsList.appendChild(ticket);
         }
 
-        function completeOrder(index) {
-            kdsOrders.splice(index, 1);
+        function clearLiveOrder() {
+            cartState = [];
+            updateCartBadge();
             renderKDS();
         }
     </script>
