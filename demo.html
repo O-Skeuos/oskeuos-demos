@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O-Skeuos Live Ordering Demo</title>
-    <!-- Canvas Confetti Library for Pitch "Wow" Factor -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
     <style>
         :root {
             --bg-ios: #f2f2f7;
@@ -63,12 +62,17 @@
         .view-toggle, .cart-nav-btn {
             background: var(--accent);
             border: none;
-            padding: 0.4rem 0.8rem;
+            padding: 0.4rem 0.9rem;
             border-radius: 16px;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: white;
             cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .view-toggle:hover, .cart-nav-btn:hover {
+            background: var(--accent-hover);
         }
 
         .cart-nav-btn {
@@ -83,7 +87,7 @@
         }
 
         .menu-section-title {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 700;
             margin: 1.5rem 0 0.8rem 0.5rem;
             color: var(--text-primary);
@@ -92,9 +96,9 @@
         .menu-card {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 1rem;
+            padding: 1.2rem;
             margin-bottom: 1rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
 
         .menu-card-top {
@@ -120,26 +124,26 @@
         }
 
         .item-info h3 {
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             margin-bottom: 0.2rem;
         }
 
         .item-info p {
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
             margin-bottom: 0.4rem;
         }
 
         .item-price {
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--accent);
         }
 
         .options-group {
-            margin-top: 0.8rem;
-            padding-top: 0.8rem;
+            margin-top: 0.9rem;
+            padding-top: 0.9rem;
             border-top: 1px dashed #e5e5ea;
         }
 
@@ -149,7 +153,7 @@
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
         }
 
         .chip-group {
@@ -159,8 +163,8 @@
         }
 
         .chip {
-            font-size: 0.75rem;
-            padding: 0.3rem 0.6rem;
+            font-size: 0.78rem;
+            padding: 0.35rem 0.7rem;
             border-radius: 14px;
             background: #f0f0f5;
             color: var(--text-primary);
@@ -170,6 +174,7 @@
             align-items: center;
             gap: 0.3rem;
             user-select: none;
+            transition: all 0.15s ease;
         }
 
         .chip.active {
@@ -197,13 +202,14 @@
             background: var(--accent);
             color: white;
             border: none;
-            padding: 0.6rem 1rem;
+            padding: 0.7rem 1rem;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 0.8rem;
+            margin-top: 1rem;
             width: 100%;
+            transition: background 0.2s, transform 0.1s;
         }
 
         .add-btn:active {
@@ -231,15 +237,15 @@
             border-radius: 12px;
             padding: 1.2rem;
             margin-top: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
         }
 
         .checkout-total-row {
             display: flex;
             justify-content: space-between;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .place-order-main-btn {
@@ -247,17 +253,13 @@
             color: white;
             border: none;
             width: 100%;
-            padding: 0.9rem;
+            padding: 1rem;
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
             transition: background 0.2s;
-        }
-
-        .place-order-main-btn:active {
-            transform: scale(0.98);
         }
 
         .post-order-actions {
@@ -271,9 +273,9 @@
             color: white;
             border: none;
             width: 100%;
-            padding: 0.8rem;
+            padding: 0.85rem;
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
@@ -286,7 +288,7 @@
         }
 
         .kds-header {
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             display: flex;
@@ -297,12 +299,13 @@
         .kds-explainer {
             background: var(--card-bg);
             border-radius: 10px;
-            padding: 1rem;
+            padding: 1.1rem;
             margin-bottom: 1.2rem;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: var(--text-secondary);
             border-left: 4px solid var(--accent);
-            line-height: 1.5;
+            line-height: 1.55;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
 
         .kds-ticket {
@@ -311,7 +314,7 @@
             border-radius: 12px;
             padding: 1.2rem;
             margin-bottom: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
         }
 
         .kds-item-row {
@@ -354,11 +357,16 @@
             color: white;
             border: none;
             width: 100%;
-            padding: 0.7rem;
+            padding: 0.75rem;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             margin-top: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .complete-btn:hover {
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -367,20 +375,20 @@
     <header>
         <h1>O-Skeuos Demo</h1>
         <div class="header-actions">
-            <button class="cart-nav-btn" id="cartNavBtn" onclick="switchView('cart')">🛒 View Cart (<span id="navCartCount">0</span>)</button>
-            <button class="view-toggle" onclick="toggleMainKDSView()" id="viewToggleBtn">KDS View</button>
+            <button class="cart-nav-btn" id="cartNavBtn" onclick="App.switchView('cart')">🛒 View Cart (<span id="navCartCount">0</span>)</button>
+            <button class="view-toggle" onclick="App.toggleMainKDSView()" id="viewToggleBtn">KDS View</button>
         </div>
     </header>
 
     <!-- CUSTOMER MENU VIEW -->
-    <div class="container" id="customerView">
+    <main class="container" id="customerView">
         <div class="menu-section-title">Festival Menu</div>
 
         <!-- Smash Burger -->
-        <div class="menu-card">
+        <article class="menu-card" data-item-key="burger">
             <div class="menu-card-top">
                 <div class="food-graphic">
-                    <svg width="50" height="50" viewBox="0 0 100 100">
+                    <svg width="50" height="50" viewBox="0 0 100 100" aria-hidden="true">
                         <path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/>
                         <rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/>
                         <polygon points="20,55 35,53 50,57 65,53 80,55 80,59 20,59" fill="#f1c40f"/>
@@ -401,13 +409,13 @@
             <div class="options-group">
                 <div class="options-title">Add Extra Toppings</div>
                 <div class="chip-group">
-                    <div class="chip" onclick="toggleChip(this, 'burger', 'cheese', '#f39c12')">
+                    <div class="chip" onclick="App.toggleChip(this, 'burger', 'cheese')">
                         <span class="dot-icon" style="background:#f39c12;"></span> Extra Cheese
                     </div>
-                    <div class="chip" onclick="toggleChip(this, 'burger', 'sauce', '#e74c3c')">
+                    <div class="chip" onclick="App.toggleChip(this, 'burger', 'sauce')">
                         <span class="dot-icon" style="background:#e74c3c;"></span> Extra Secret Sauce
                     </div>
-                    <div class="chip" onclick="toggleChip(this, 'burger', 'bacon', '#8e44ad')">
+                    <div class="chip" onclick="App.toggleChip(this, 'burger', 'bacon')">
                         <span class="dot-icon" style="background:#8e44ad;"></span> Crispy Bacon
                     </div>
                 </div>
@@ -416,19 +424,19 @@
             <div class="options-group">
                 <div class="options-title">Removals</div>
                 <div class="chip-group">
-                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Onions</div>
-                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Pickles</div>
+                    <div class="chip chip-remove" onclick="App.toggleRemoveChip(this)">No Onions</div>
+                    <div class="chip chip-remove" onclick="App.toggleRemoveChip(this)">No Pickles</div>
                 </div>
             </div>
 
-            <button class="add-btn" onclick="addBurgerToCart()">Add to Cart</button>
-        </div>
+            <button class="add-btn" onclick="App.addBurgerToCart(event)">Add to Cart</button>
+        </article>
 
         <!-- Loaded Fries -->
-        <div class="menu-card">
+        <article class="menu-card" data-item-key="fries">
             <div class="menu-card-top">
                 <div class="food-graphic">
-                    <svg width="50" height="50" viewBox="0 0 100 100">
+                    <svg width="50" height="50" viewBox="0 0 100 100" aria-hidden="true">
                         <polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/>
                         <rect x="33" y="15" width="6" height="35" rx="3" fill="#f1c40f"/>
                         <rect x="42" y="10" width="6" height="40" rx="3" fill="#f39c12"/>
@@ -448,10 +456,10 @@
             <div class="options-group">
                 <div class="options-title">Add Extra Drizzle / Toppings</div>
                 <div class="chip-group">
-                    <div class="chip" onclick="toggleChip(this, 'fries', 'ranch', '#ecf0f1')">
+                    <div class="chip" onclick="App.toggleChip(this, 'fries', 'ranch')">
                         <span class="dot-icon" style="background:#bdc3c7;"></span> Ranch Drizzle
                     </div>
-                    <div class="chip" onclick="toggleChip(this, 'fries', 'jalapeno', '#27ae60')">
+                    <div class="chip" onclick="App.toggleChip(this, 'fries', 'jalapeno')">
                         <span class="dot-icon" style="background:#27ae60;"></span> Jalapeños
                     </div>
                 </div>
@@ -460,19 +468,19 @@
             <div class="options-group">
                 <div class="options-title">Removals</div>
                 <div class="chip-group">
-                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Bacon</div>
-                    <div class="chip chip-remove" onclick="toggleRemoveChip(this)">No Green Onions</div>
+                    <div class="chip chip-remove" onclick="App.toggleRemoveChip(this)">No Bacon</div>
+                    <div class="chip chip-remove" onclick="App.toggleRemoveChip(this)">No Green Onions</div>
                 </div>
             </div>
 
-            <button class="add-btn" onclick="addFriesToCart()">Add to Cart</button>
-        </div>
+            <button class="add-btn" onclick="App.addFriesToCart(event)">Add to Cart</button>
+        </article>
 
         <!-- Craft Lemonade -->
-        <div class="menu-card">
+        <article class="menu-card" data-item-key="lemonade">
             <div class="menu-card-top">
                 <div class="food-graphic">
-                    <svg width="50" height="50" viewBox="0 0 100 100">
+                    <svg width="50" height="50" viewBox="0 0 100 100" aria-hidden="true">
                         <path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/>
                         <path id="lemonade-liquid" d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="#f1c40f"/>
                         <line x1="58" y1="10" x2="48" y2="75" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
@@ -490,310 +498,355 @@
             <div class="options-group">
                 <div class="options-title">Select Flavor Variant</div>
                 <div class="chip-group">
-                    <div class="chip active" onclick="selectLemonadeFlavor(this, 'Classic Lemon', '#f1c40f', 5.00)">
+                    <div class="chip active" onclick="App.selectLemonadeFlavor(this, 'Classic Lemon', '#f1c40f', 5.00)">
                         <span class="dot-icon" style="background:#f1c40f;"></span> Classic Yellow
                     </div>
-                    <div class="chip" onclick="selectLemonadeFlavor(this, 'Blackberry Infused', '#8e44ad', 5.50)">
+                    <div class="chip" onclick="App.selectLemonadeFlavor(this, 'Blackberry Infused', '#8e44ad', 5.50)">
                         <span class="dot-icon" style="background:#8e44ad;"></span> Blackberry
                     </div>
-                    <div class="chip" onclick="selectLemonadeFlavor(this, 'Strawberry Electric', '#e74c3c', 5.50)">
+                    <div class="chip" onclick="selectLemonadeFlavorAdapter(this, 'Strawberry Electric', '#e74c3c', 5.50)">
                         <span class="dot-icon" style="background:#e74c3c;"></span> Strawberry
                     </div>
-                    <div class="chip" onclick="selectLemonadeFlavor(this, 'Blue Raspberry', '#3498db', 5.50)">
+                    <div class="chip" onclick="App.selectLemonadeFlavor(this, 'Blue Raspberry', '#3498db', 5.50)">
                         <span class="dot-icon" style="background:#3498db;"></span> Blue Raspberry
                     </div>
                 </div>
             </div>
 
-            <button class="add-btn" onclick="addLemonadeToCart()">Add to Cart</button>
-        </div>
-    </div>
+            <button class="add-btn" onclick="App.addLemonadeToCart(event)">Add to Cart</button>
+        </article>
+    </main>
 
     <!-- DEDICATED CART VIEW -->
-    <div class="container" id="cartView">
+    <section class="container" id="cartView">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <h2 class="menu-section-title" style="margin:0;">Your Order Cart</h2>
-            <button onclick="switchView('menu')" style="background:none; border:none; color:var(--accent); font-weight:600; cursor:pointer;">← Back to Menu</button>
+            <button onclick="App.switchView('menu')" style="background:none; border:none; color:var(--accent); font-weight:600; cursor:pointer;">← Back to Menu</button>
         </div>
         
-        <div id="cartItemsContainer">
-            <!-- Populated dynamically -->
-        </div>
+        <div id="cartItemsContainer"></div>
 
         <div class="checkout-box">
             <div class="checkout-total-row">
                 <span>Total Amount:</span>
                 <span id="cartViewTotal">$0.00</span>
             </div>
-            <button class="place-order-main-btn" id="placeOrderBtn" onclick="executeCheckout(event)">Place Order →</button>
+            <button class="place-order-main-btn" id="placeOrderBtn" onclick="App.executeCheckout(event)">Place Order →</button>
             
             <div class="post-order-actions" id="postOrderActions">
-                <button class="go-to-kds-btn" onclick="switchView('kds')">👀 Open Live KDS Display →</button>
+                <button class="go-to-kds-btn" onclick="App.switchView('kds')">👀 Open Live KDS Display →</button>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- KITCHEN DISPLAY SYSTEM (KDS) VIEW -->
-    <div class="container" id="kds-view">
+    <section class="container" id="kds-view">
         <div class="kds-header">
             <span>Kitchen Display (Live)</span>
             <span style="font-size: 0.85rem; color: var(--success);">● Connected</span>
         </div>
         
         <div class="kds-explainer">
-            <strong>⚡ Live KDS Infrastructure:</strong> Designed for high-volume crowds like the South Carolina Pecan Festival. Instead of shouted callouts or lost paper tickets, orders stream instantly from customer phones to the kitchen station. Modifiers like <em>"No Onions"</em> or custom flavor variants highlight automatically to eliminate remakes during peak rushes.
+            <strong>⚡ Live KDS Infrastructure:</strong> Architected for high-density festival environments like the South Carolina Pecan Festival. Orders route instantly from customer mobile browsers directly to kitchen prep stations. Ingredient modifiers (such as <em>"No Onions"</em>) and color-coded beverage variants highlight dynamically to completely eliminate remakes during high-rush sales windows.
         </div>
 
         <div id="kdsTicketContainer">
             <p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders. Place an order from the cart view!</p>
         </div>
-    </div>
+    </section>
 
     <script>
-        let cart = [];
-        let activeOrders = [];
-        let currentView = 'menu'; // 'menu', 'cart', 'kds'
-
-        let selectedLemonade = {
-            flavor: 'Classic Lemon',
-            color: '#f1c40f',
-            price: 5.00
-        };
-
-        function toggleChip(element, itemKey, dotKey, color) {
-            element.classList.toggle('active');
-            const dot = document.getElementById(`${itemKey}-dot-${dotKey}`);
-            if (dot) {
-                dot.style.display = element.classList.contains('active') ? 'block' : 'none';
-            }
+        // Backward compatibility helper for inline click binding
+        function selectLemonadeFlavorAdapter(el, flavor, color, price) {
+            App.selectLemonadeFlavor(el, flavor, color, price);
         }
 
-        function toggleRemoveChip(element) {
-            element.classList.toggle('active');
-        }
-
-        function selectLemonadeFlavor(element, flavor, color, price) {
-            const group = element.parentElement.querySelectorAll('.chip');
-            group.forEach(c => c.classList.remove('active'));
-            element.classList.add('active');
-
-            selectedLemonade = { flavor, color, price };
-            document.getElementById('lemonade-liquid').setAttribute('fill', color);
-            document.getElementById('lemonade-price-display').textContent = `$${price.toFixed(2)}`;
-        }
-
-        function getSelectedOptions(cardElement) {
-            const addons = Array.from(cardElement.querySelectorAll('.options-group:nth-of-type(1) .chip.active'))
-                .map(c => c.textContent.trim());
-            const removals = Array.from(cardElement.querySelectorAll('.chip-remove.active'))
-                .map(c => c.textContent.trim());
-            return { addons, removals };
-        }
-
-        function addBurgerToCart() {
-            const card = event.target.closest('.menu-card');
-            const { addons, removals } = getSelectedOptions(card);
-            cart.push({
-                name: 'Smash Burger Basket',
-                price: 12.00,
-                addons,
-                removals,
-                type: 'burger'
-            });
-            updateCartCount();
-            alert("Added Smash Burger to Cart!");
-        }
-
-        function addFriesToCart() {
-            const card = event.target.closest('.menu-card');
-            const { addons, removals } = getSelectedOptions(card);
-            cart.push({
-                name: 'Loaded Fries',
-                price: 8.50,
-                addons,
-                removals,
-                type: 'fries'
-            });
-            updateCartCount();
-            alert("Added Loaded Fries to Cart!");
-        }
-
-        function addLemonadeToCart() {
-            cart.push({
-                name: `Craft Lemonade (${selectedLemonade.flavor})`,
-                price: selectedLemonade.price,
-                addons: [],
-                removals: [],
-                type: 'lemonade',
-                color: selectedLemonade.color
-            });
-            updateCartCount();
-            alert("Added Craft Lemonade to Cart!");
-        }
-
-        function updateCartCount() {
-            const countElem = document.getElementById('navCartCount');
-            const cartNavBtn = document.getElementById('cartNavBtn');
-            countElem.textContent = cart.length;
-            if (cart.length > 0) {
-                cartNavBtn.style.display = 'inline-block';
-            } else {
-                cartNavBtn.style.display = 'none';
-            }
-        }
-
-        function switchView(view) {
-            currentView = view;
-            const menuView = document.getElementById('customerView');
-            const cartView = document.getElementById('cartView');
-            const kdsView = document.getElementById('kds-view');
-            const viewToggleBtn = document.getElementById('viewToggleBtn');
-            const cartNavBtn = document.getElementById('cartNavBtn');
-
-            menuView.style.display = 'none';
-            cartView.style.display = 'none';
-            kdsView.style.display = 'none';
-
-            if (view === 'menu') {
-                menuView.style.display = 'block';
-                viewToggleBtn.textContent = 'KDS View';
-                if (cart.length > 0) cartNavBtn.style.display = 'inline-block';
-            } else if (view === 'cart') {
-                cartView.style.display = 'block';
-                cartNavBtn.style.display = 'none';
-                viewToggleBtn.textContent = 'Menu';
-                renderCartView();
-                // Reset button state when opening cart
-                document.getElementById('placeOrderBtn').textContent = 'Place Order →';
-                document.getElementById('placeOrderBtn').style.background = 'var(--success)';
-                document.getElementById('postOrderActions').style.display = 'none';
-            } else if (view === 'kds') {
-                kdsView.style.display = 'block';
-                viewToggleBtn.textContent = 'Menu';
-                cartNavBtn.style.display = 'none';
-            }
-        }
-
-        function toggleMainKDSView() {
-            if (currentView === 'kds') {
-                switchView('menu');
-            } else {
-                switchView('kds');
-            }
-        }
-
-        function renderCartView() {
-            const container = document.getElementById('cartItemsContainer');
-            const totalElem = document.getElementById('cartViewTotal');
-
-            if (cart.length === 0) {
-                container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; margin: 2rem 0;">Your cart is empty.</p>`;
-                totalElem.textContent = '$0.00';
-                return;
-            }
-
-            let total = cart.reduce((sum, item) => sum + item.price, 0);
-            totalElem.textContent = `$${total.toFixed(2)}`;
-
-            container.innerHTML = cart.map((item, index) => `
-                <div class="cart-item-card">
-                    <div>
-                        <div style="font-weight: 600; font-size: 1rem;">${item.name}</div>
-                        <div style="font-size: 0.82rem; color: var(--text-secondary);">
-                            ${item.addons.map(a => `+ ${a}`).join(', ')}
-                            ${item.removals.map(r => `NO ${r.replace('No ', '')}`).join(', ')}
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-weight: 600; color: var(--accent); margin-bottom: 0.3rem;">$${item.price.toFixed(2)}</div>
-                        <button onclick="removeFromCart(${index})" style="background:none; border:none; color:var(--danger); font-size:0.8rem; cursor:pointer;">Remove</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartCount();
-            renderCartView();
-        }
-
-        function executeCheckout(event) {
-            if (cart.length === 0) return;
-
-            let newOrder = {
-                id: Math.floor(100 + Math.random() * 900),
-                items: [...cart],
-                time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
+        const App = (() => {
+            let state = {
+                cart: [],
+                activeOrders: [],
+                currentView: 'menu',
+                selectedLemonade: {
+                    flavor: 'Classic Lemon',
+                    color: '#f1c40f',
+                    price: 5.00
+                }
             };
 
-            activeOrders.push(newOrder);
-            cart = [];
-            updateCartCount();
-            renderKDS();
-
-            // Trigger Confetti from button position
-            const rect = event.target.getBoundingClientRect();
-            const x = (rect.left + rect.width / 2) / window.innerWidth;
-            const y = (rect.top + rect.height / 2) / window.innerHeight;
-            
-            confetti({
-                particleCount: 70,
-                spread: 60,
-                origin: { x: x, y: y }
-            });
-
-            // Update button state & reveal KDS link
-            const btn = document.getElementById('placeOrderBtn');
-            btn.textContent = 'Order Placed! ✓';
-            btn.style.background = '#27ae60';
-            document.getElementById('postOrderActions').style.display = 'block';
-        }
-
-        function getKDSGraphic(item) {
-            if (item.type === 'burger') {
-                return `<svg viewBox="0 0 100 100" class="kds-graphic"><path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/><rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/><rect x="15" y="61" width="70" height="12" rx="4" fill="#5d4037"/><rect x="18" y="75" width="64" height="10" rx="4" fill="#d35400"/></svg>`;
-            } else if (item.type === 'fries') {
-                return `<svg viewBox="0 0 100 100" class="kds-graphic"><polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/><rect x="33" y="15" width="6" height="35" rx="3" fill="#f1c40f"/><rect x="42" y="10" width="6" height="40" rx="3" fill="#f39c12"/><rect x="51" y="12" width="6" height="38" rx="3" fill="#f1c40f"/></svg>`;
-            } else {
-                return `<svg viewBox="0 0 100 100" class="kds-graphic"><path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/><path d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="${item.color || '#f1c40f'}"/><line x1="58" y1="10" x2="48" y2="75" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/></svg>`;
-            }
-        }
-
-        function renderKDS() {
-            const container = document.getElementById('kdsTicketContainer');
-            if (activeOrders.length === 0) {
-                container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders.</p>`;
-                return;
+            function init() {
+                try {
+                    const cachedOrders = localStorage.getItem('oskeuos_orders');
+                    if (cachedOrders) state.activeOrders = JSON.parse(cachedOrders);
+                } catch (e) {
+                    console.warn('Storage sync unavailable');
+                }
+                updateCartCount();
+                renderKDS();
             }
 
-            container.innerHTML = activeOrders.map((order, index) => `
-                <div class="kds-ticket">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
-                        <h4 style="margin:0;">Order #${order.id}</h4>
-                        <span style="font-size: 0.8rem; color: var(--text-secondary);">${order.time}</span>
-                    </div>
-                    <div>
-                        ${order.items.map(i => `
-                            <div class="kds-item-row">
-                                ${getKDSGraphic(i)}
-                                <div>
-                                    <div style="font-weight:600; font-size:0.95rem;">${i.name}</div>
-                                    ${i.addons.map(a => `<span class="kds-tag">+ ${a}</span>`).join('')}
-                                    ${i.removals.map(r => `<span class="kds-tag tag-remove">NO: ${r.replace('No ', '')}</span>`).join('')}
-                                </div>
+            function toggleChip(element, itemKey, dotKey) {
+                element.classList.toggle('active');
+                const dot = document.getElementById(`${itemKey}-dot-${dotKey}`);
+                if (dot) {
+                    dot.style.display = element.classList.contains('active') ? 'block' : 'none';
+                }
+            }
+
+            function toggleRemoveChip(element) {
+                element.classList.toggle('active');
+            }
+
+            function selectLemonadeFlavor(element, flavor, color, price) {
+                const group = element.parentElement.querySelectorAll('.chip');
+                group.forEach(c => c.classList.remove('active'));
+                element.classList.add('active');
+
+                state.selectedLemonade = { flavor, color, price };
+                const liquid = document.getElementById('lemonade-liquid');
+                const priceDisplay = document.getElementById('lemonade-price-display');
+                if (liquid) liquid.setAttribute('fill', color);
+                if (priceDisplay) priceDisplay.textContent = `$${price.toFixed(2)}`;
+            }
+
+            function getSelectedOptions(cardElement) {
+                const addons = Array.from(cardElement.querySelectorAll('.options-group:nth-of-type(1) .chip.active'))
+                    .map(c => c.textContent.trim());
+                const removals = Array.from(cardElement.querySelectorAll('.chip-remove.active'))
+                    .map(c => c.textContent.trim());
+                return { addons, removals };
+            }
+
+            function addBurgerToCart(event) {
+                const card = event.target.closest('.menu-card');
+                const { addons, removals } = getSelectedOptions(card);
+                state.cart.push({
+                    name: 'Smash Burger Basket',
+                    price: 12.00,
+                    addons,
+                    removals,
+                    type: 'burger'
+                });
+                updateCartCount();
+                alert("Added Smash Burger to Cart!");
+            }
+
+            function addFriesToCart(event) {
+                const card = event.target.closest('.menu-card');
+                const { addons, removals } = getSelectedOptions(card);
+                state.cart.push({
+                    name: 'Loaded Fries',
+                    price: 8.50,
+                    addons,
+                    removals,
+                    type: 'fries'
+                });
+                updateCartCount();
+                alert("Added Loaded Fries to Cart!");
+            }
+
+            function addLemonadeToCart(event) {
+                state.cart.push({
+                    name: `Craft Lemonade (${state.selectedLemonade.flavor})`,
+                    price: state.selectedLemonade.price,
+                    addons: [],
+                    removals: [],
+                    type: 'lemonade',
+                    color: state.selectedLemonade.color
+                });
+                updateCartCount();
+                alert("Added Craft Lemonade to Cart!");
+            }
+
+            function updateCartCount() {
+                const countElem = document.getElementById('navCartCount');
+                const cartNavBtn = document.getElementById('cartNavBtn');
+                if (countElem) countElem.textContent = state.cart.length;
+                if (cartNavBtn) {
+                    cartNavBtn.style.display = state.cart.length > 0 ? 'inline-block' : 'none';
+                }
+            }
+
+            function switchView(view) {
+                state.currentView = view;
+                const menuView = document.getElementById('customerView');
+                const cartView = document.getElementById('cartView');
+                const kdsView = document.getElementById('kds-view');
+                const viewToggleBtn = document.getElementById('viewToggleBtn');
+                const cartNavBtn = document.getElementById('cartNavBtn');
+
+                if (menuView) menuView.style.display = 'none';
+                if (cartView) cartView.style.display = 'none';
+                if (kdsView) kdsView.style.display = 'none';
+
+                if (view === 'menu') {
+                    if (menuView) menuView.style.display = 'block';
+                    if (viewToggleBtn) viewToggleBtn.textContent = 'KDS View';
+                    if (state.cart.length > 0 && cartNavBtn) cartNavBtn.style.display = 'inline-block';
+                } else if (view === 'cart') {
+                    if (cartView) cartView.style.display = 'block';
+                    if (cartNavBtn) cartNavBtn.style.display = 'none';
+                    if (viewToggleBtn) viewToggleBtn.textContent = 'Menu';
+                    renderCartView();
+                    const placeOrderBtn = document.getElementById('placeOrderBtn');
+                    const postOrderActions = document.getElementById('postOrderActions');
+                    if (placeOrderBtn) {
+                        placeOrderBtn.textContent = 'Place Order →';
+                        placeOrderBtn.style.background = 'var(--success)';
+                    }
+                    if (postOrderActions) postOrderActions.style.display = 'none';
+                } else if (view === 'kds') {
+                    if (kdsView) kdsView.style.display = 'block';
+                    if (viewToggleBtn) viewToggleBtn.textContent = 'Menu';
+                    if (cartNavBtn) cartNavBtn.style.display = 'none';
+                }
+            }
+
+            function toggleMainKDSView() {
+                if (state.currentView === 'kds') {
+                    switchView('menu');
+                } else {
+                    switchView('kds');
+                }
+            }
+
+            function renderCartView() {
+                const container = document.getElementById('cartItemsContainer');
+                const totalElem = document.getElementById('cartViewTotal');
+                if (!container || !totalElem) return;
+
+                if (state.cart.length === 0) {
+                    container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; margin: 2rem 0;">Your cart is empty.</p>`;
+                    totalElem.textContent = '$0.00';
+                    return;
+                }
+
+                let total = state.cart.reduce((sum, item) => sum + item.price, 0);
+                totalElem.textContent = `$${total.toFixed(2)}`;
+
+                container.innerHTML = state.cart.map((item, index) => `
+                    <div class="cart-item-card">
+                        <div>
+                            <div style="font-weight: 600; font-size: 1rem;">${item.name}</div>
+                            <div style="font-size: 0.82rem; color: var(--text-secondary);">
+                                ${item.addons.map(a => `+ ${a}`).join(', ')}
+                                ${item.removals.map(r => `NO ${r.replace('No ', '')}`).join(', ')}
                             </div>
-                        `).join('')}
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 600; color: var(--accent); margin-bottom: 0.3rem;">$${item.price.toFixed(2)}</div>
+                            <button onclick="App.removeFromCart(${index})" style="background:none; border:none; color:var(--danger); font-size:0.8rem; cursor:pointer;">Remove</button>
+                        </div>
                     </div>
-                    <button class="complete-btn" onclick="completeOrder(${index})">Mark Ready / Complete</button>
-                </div>
-            `).join('');
-        }
+                `).join('');
+            }
 
-        function completeOrder(index) {
-            activeOrders.splice(index, 1);
-            renderKDS();
-        }
+            function removeFromCart(index) {
+                state.cart.splice(index, 1);
+                updateCartCount();
+                renderCartView();
+            }
+
+            function executeCheckout(event) {
+                if (state.cart.length === 0) return;
+
+                let newOrder = {
+                    id: Math.floor(100 + Math.random() * 900),
+                    items: [...state.cart],
+                    time: new Date().toLocaleTimeString([], { hour: '2-numeric', minute: '2-digit' })
+                };
+
+                state.activeOrders.push(newOrder);
+                try {
+                    localStorage.setItem('oskeuos_orders', JSON.stringify(state.activeOrders));
+                } catch (e) {}
+
+                state.cart = [];
+                updateCartCount();
+                renderKDS();
+
+                if (typeof confetti === 'function') {
+                    const rect = event.target.getBoundingClientRect();
+                    const x = (rect.left + rect.width / 2) / window.innerWidth;
+                    const y = (rect.top + rect.height / 2) / window.innerHeight;
+                    confetti({ particleCount: 70, spread: 60, origin: { x, y } });
+                }
+
+                const btn = document.getElementById('placeOrderBtn');
+                const postActions = document.getElementById('postOrderActions');
+                if (btn) {
+                    btn.textContent = 'Order Placed! ✓';
+                    btn.style.background = '#27ae60';
+                }
+                if (postActions) postActions.style.display = 'block';
+            }
+
+            function getKDSGraphic(item) {
+                if (item.type === 'burger') {
+                    return `<svg viewBox="0 0 100 100" class="kds-graphic"><path d="M 20 45 A 30 25 0 0 1 80 45 Z" fill="#e67e22"/><rect x="18" y="47" width="64" height="6" rx="3" fill="#2ecc71"/><rect x="15" y="61" width="70" height="12" rx="4" fill="#5d4037"/><rect x="18" y="75" width="64" height="10" rx="4" fill="#d35400"/></svg>`;
+                } else if (item.type === 'fries') {
+                    return `<svg viewBox="0 0 100 100" class="kds-graphic"><polygon points="30,45 70,45 62,90 38,90" fill="#e74c3c"/><rect x="33" y="15" width="6" height="35" rx="3" fill="#f1c40f"/><rect x="42" y="10" width="6" height="40" rx="3" fill="#f39c12"/><rect x="51" y="12" width="6" height="38" rx="3" fill="#f1c40f"/></svg>`;
+                } else {
+                    return `<svg viewBox="0 0 100 100" class="kds-graphic"><path d="M 30 25 L 70 25 L 62 85 L 38 85 Z" fill="none" stroke="#bdc3c7" stroke-width="4"/><path d="M 32 35 L 68 35 L 61 83 L 39 83 Z" fill="${item.color || '#f1c40f'}"/><line x1="58" y1="10" x2="48" y2="75" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/></svg>`;
+                }
+            }
+
+            function renderKDS() {
+                const container = document.getElementById('kdsTicketContainer');
+                if (!container) return;
+
+                if (state.activeOrders.length === 0) {
+                    container.innerHTML = `<p style="color: var(--text-secondary); text-align: center; margin-top: 2rem;">No active orders.</p>`;
+                    return;
+                }
+
+                container.innerHTML = state.activeOrders.map((order, index) => `
+                    <div class="kds-ticket">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+                            <h4 style="margin:0;">Order #${order.id}</h4>
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);">${order.time}</span>
+                        </div>
+                        <div>
+                            ${order.items.map(i => `
+                                <div class="kds-item-row">
+                                    ${getKDSGraphic(i)}
+                                    <div>
+                                        <div style="font-weight:600; font-size:0.95rem;">${i.name}</div>
+                                        ${i.addons.map(a => `<span class="kds-tag">+ ${a}</span>`).join('')}
+                                        ${i.removals.map(r => `<span class="kds-tag tag-remove">NO: ${r.replace('No ', '')}</span>`).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button class="complete-btn" onclick="App.completeOrder(${index})">Mark Ready / Complete</button>
+                    </div>
+                `).join('');
+            }
+
+            function completeOrder(index) {
+                state.activeOrders.splice(index, 1);
+                try {
+                    localStorage.setItem('oskeuos_orders', JSON.stringify(state.activeOrders));
+                } catch (e) {}
+                renderKDS();
+            }
+
+            return {
+                init,
+                toggleChip,
+                toggleRemoveChip,
+                selectLemonadeFlavor,
+                addBurgerToCart,
+                addFriesToCart,
+                addLemonadeToCart,
+                switchView,
+                toggleMainKDSView,
+                removeFromCart,
+                executeCheckout,
+                completeOrder
+            };
+        })();
+
+        document.addEventListener('DOMContentLoaded', App.init);
     </script>
 </body>
 </html>
